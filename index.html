@@ -1,61 +1,229 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UniLink Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniLink Dashboard</title>
+    <style>
+        :root {
+            --bg-lavender: #dcd9e8;
+            --dark-purple: #3b3a58;
+            --deep-navy: #2d2c44;
+            --accent-orange: #ff9f43;
+            --soft-white: #f8f9fd;
+            --text-muted: #8e8da2;
+            --card-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
 
-<link rel="stylesheet" href="styles.css">
+        body {
+            background-color: var(--bg-lavender);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--soft-white);
+        }
 
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 280px 1fr 300px;
+            gap: 25px;
+            width: 90%;
+            max-width: 1200px;
+            padding: 40px;
+            position: relative;
+        }
+
+        /* Connecting Lines Deco */
+        .dashboard-container::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: radial-gradient(circle, #fff 1px, transparent 1px);
+            background-size: 100px 100px;
+            opacity: 0.2;
+            z-index: -1;
+        }
+
+        /* Generic Card Style */
+        .card {
+            border-radius: 24px;
+            padding: 20px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .dark-card { background-color: var(--dark-purple); }
+        .light-card { background-color: var(--soft-white); color: var(--deep-navy); }
+
+        /* Main Center Panel */
+        .main-panel {
+            background: linear-gradient(180deg, var(--deep-navy) 60%, var(--soft-white) 60%);
+            height: 700px;
+            position: relative;
+            overflow: hidden;
+            border: 8px solid white;
+        }
+
+        .chart-area {
+            height: 40%;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .wave-svg {
+            width: 100%;
+            height: 100px;
+            stroke: var(--accent-orange);
+            stroke-width: 3;
+            fill: none;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            padding: 20px;
+            margin-top: 50px;
+        }
+
+        .stat-box {
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
+        }
+
+        /* Sidebar Elements */
+        .sidebar-left, .sidebar-right {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .mini-card {
+            height: 150px;
+            width: 100%;
+        }
+
+        .accent-pill {
+            background: var(--accent-orange);
+            height: 10px;
+            width: 40px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .line-placeholder {
+            background: rgba(255,255,255,0.1);
+            height: 8px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+
+        .light-card .line-placeholder {
+            background: #e0e0e0;
+        }
+
+        /* Decorative Nodes */
+        .node {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: var(--accent-orange);
+            border: 3px solid white;
+            border-radius: 4px;
+        }
+
+    </style>
 </head>
 <body>
 
-<div class="container">
+    <div class="dashboard-container">
+        <!-- Decorative Orange Squares -->
+        <div class="node" style="top: 50px; right: -10px;"></div>
+        <div class="node" style="bottom: 20px; left: 45%;"></div>
 
-    <aside class="sidebar">
-        <h2>UniLink</h2>
-        <ul>
-            <li class="active">Dashboard</li>
-            <li>Buy Data</li>
-            <li>Wallet</li>
-            <li>Transactions</li>
-        </ul>
-    </aside>
+        <!-- Left Sidebar -->
+        <div class="sidebar-left">
+            <div class="card dark-card" style="height: 300px;">
+                <div class="accent-pill"></div>
+                <div class="line-placeholder" style="width: 80%;"></div>
+                <div class="line-placeholder" style="width: 60%;"></div>
+                <div class="line-placeholder" style="width: 90%; margin-top: 40px;"></div>
+                <div style="background: var(--accent-orange); height: 35px; border-radius: 8px; margin-top: 20px;"></div>
+            </div>
+            
+            <div class="card light-card" style="flex-grow: 1;">
+                <div style="display: flex; gap: 10px;">
+                    <div style="width: 40px; height: 40px; background: #eee; border-radius: 8px;"></div>
+                    <div style="flex-grow: 1;">
+                        <div class="line-placeholder" style="width: 100%;"></div>
+                        <div class="line-placeholder" style="width: 70%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <main class="main">
-
-        <header class="topbar">
-            <h1>Dashboard</h1>
-            <button type="button" class="btn">Buy Data</button>
-        </header>
-
-        <section class="cards">
-            <div class="card dark">
-                <h3>Balance</h3>
-                <p>GHS 120.00</p>
+        <!-- Center Phone/Tablet Display -->
+        <div class="card main-panel">
+            <div class="chart-area">
+                <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                    <div style="width: 60px; height: 10px; background: rgba(255,255,255,0.3); border-radius: 10px;"></div>
+                    <div style="width: 40px; height: 10px; background: var(--accent-orange); border-radius: 10px;"></div>
+                </div>
+                <!-- Simple Waveform Representation -->
+                <svg class="wave-svg" viewBox="0 0 100 20">
+                    <path d="M0,10 Q15,0 30,10 T60,10 T90,10" stroke-linecap="round"/>
+                    <circle cx="30" cy="10" r="2" fill="white" />
+                    <circle cx="60" cy="10" r="2" fill="white" />
+                </svg>
             </div>
 
-            <div class="card">
-                <h3>Data Bought</h3>
-                <p>25GB</p>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="line-placeholder" style="width: 30%; background: #ff9f43;"></div>
+                    <div class="line-placeholder"></div>
+                    <div class="line-placeholder"></div>
+                </div>
+                <div class="stat-box">
+                    <div class="line-placeholder" style="width: 30%; background: #ff9f43;"></div>
+                    <div class="line-placeholder"></div>
+                    <div class="line-placeholder"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Sidebar -->
+        <div class="sidebar-right">
+            <div class="card light-card" style="height: 350px;">
+                <div style="display: flex; justify-content: space-between;">
+                     <div class="line-placeholder" style="width: 40%;"></div>
+                     <div style="width: 30px; height: 30px; background: var(--dark-purple); border-radius: 6px;"></div>
+                </div>
+                <div class="line-placeholder" style="margin-top: 30px;"></div>
+                <div class="line-placeholder"></div>
+                <div class="line-placeholder"></div>
+                <div style="border: 2px solid #eee; border-radius: 12px; padding: 15px; margin-top: 20px;">
+                    <div class="line-placeholder" style="width: 50%;"></div>
+                </div>
             </div>
 
-            <div class="card">
-                <h3>Active Bundles</h3>
-                <p>3</p>
+            <div class="card dark-card" style="height: 200px; background: #3b3a58;">
+                 <div style="display: flex; align-items: center; gap: 15px;">
+                     <div style="width: 40px; height: 40px; border: 3px solid var(--accent-orange); border-radius: 50%;"></div>
+                     <div style="flex-grow: 1;">
+                         <div class="line-placeholder"></div>
+                         <div class="line-placeholder" style="width: 40%;"></div>
+                     </div>
+                 </div>
             </div>
-        </section>
-
-        <section class="graph">
-            <canvas id="chart"></canvas>
-        </section>
-
-    </main>
-
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="app.js"></script>
+        </div>
+    </div>
 
 </body>
 </html>
