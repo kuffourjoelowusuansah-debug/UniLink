@@ -1,0 +1,21 @@
+body {
+    margin: 0;
+    font-family: sans-serif;
+    background: #f5f6fa;
+}
+
+.container {
+    display: flex;
+}
+
+.sidebar {
+    width: 220px;
+    background: #2f2f4f;
+    color: white;
+    height: 100vh;
+    padding: 20px;
+}
+
+.sidebar li {
+    list-style: none;
+    margin: 15px
