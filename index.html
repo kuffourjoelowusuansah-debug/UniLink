@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UniLink Dashboard</title>
+
+<link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+
+<div class="container">
+
+    <aside class="sidebar">
+        <h2>UniLink</h2>
+        <ul>
+            <li class="active">Dashboard</li>
+            <li>Buy Data</li>
+            <li>Wallet</li>
+            <li>Transactions</li>
+        </ul>
+    </aside>
+
+    <main class="main">
+
+        <header class="topbar">
+            <h1>Dashboard</h1>
+            <button type="button" class="btn">Buy Data</button>
+        </header>
+
+        <section class="cards">
+            <div class="card dark">
+                <h3>Balance</h3>
+                <p>GHS 120.00</p>
+            </div>
+
+            <div class="card">
+                <h3>Data Bought</h3>
+                <p>25GB</p>
+            </div>
+
+            <div class="card">
+                <h3>Active Bundles</h3>
+                <p>3</p>
+            </div>
+        </section>
+
+        <section class="graph">
+            <canvas id="chart"></canvas>
+        </section>
+
+    </main>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
