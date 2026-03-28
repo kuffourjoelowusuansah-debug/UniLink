@@ -1,836 +1,460 @@
-
-          
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UniLink GH — Data Bundles for Students</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<title>Dashboard | Purple & Orange Theme</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --green: #00C57A;
-    --green-dark: #00A865;
-    --green-dim: #003D27;
-    --bg: #080E0A;
-    --bg2: #0E1710;
-    --bg3: #142019;
-    --text: #F0F7F2;
-    --muted: #7A9A85;
-    --border: rgba(0,197,122,0.15);
-    --accent: #FFD166;
+    /* Color Palette derived from the image */
+    --bg-app: #E4E2F1;
+    --surface-dark: #32304C;
+    --surface-darker: #26243D;
+    --surface-light: #F4F3F8;
+    --surface-white: #FFFFFF;
+    
+    --accent-orange: #FF9431;
+    --accent-yellow: #FFC259;
+    
+    --text-main: #FFFFFF;
+    --text-muted: #8E8BBA;
+    --text-dark: #32304C;
+    --text-dark-muted: #79769B;
+    
+    --border-radius-lg: 24px;
+    --border-radius-md: 16px;
+    --border-radius-sm: 8px;
+    
+    --shadow-soft: 0 10px 30px rgba(38, 36, 61, 0.1);
+    --shadow-floating: 0 20px 40px rgba(38, 36, 61, 0.15);
   }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
   body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    overflow-x: hidden;
-    cursor: none;
-  }
-
-  /* CUSTOM CURSOR */
-  .cursor {
-    width: 12px; height: 12px;
-    background: var(--green);
-    border-radius: 50%;
-    position: fixed; top: 0; left: 0;
-    pointer-events: none;
-    z-index: 9999;
-    transition: transform 0.15s ease, width 0.2s, height 0.2s, background 0.2s;
-    transform: translate(-50%, -50%);
-  }
-  .cursor-ring {
-    width: 36px; height: 36px;
-    border: 1px solid rgba(0,197,122,0.5);
-    border-radius: 50%;
-    position: fixed; top: 0; left: 0;
-    pointer-events: none;
-    z-index: 9998;
-    transition: transform 0.08s ease, width 0.2s, height 0.2s;
-    transform: translate(-50%, -50%);
-  }
-  a, button { cursor: none; }
-
-  /* NOISE TEXTURE OVERLAY */
-  body::before {
-    content: '';
-    position: fixed; inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-    pointer-events: none; z-index: 1000; opacity: 0.4;
-  }
-
-  /* NAV */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 1.25rem 3rem;
-    border-bottom: 1px solid var(--border);
-    background: rgba(8,14,10,0.85);
-    backdrop-filter: blur(16px);
-  }
-  .logo {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800; font-size: 1.4rem;
-    color: var(--text); text-decoration: none;
-    letter-spacing: -0.03em;
-  }
-  .logo span { color: var(--green); }
-  .nav-links { display: flex; gap: 2rem; align-items: center; }
-  .nav-links a {
-    text-decoration: none; color: var(--muted);
-    font-size: 0.875rem; font-weight: 400;
-    transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--text); }
-  .nav-cta {
-    background: var(--green);
-    color: #080E0A !important;
-    font-weight: 500 !important;
-    padding: 0.5rem 1.25rem;
-    border-radius: 100px;
-    transition: background 0.2s, transform 0.15s !important;
-  }
-  .nav-cta:hover { background: var(--green-dark) !important; transform: scale(1.03) !important; color: #080E0A !important; }
-
-  /* HERO */
-  .hero {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-app);
+    color: var(--text-dark);
     min-height: 100vh;
-    display: flex; flex-direction: column;
+    display: flex;
     justify-content: center;
-    padding: 8rem 3rem 4rem;
-    position: relative;
-    overflow: hidden;
-  }
-  .hero-grid-bg {
-    position: absolute; inset: 0;
-    background-image:
-      linear-gradient(rgba(0,197,122,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,197,122,0.04) 1px, transparent 1px);
-    background-size: 60px 60px;
-    mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 30%, transparent 100%);
-  }
-  .hero-glow {
-    position: absolute;
-    width: 700px; height: 700px;
-    background: radial-gradient(circle, rgba(0,197,122,0.12) 0%, transparent 70%);
-    top: 50%; left: 50%;
-    transform: translate(-50%, -55%);
-    pointer-events: none;
-  }
-  .hero-tag {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    background: rgba(0,197,122,0.1);
-    border: 1px solid rgba(0,197,122,0.25);
-    padding: 0.35rem 1rem;
-    border-radius: 100px;
-    font-size: 0.78rem; font-weight: 500;
-    color: var(--green);
-    margin-bottom: 2rem;
-    width: fit-content;
-    animation: fadeUp 0.6s ease both;
-  }
-  .hero-tag::before {
-    content: '';
-    width: 6px; height: 6px;
-    background: var(--green);
-    border-radius: 50%;
-    animation: pulse 2s infinite;
-  }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(0.7); }
-  }
-  .hero h1 {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: clamp(3rem, 8vw, 7rem);
-    line-height: 0.95;
-    letter-spacing: -0.04em;
-    margin-bottom: 1.5rem;
-    position: relative;
-    animation: fadeUp 0.7s 0.1s ease both;
-  }
-  .hero h1 em {
-    font-style: normal;
-    color: var(--green);
-    position: relative;
-  }
-  .hero h1 em::after {
-    content: '';
-    position: absolute;
-    bottom: 4px; left: 0; right: 0;
-    height: 3px;
-    background: var(--green);
-    opacity: 0.3;
-    border-radius: 2px;
-  }
-  .hero-sub {
-    font-size: 1.15rem;
-    color: var(--muted);
-    max-width: 480px;
-    line-height: 1.7;
-    margin-bottom: 2.5rem;
-    font-weight: 300;
-    animation: fadeUp 0.7s 0.2s ease both;
-  }
-  .hero-actions {
-    display: flex; gap: 1rem; align-items: center;
-    flex-wrap: wrap;
-    animation: fadeUp 0.7s 0.3s ease both;
-  }
-  .btn-primary {
-    background: var(--green);
-    color: #080E0A;
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 500; font-size: 0.95rem;
-    padding: 0.85rem 2rem;
-    border-radius: 100px;
-    border: none;
-    text-decoration: none;
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    transition: transform 0.15s, background 0.2s, box-shadow 0.2s;
-    box-shadow: 0 0 0 0 rgba(0,197,122,0.4);
-  }
-  .btn-primary:hover {
-    background: var(--green-dark);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(0,197,122,0.25);
-  }
-  .btn-ghost {
-    color: var(--muted);
-    font-size: 0.9rem;
-    text-decoration: none;
-    display: inline-flex; align-items: center; gap: 0.4rem;
-    transition: color 0.2s;
-    border: none; background: none;
-    font-family: 'DM Sans', sans-serif;
-  }
-  .btn-ghost:hover { color: var(--text); }
-  .hero-stats {
-    display: flex; gap: 3rem;
-    margin-top: 4rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--border);
-    animation: fadeUp 0.7s 0.4s ease both;
-  }
-  .stat-num {
-    font-family: 'Syne', sans-serif;
-    font-size: 2rem; font-weight: 700;
-    color: var(--text);
-    letter-spacing: -0.03em;
-  }
-  .stat-num span { color: var(--green); }
-  .stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
+    align-items: center;
+    padding: 2rem;
   }
 
-  /* BUNDLES SECTION */
-  .section { padding: 6rem 3rem; }
-  .section-eyebrow {
-    font-size: 0.75rem; font-weight: 500; letter-spacing: 0.12em;
-    text-transform: uppercase; color: var(--green);
-    margin-bottom: 0.75rem;
-  }
-  .section-title {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(2rem, 4vw, 3.2rem);
-    font-weight: 700; letter-spacing: -0.03em;
-    margin-bottom: 1rem;
-  }
-  .section-sub {
-    color: var(--muted); font-size: 1rem;
-    max-width: 520px; line-height: 1.7;
-    margin-bottom: 3rem; font-weight: 300;
-  }
-
-  /* BUNDLE CARDS */
-  .bundles-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1.25rem;
-  }
-  .bundle-card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 1.75rem;
-    position: relative;
-    overflow: hidden;
-    transition: border-color 0.25s, transform 0.2s, box-shadow 0.25s;
-  }
-  .bundle-card::before {
-    content: '';
-    position: absolute; top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--green), transparent);
-    opacity: 0;
-    transition: opacity 0.25s;
-  }
-  .bundle-card:hover {
-    border-color: rgba(0,197,122,0.35);
-    transform: translateY(-4px);
-    box-shadow: 0 16px 40px rgba(0,0,0,0.4);
-  }
-  .bundle-card:hover::before { opacity: 1; }
-  .bundle-card.featured {
-    border-color: rgba(0,197,122,0.5);
-    background: linear-gradient(135deg, var(--bg2), var(--green-dim));
-  }
-  .bundle-card.featured::before { opacity: 1; }
-  .popular-tag {
-    position: absolute; top: 1rem; right: 1rem;
-    background: var(--green);
-    color: #080E0A;
-    font-size: 0.7rem; font-weight: 600;
-    padding: 0.25rem 0.6rem;
-    border-radius: 100px;
-    letter-spacing: 0.05em;
-  }
-  .network-badge {
-    display: inline-flex; align-items: center; gap: 0.35rem;
-    background: rgba(255,255,255,0.06);
-    padding: 0.3rem 0.7rem;
-    border-radius: 100px;
-    font-size: 0.75rem; color: var(--muted);
-    margin-bottom: 1.25rem;
-  }
-  .bundle-data {
-    font-family: 'Syne', sans-serif;
-    font-size: 2.8rem; font-weight: 800;
-    letter-spacing: -0.04em;
-    line-height: 1; margin-bottom: 0.25rem;
-  }
-  .bundle-data span { font-size: 1.2rem; font-weight: 500; color: var(--muted); }
-  .bundle-validity { font-size: 0.8rem; color: var(--muted); margin-bottom: 1.25rem; }
-  .bundle-price {
-    font-family: 'Syne', sans-serif;
-    font-size: 1.4rem; font-weight: 700;
-    color: var(--green); margin-bottom: 1.25rem;
-  }
-  .bundle-price small { font-size: 0.85rem; font-weight: 400; color: var(--muted); font-family: 'DM Sans', sans-serif; }
-  .bundle-btn {
+  /* MAIN APP CONTAINER */
+  .app-container {
     width: 100%;
-    background: rgba(0,197,122,0.1);
-    border: 1px solid rgba(0,197,122,0.25);
-    color: var(--green);
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 500; font-size: 0.875rem;
-    padding: 0.7rem;
-    border-radius: 12px;
-    transition: background 0.2s, border-color 0.2s;
-  }
-  .bundle-btn:hover { background: rgba(0,197,122,0.2); border-color: rgba(0,197,122,0.4); }
-  .bundle-card.featured .bundle-btn {
-    background: var(--green);
-    border-color: var(--green);
-    color: #080E0A;
-  }
-  .bundle-card.featured .bundle-btn:hover { background: var(--green-dark); }
-
-  /* HOW IT WORKS */
-  .how-section { padding: 6rem 3rem; background: var(--bg2); }
-  .steps-grid {
+    max-width: 1200px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    overflow: hidden;
-    margin-top: 3rem;
+    grid-template-columns: 280px 1fr 300px;
+    gap: 2rem;
   }
-  .step {
-    background: var(--bg2);
-    padding: 2.5rem 2rem;
+
+  /* SIDEBAR (Left Panel) */
+  .sidebar {
+    background: var(--surface-light);
+    border-radius: var(--border-radius-lg);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .logo-block {
+    width: 48px;
+    height: 48px;
+    background: var(--surface-dark);
+    border-radius: var(--border-radius-md);
     position: relative;
   }
-  .step-num {
-    font-family: 'Syne', sans-serif;
-    font-size: 4rem; font-weight: 800;
-    color: rgba(0,197,122,0.08);
-    line-height: 1; margin-bottom: 1rem;
-    letter-spacing: -0.05em;
+  .logo-block::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 20px; height: 20px;
+    background: var(--accent-orange);
+    border-radius: 4px;
   }
-  .step-icon {
-    font-size: 1.5rem; margin-bottom: 1rem;
-  }
-  .step h3 {
-    font-family: 'Syne', sans-serif;
-    font-weight: 600; font-size: 1.1rem;
-    margin-bottom: 0.5rem;
-  }
-  .step p { font-size: 0.875rem; color: var(--muted); line-height: 1.6; }
 
-  /* WHY US */
-  .why-grid {
+  .nav-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    flex-grow: 1;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .nav-item.active {
+    background: var(--surface-dark);
+    color: var(--text-main);
+  }
+  
+  .nav-item:not(.active):hover {
+    background: rgba(50, 48, 76, 0.05);
+  }
+
+  .nav-icon {
+    width: 20px;
+    height: 6px;
+    background: var(--accent-orange);
+    border-radius: 10px;
+  }
+  .nav-item:not(.active) .nav-icon { background: var(--text-muted); }
+
+  .nav-line {
+    width: 60px;
+    height: 6px;
+    background: var(--text-muted);
+    border-radius: 10px;
+    opacity: 0.5;
+  }
+  .nav-item.active .nav-line { background: var(--surface-white); opacity: 1; }
+
+  /* MAIN DASHBOARD (Center Panel) */
+  .main-dashboard {
+    background: var(--surface-dark);
+    border-radius: 32px;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    box-shadow: var(--shadow-floating);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .search-bar {
+    width: 120px;
+    height: 12px;
+    background: var(--surface-white);
+    border-radius: 10px;
+    opacity: 0.8;
+  }
+
+  .header-action {
+    width: 80px;
+    height: 24px;
+    background: var(--accent-orange);
+    border-radius: 12px;
+  }
+
+  /* CHART AREA */
+  .chart-container {
+    height: 200px;
+    background: var(--surface-darker);
+    border-radius: var(--border-radius-lg);
+    position: relative;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .chart-svg {
+    position: absolute;
+    bottom: 2rem;
+    left: 0;
+    width: 100%;
+    height: 60%;
+  }
+
+  .chart-points {
+    position: absolute;
+    bottom: 3.5rem;
+    left: 20%;
+    width: 12px; height: 12px;
+    background: var(--accent-yellow);
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px rgba(255, 194, 89, 0.3);
+  }
+  .chart-points:nth-child(2) { left: 45%; bottom: 6rem; background: var(--surface-white); box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.2); }
+  .chart-points:nth-child(3) { left: 75%; bottom: 4.5rem; }
+
+  .chart-axis {
+    display: flex;
+    justify-content: space-between;
+    border-top: 2px dashed rgba(142, 139, 186, 0.3);
+    padding-top: 1rem;
+    margin-top: 2rem;
+  }
+
+  .axis-dot {
+    width: 8px; height: 8px;
+    background: var(--text-muted);
+    border-radius: 50%;
+  }
+
+  /* BOTTOM CARDS GRID */
+  .cards-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1.25rem;
-    margin-top: 3rem;
+    gap: 1.5rem;
   }
-  .why-card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 1.75rem;
-    transition: border-color 0.2s;
-  }
-  .why-card:hover { border-color: rgba(0,197,122,0.3); }
-  .why-icon {
-    width: 44px; height: 44px;
-    background: rgba(0,197,122,0.1);
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
-  }
-  .why-card h3 {
-    font-family: 'Syne', sans-serif;
-    font-weight: 600; font-size: 1rem;
-    margin-bottom: 0.4rem;
-  }
-  .why-card p { font-size: 0.875rem; color: var(--muted); line-height: 1.6; }
 
-  /* TESTIMONIALS */
-  .testimonials-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.25rem;
-    margin-top: 3rem;
+  .data-card {
+    background: var(--surface-white);
+    border-radius: var(--border-radius-lg);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
   }
-  .testi-card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 1.75rem;
+
+  .card-header {
+    width: 60%;
+    height: 10px;
+    background: var(--text-dark-muted);
+    border-radius: 10px;
+    opacity: 0.3;
+    margin-bottom: 0.5rem;
   }
-  .stars { color: var(--accent); font-size: 0.85rem; margin-bottom: 1rem; letter-spacing: 2px; }
-  .testi-text { font-size: 0.95rem; line-height: 1.7; color: var(--text); margin-bottom: 1.25rem; font-style: italic; font-weight: 300; }
-  .testi-author { display: flex; align-items: center; gap: 0.75rem; }
-  .avatar {
-    width: 36px; height: 36px;
+
+  .list-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+  }
+  .list-item:last-child { border: none; padding-bottom: 0; }
+
+  .checkbox {
+    width: 24px; height: 24px;
+    border: 2px solid var(--text-muted);
+    border-radius: 6px;
+    opacity: 0.5;
+  }
+  .checkbox.checked {
+    background: var(--surface-dark);
+    border-color: var(--surface-dark);
+  }
+
+  .list-lines {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex-grow: 1;
+  }
+  .line-long { height: 6px; background: var(--text-dark); border-radius: 4px; width: 80%; }
+  .line-short { height: 6px; background: var(--text-muted); border-radius: 4px; width: 40%; opacity: 0.5; }
+
+  /* RIGHT PANEL (Analytics Widget) */
+  .right-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .analytics-widget {
+    background: var(--surface-dark);
+    border-radius: var(--border-radius-lg);
+    padding: 2rem;
+    box-shadow: var(--shadow-floating);
+  }
+
+  .widget-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+  }
+  
+  .pie-chart {
+    width: 60px; height: 60px;
     border-radius: 50%;
-    background: var(--green-dim);
-    border: 1.5px solid rgba(0,197,122,0.3);
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Syne', sans-serif;
-    font-weight: 700; font-size: 0.75rem; color: var(--green);
-  }
-  .testi-name { font-weight: 500; font-size: 0.875rem; }
-  .testi-uni { font-size: 0.75rem; color: var(--muted); }
-
-  /* CTA SECTION */
-  .cta-section {
-    padding: 6rem 3rem;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .cta-section::before {
-    content: '';
-    position: absolute;
-    width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(0,197,122,0.1) 0%, transparent 70%);
-    top: 50%; left: 50%; transform: translate(-50%, -50%);
-    pointer-events: none;
-  }
-  .cta-section h2 {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(2.2rem, 5vw, 4rem);
-    font-weight: 800;
-    letter-spacing: -0.04em;
-    margin-bottom: 1rem;
-    position: relative;
-  }
-  .cta-section p {
-    color: var(--muted); font-size: 1rem;
-    margin-bottom: 2.5rem; font-weight: 300;
-    max-width: 460px; margin-left: auto; margin-right: auto;
-    line-height: 1.7;
-  }
-  .whatsapp-btn {
-    display: inline-flex; align-items: center; gap: 0.6rem;
-    background: #25D366;
-    color: white;
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 500; font-size: 1rem;
-    padding: 1rem 2.25rem;
-    border-radius: 100px;
-    border: none;
-    text-decoration: none;
-    transition: transform 0.15s, box-shadow 0.2s;
-    box-shadow: 0 0 0 0 rgba(37,211,102,0.4);
-    margin-bottom: 2.5rem;
-  }
-  .whatsapp-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(37,211,102,0.3);
-  }
-  .wa-icon { width: 20px; height: 20px; }
-
-  /* FOOTER */
-  footer {
-    padding: 2.5rem 3rem;
-    border-top: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: space-between;
-    flex-wrap: wrap; gap: 1rem;
-  }
-  footer .logo { font-size: 1.1rem; }
-  .footer-links { display: flex; gap: 1.5rem; }
-  .footer-links a { font-size: 0.8rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
-  .footer-links a:hover { color: var(--text); }
-  .footer-copy { font-size: 0.8rem; color: var(--muted); }
-
-  /* SCROLL REVEAL */
-  .reveal {
-    opacity: 0;
-    transform: translateY(32px);
-    transition: opacity 0.65s ease, transform 0.65s ease;
-  }
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
+    background: conic-gradient(var(--accent-orange) 0% 40%, var(--surface-white) 40% 75%, var(--text-muted) 75% 100%);
   }
 
-  /* TICKER */
-  .ticker-wrap {
-    overflow: hidden;
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    padding: 0.875rem 0;
-    background: var(--bg2);
+  .bar-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    height: 60px;
   }
-  .ticker {
-    display: flex; gap: 0;
-    animation: ticker 25s linear infinite;
-    white-space: nowrap;
-  }
-  .ticker-item {
-    font-size: 0.8rem; font-weight: 500;
-    color: var(--muted);
-    padding: 0 2.5rem;
-    display: flex; align-items: center; gap: 0.5rem;
-  }
-  .ticker-dot { width: 5px; height: 5px; background: var(--green); border-radius: 50%; }
-  @keyframes ticker {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
+  .bar { width: 12px; background: var(--accent-orange); border-radius: 4px 4px 0 0; }
+  .bar:nth-child(2) { height: 40%; background: var(--surface-white); }
+  .bar:nth-child(3) { height: 80%; background: var(--text-muted); }
+  .bar:nth-child(4) { height: 100%; }
+
+  .secondary-widget {
+    background: var(--surface-darker);
+    border-radius: var(--border-radius-lg);
+    padding: 1.5rem;
+    flex-grow: 1;
   }
 
-  /* MOBILE */
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .app-container { grid-template-columns: 80px 1fr; }
+    .nav-line { display: none; }
+    .nav-item { justify-content: center; }
+    .right-panel { display: none; }
+  }
+
   @media (max-width: 768px) {
-    nav { padding: 1rem 1.25rem; }
-    .nav-links { display: none; }
-    .hero { padding: 7rem 1.25rem 3rem; }
-    .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
-    .section, .cta-section { padding: 4rem 1.25rem; }
-    .how-section { padding: 4rem 1.25rem; }
-    .why-grid { grid-template-columns: 1fr; }
-    footer { padding: 2rem 1.25rem; flex-direction: column; text-align: center; }
-    .footer-links { justify-content: center; }
+    .app-container { grid-template-columns: 1fr; }
+    .sidebar { flex-direction: row; justify-content: center; padding: 1rem; }
+    .nav-menu { flex-direction: row; justify-content: center; }
+    .cards-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
 <body>
 
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
-
-<!-- NAV -->
-<nav>
-  <a href="#" class="logo">Uni<span>Link</span> <span style="color:var(--muted);font-weight:400;">GH</span></a>
-  <div class="nav-links">
-    <a href="#bundles">Bundles</a>
-    <a href="#how">How it works</a>
-    <a href="#why">Why UniLink</a>
-    <a href="https://wa.me/233000000000" class="nav-cta">Buy Data →</a>
-  </div>
-</nav>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-grid-bg"></div>
-  <div class="hero-glow"></div>
-
-  <div class="hero-tag">🎓 Built for Ghanaian students</div>
-
-  <h1>Stay<br><em>connected</em>,<br>spend less.</h1>
-
-  <p class="hero-sub">Affordable data bundles for uni students across Ghana. MTN, Telecel & AirtelTigo — delivered instantly via WhatsApp.</p>
-
-  <div class="hero-actions">
-    <a href="https://wa.me/233000000000" class="btn-primary">
-      <svg class="wa-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-      Order on WhatsApp
-    </a>
-    <a href="#bundles" class="btn-ghost">View bundles ↓</a>
-  </div>
-
-  <div class="hero-stats">
-    <div>
-      <div class="stat-num">5K<span>+</span></div>
-      <div class="stat-label">Students served</div>
+<div class="app-container">
+  
+  <!-- LEFT SIDEBAR -->
+  <aside class="sidebar">
+    <div class="logo-block"></div>
+    <div class="nav-menu">
+      <div class="nav-item active">
+        <div class="nav-icon"></div>
+        <div class="nav-line"></div>
+      </div>
+      <div class="nav-item">
+        <div class="nav-icon"></div>
+        <div class="nav-line"></div>
+      </div>
+      <div class="nav-item">
+        <div class="nav-icon"></div>
+        <div class="nav-line"></div>
+      </div>
+      <div class="nav-item">
+        <div class="nav-icon"></div>
+        <div class="nav-line"></div>
+      </div>
     </div>
-    <div>
-      <div class="stat-num">3<span> networks</span></div>
-      <div class="stat-label">MTN · Telecel · AirtelTigo</div>
-    </div>
-    <div>
-      <div class="stat-num">&lt;2<span>min</span></div>
-      <div class="stat-label">Average delivery</div>
-    </div>
-  </div>
-</section>
+  </aside>
 
-<!-- TICKER -->
-<div class="ticker-wrap">
-  <div class="ticker">
-    <div class="ticker-item"><span class="ticker-dot"></span> MTN Bundles</div>
-    <div class="ticker-item"><span class="ticker-dot"></span> Telecel Bundles</div>
-    <div class="ticker-item"><span class="ticker-dot"></span> AirtelTigo Bundles</div>
-    <div class="ticker-item"><span class="ticker-dot"></span> Instant Delivery</div>
-    <div class="ticker-item"><span class="ticker-dot"></span> Student Prices</div>
-    <div class="ticker-item"><span class="ticker-dot"></span> 24/7 Service</div>
-    <div class="ticker-item"><span class="ticker-dot"></span> Referral Bonus</div>
-    <div class="ticker-item"><span class="ticker-dot"></span> Campus Trusted</div>
-    <!-- repeat for seamless loop -->
-    <div class="ticker-item"><span class="ticker-dot"></span> MTN Bundles</div>
-    <div class="ticker-item"><span class="ticker-dot"></span> Telecel Bundles</div>
-    <div class="ticker-item"><span class="ticker-dot"></span> AirtelTigo Bundles</div>
-    <div class="ticker-item"><span class="ticker-dot"></span> Instant Delivery</div>
-    <div class="ticker-item"><span class="ticker-dot"></span> Student Prices</div>
-    <div class="ticker-item"><span class="ticker-dot"></span> 24/7 Service</div>
-    <div class="ticker-item"><span class="ticker-dot"></span> Referral Bonus</div>
-    <div class="ticker-item"><span class="ticker-dot"></span> Campus Trusted</div>
-  </div>
+  <!-- MAIN DASHBOARD -->
+  <main class="main-dashboard">
+    <div class="dashboard-header">
+      <div class="search-bar"></div>
+      <div style="display: flex; gap: 10px;">
+        <div class="search-bar" style="width: 40px; border-radius: 20px;"></div>
+        <div class="header-action"></div>
+      </div>
+    </div>
+
+    <!-- Big Chart Area -->
+    <div class="chart-container">
+      <!-- Decorative SVG Wave Chart -->
+      <svg class="chart-svg" preserveAspectRatio="none" viewBox="0 0 100 100">
+        <path d="M0,80 Q10,20 30,50 T70,30 T100,60 L100,100 L0,100 Z" fill="rgba(255, 148, 49, 0.1)" stroke="var(--accent-orange)" stroke-width="2"/>
+      </svg>
+      <div class="chart-points"></div>
+      <div class="chart-points"></div>
+      <div class="chart-points"></div>
+
+      <div class="chart-axis">
+        <div class="axis-dot"></div><div class="axis-dot"></div>
+        <div class="axis-dot"></div><div class="axis-dot"></div>
+        <div class="axis-dot"></div><div class="axis-dot"></div>
+        <div class="axis-dot"></div><div class="axis-dot"></div>
+      </div>
+    </div>
+
+    <div style="display: flex; justify-content: center; gap: 10px; margin-top: -10px;">
+        <div class="axis-dot" style="background: var(--surface-white); width: 24px; border-radius: 12px;"></div>
+        <div class="axis-dot"></div>
+        <div class="axis-dot"></div>
+    </div>
+
+    <!-- Bottom Light Cards -->
+    <div class="cards-grid">
+      <!-- Card 1 -->
+      <div class="data-card">
+        <div class="card-header"></div>
+        <div class="list-item">
+          <div class="checkbox"></div>
+          <div class="list-lines">
+            <div class="line-long"></div><div class="line-short"></div>
+          </div>
+        </div>
+        <div class="list-item">
+          <div class="checkbox checked"></div>
+          <div class="list-lines">
+            <div class="line-long"></div><div class="line-short"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="data-card">
+        <div class="card-header"></div>
+        <div class="list-item">
+          <div class="checkbox checked"></div>
+          <div class="list-lines">
+            <div class="line-long"></div><div class="line-short"></div>
+          </div>
+        </div>
+        <div class="list-item">
+          <div class="checkbox"></div>
+          <div class="list-lines">
+            <div class="line-long"></div><div class="line-short"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- RIGHT PANEL -->
+  <aside class="right-panel">
+    <!-- Top Analytics Widget -->
+    <div class="analytics-widget">
+      <div class="widget-header">
+        <div class="pie-chart"></div>
+        <div class="bar-chart">
+          <div class="bar" style="height: 60%;"></div>
+          <div class="bar" style="height: 80%;"></div>
+          <div class="bar" style="height: 40%;"></div>
+          <div class="bar" style="height: 100%;"></div>
+        </div>
+      </div>
+      <div class="list-lines" style="margin-top: 20px;">
+        <div class="line-long" style="background: var(--surface-white); width: 100%;"></div>
+        <div class="line-short" style="background: var(--text-muted); width: 60%;"></div>
+      </div>
+    </div>
+
+    <!-- Bottom Secondary Widget -->
+    <div class="secondary-widget">
+       <div class="list-lines" style="gap: 12px;">
+         <div class="line-long" style="background: var(--text-muted); width: 40%;"></div>
+         <div class="line-long" style="background: var(--surface-white); width: 90%; height: 8px;"></div>
+         <div class="line-long" style="background: var(--surface-white); width: 70%; height: 8px;"></div>
+       </div>
+       
+       <div style="margin-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; display: flex; align-items: center; gap: 15px;">
+         <div style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--accent-orange); display: flex; justify-content: center; align-items: center;">
+            <div style="width: 30px; height: 30px; border-radius: 50%; background: var(--surface-dark);"></div>
+         </div>
+         <div class="list-lines">
+            <div class="line-long" style="background: var(--surface-white);"></div>
+            <div class="line-short" style="background: var(--accent-orange);"></div>
+         </div>
+       </div>
+    </div>
+  </aside>
+
 </div>
 
-<!-- BUNDLES -->
-<section class="section" id="bundles">
-  <div class="section-eyebrow reveal">Our bundles</div>
-  <h2 class="section-title reveal">Data that fits your budget</h2>
-  <p class="section-sub reveal">All networks, student prices. Delivered straight to your number in under 2 minutes.</p>
-
-  <div class="bundles-grid reveal">
-    <div class="bundle-card">
-      <div class="network-badge">📶 MTN</div>
-      <div class="bundle-data">1<span>GB</span></div>
-      <div class="bundle-validity">Valid for 1 day</div>
-      <div class="bundle-price">GH₵ 2.50 <small>/ bundle</small></div>
-      <button class="bundle-btn" onclick="window.open('https://wa.me/233000000000?text=I want 1GB MTN bundle','_blank')">Order Now</button>
-    </div>
-    <div class="bundle-card">
-      <div class="network-badge">📶 MTN</div>
-      <div class="bundle-data">3<span>GB</span></div>
-      <div class="bundle-validity">Valid for 3 days</div>
-      <div class="bundle-price">GH₵ 6.00 <small>/ bundle</small></div>
-      <button class="bundle-btn" onclick="window.open('https://wa.me/233000000000?text=I want 3GB MTN bundle','_blank')">Order Now</button>
-    </div>
-    <div class="bundle-card featured">
-      <div class="popular-tag">POPULAR</div>
-      <div class="network-badge">📶 MTN</div>
-      <div class="bundle-data">10<span>GB</span></div>
-      <div class="bundle-validity">Valid for 30 days</div>
-      <div class="bundle-price">GH₵ 18.00 <small>/ bundle</small></div>
-      <button class="bundle-btn" onclick="window.open('https://wa.me/233000000000?text=I want 10GB MTN bundle','_blank')">Order Now</button>
-    </div>
-    <div class="bundle-card">
-      <div class="network-badge">📶 Telecel</div>
-      <div class="bundle-data">5<span>GB</span></div>
-      <div class="bundle-validity">Valid for 7 days</div>
-      <div class="bundle-price">GH₵ 10.00 <small>/ bundle</small></div>
-      <button class="bundle-btn" onclick="window.open('https://wa.me/233000000000?text=I want 5GB Telecel bundle','_blank')">Order Now</button>
-    </div>
-    <div class="bundle-card">
-      <div class="network-badge">📶 AirtelTigo</div>
-      <div class="bundle-data">5<span>GB</span></div>
-      <div class="bundle-validity">Valid for 7 days</div>
-      <div class="bundle-price">GH₵ 9.50 <small>/ bundle</small></div>
-      <button class="bundle-btn" onclick="window.open('https://wa.me/233000000000?text=I want 5GB AirtelTigo bundle','_blank')">Order Now</button>
-    </div>
-    <div class="bundle-card">
-      <div class="network-badge">📶 MTN</div>
-      <div class="bundle-data">20<span>GB</span></div>
-      <div class="bundle-validity">Valid for 30 days</div>
-      <div class="bundle-price">GH₵ 32.00 <small>/ bundle</small></div>
-      <button class="bundle-btn" onclick="window.open('https://wa.me/233000000000?text=I want 20GB MTN bundle','_blank')">Order Now</button>
-    </div>
-  </div>
-</section>
-
-<!-- HOW IT WORKS -->
-<section class="how-section" id="how">
-  <div style="max-width: 900px; margin: 0 auto;">
-    <div class="section-eyebrow reveal">How it works</div>
-    <h2 class="section-title reveal">3 steps to getting connected</h2>
-
-    <div class="steps-grid reveal">
-      <div class="step">
-        <div class="step-num">01</div>
-        <div class="step-icon">💬</div>
-        <h3>Message us</h3>
-        <p>Send us a WhatsApp message with the bundle you want and your number. No app to download.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">02</div>
-        <div class="step-icon">💳</div>
-        <h3>Pay with MoMo</h3>
-        <p>Pay instantly via MTN Mobile Money. Fast, safe, and familiar — the Ghanaian way.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">03</div>
-        <div class="step-icon">⚡</div>
-        <h3>Receive instantly</h3>
-        <p>Your data bundle lands in under 2 minutes. Back to streaming, studying, scrolling.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- WHY UNILINK -->
-<section class="section" id="why">
-  <div class="section-eyebrow reveal">Why UniLink GH</div>
-  <h2 class="section-title reveal">Made different, on purpose</h2>
-  <p class="section-sub reveal">We're not a generic reseller. We're built specifically for students — every decision we make reflects that.</p>
-
-  <div class="why-grid reveal">
-    <div class="why-card">
-      <div class="why-icon">🎓</div>
-      <h3>Student-first pricing</h3>
-      <p>We keep our margins lean so your budget goes further. Micro bundles available for when funds are tight — no judgment.</p>
-    </div>
-    <div class="why-card">
-      <div class="why-icon">⚡</div>
-      <h3>Instant delivery</h3>
-      <p>No waiting. Data arrives in under 2 minutes. Because you can't afford to be offline in the middle of a lecture or exam.</p>
-    </div>
-    <div class="why-card">
-      <div class="why-icon">🤝</div>
-      <h3>Campus-trusted</h3>
-      <p>Recommended by students, for students. Our ambassadors are your coursemates — people you actually know and trust.</p>
-    </div>
-    <div class="why-card">
-      <div class="why-icon">🎁</div>
-      <h3>Referral rewards</h3>
-      <p>Refer a friend and earn free data. The more you spread the word, the more you save. Simple and fair.</p>
-    </div>
-  </div>
-</section>
-
-<!-- TESTIMONIALS -->
-<section class="section" style="padding-top: 0;">
-  <div class="section-eyebrow reveal">Student love</div>
-  <h2 class="section-title reveal">What students are saying</h2>
-
-  <div class="testimonials-grid reveal">
-    <div class="testi-card">
-      <div class="stars">★★★★★</div>
-      <p class="testi-text">"Honestly the fastest data service I've ever used. I pay with MoMo and it's there before I finish typing. My whole floor uses UniLink now."</p>
-      <div class="testi-author">
-        <div class="avatar">AK</div>
-        <div>
-          <div class="testi-name">Abena K.</div>
-          <div class="testi-uni">UG Legon, Level 200</div>
-        </div>
-      </div>
-    </div>
-    <div class="testi-card">
-      <div class="stars">★★★★★</div>
-      <p class="testi-text">"The 10GB monthly bundle is a student's best friend. Can't believe how cheap it is compared to what I was buying before."</p>
-      <div class="testi-author">
-        <div class="avatar">KO</div>
-        <div>
-          <div class="testi-name">Kwame O.</div>
-          <div class="testi-uni">KNUST, Engineering</div>
-        </div>
-      </div>
-    </div>
-    <div class="testi-card">
-      <div class="stars">★★★★★</div>
-      <p class="testi-text">"I referred my roommates and got free data. This referral thing is actually real — I haven't paid for data in 3 weeks."</p>
-      <div class="testi-author">
-        <div class="avatar">EA</div>
-        <div>
-          <div class="testi-name">Efua A.</div>
-          <div class="testi-uni">Ashesi University, Fresher</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CTA -->
-<section class="cta-section">
-  <h2 class="reveal">Ready to stay<br><em style="color:var(--green);font-style:normal;">connected?</em></h2>
-  <p class="reveal">Join thousands of students getting better data at better prices. One message is all it takes.</p>
-  <div class="reveal">
-    <a href="https://wa.me/233000000000" class="whatsapp-btn">
-      <svg class="wa-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-      Chat on WhatsApp
-    </a>
-  </div>
-  <div class="reveal" style="color: var(--muted); font-size: 0.8rem;">
-    Or call/text your campus ambassador · Available 24/7
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <a href="#" class="logo">Uni<span>Link</span> GH</a>
-  <div class="footer-links">
-    <a href="#bundles">Bundles</a>
-    <a href="#how">How it works</a>
-    <a href="https://wa.me/233000000000">WhatsApp</a>
-    <a href="#">Become an ambassador</a>
-  </div>
-  <div class="footer-copy">© 2025 UniLink GH. Built for students.</div>
-</footer>
-
-<script>
-  // Custom cursor
-  const cursor = document.getElementById('cursor');
-  const ring = document.getElementById('cursorRing');
-  let mx = 0, my = 0, rx = 0, ry = 0;
-
-  document.addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
-    cursor.style.transform = `translate(${mx}px, ${my}px) translate(-50%, -50%)`;
-  });
-
-  function animRing() {
-    rx += (mx - rx) * 0.12;
-    ry += (my - ry) *.12;
-    ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
-    requestAnimationFrame(animRing);
-  }
-  animRing();
-
-  document.querySelectorAll('a, button').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      cursor.style.transform += ' scale(1.5)';
-      cursor.style.background = '#fff';
-    });
-    el.addEventListener('mouseleave', () => {
-      cursor.style.background = 'var(--green)';
-    });
-  });
-
-  // Scroll reveal
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 80);
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
-  reveals.forEach(el => observer.observe(el));
-</script>
 </body>
 </html>
