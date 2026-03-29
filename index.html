@@ -1,460 +1,319 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard | Purple & Orange Theme</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  :root {
-    /* Color Palette derived from the image */
-    --bg-app: #E4E2F1;
-    --surface-dark: #32304C;
-    --surface-darker: #26243D;
-    --surface-light: #F4F3F8;
-    --surface-white: #FFFFFF;
-    
-    --accent-orange: #FF9431;
-    --accent-yellow: #FFC259;
-    
-    --text-main: #FFFFFF;
-    --text-muted: #8E8BBA;
-    --text-dark: #32304C;
-    --text-dark-muted: #79769B;
-    
-    --border-radius-lg: 24px;
-    --border-radius-md: 16px;
-    --border-radius-sm: 8px;
-    
-    --shadow-soft: 0 10px 30px rgba(38, 36, 61, 0.1);
-    --shadow-floating: 0 20px 40px rgba(38, 36, 61, 0.15);
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniLink GH | The Student Bundle</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --purple-main: #32304C;
+            --purple-dark: #26243D;
+            --lavender: #E4E2F1;
+            --white: #FFFFFF;
+            --orange: #FF9431;
+            --text-muted: #8E8BBA;
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--lavender); overflow-x: hidden; color: var(--purple-main); }
 
-  body {
-    font-family: 'Inter', sans-serif;
-    background-color: var(--bg-app);
-    color: var(--text-dark);
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
-  }
+        /* Navigation */
+        nav {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            background: var(--purple-main); padding: 12px 25px; border-radius: 40px;
+            display: flex; gap: 30px; z-index: 1000; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        nav a { color: var(--text-muted); text-decoration: none; font-size: 12px; font-weight: 600; cursor: pointer; transition: var(--transition); }
+        nav a.active { color: var(--orange); }
 
-  /* MAIN APP CONTAINER */
-  .app-container {
-    width: 100%;
-    max-width: 1200px;
-    display: grid;
-    grid-template-columns: 280px 1fr 300px;
-    gap: 2rem;
-  }
+        .page { display: none; min-height: 100vh; width: 100%; animation: fadeIn 0.5s ease forwards; }
+        .page.active { display: flex; }
 
-  /* SIDEBAR (Left Panel) */
-  .sidebar {
-    background: var(--surface-light);
-    border-radius: var(--border-radius-lg);
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    box-shadow: var(--shadow-soft);
-  }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-  .logo-block {
-    width: 48px;
-    height: 48px;
-    background: var(--surface-dark);
-    border-radius: var(--border-radius-md);
-    position: relative;
-  }
-  .logo-block::after {
-    content: '';
-    position: absolute;
-    top: 50%; left: 50%; transform: translate(-50%, -50%);
-    width: 20px; height: 20px;
-    background: var(--accent-orange);
-    border-radius: 4px;
-  }
+        /* --- PAGE: HOME --- */
+        #home { flex-direction: row; }
+        .split-purple { flex: 1.2; background: var(--purple-main); display: flex; flex-direction: column; justify-content: center; padding: 60px; color: var(--white); }
+        .split-white { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 60px; gap: 20px; }
+        
+        .hero-tag { color: var(--orange); font-weight: 800; margin-bottom: 10px; }
+        .hero-title { font-size: 4rem; line-height: 1; margin-bottom: 20px; }
+        .btn-main { background: var(--orange); color: var(--white); padding: 18px 40px; border-radius: 12px; border: none; font-weight: 800; cursor: pointer; width: fit-content; transition: var(--transition); }
+        .btn-main:hover { transform: scale(1.05); box-shadow: 0 10px 20px rgba(255, 148, 49, 0.3); }
 
-  .nav-menu {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    flex-grow: 1;
-  }
+        .virtue-card { background: var(--white); padding: 25px; border-radius: 20px; box-shadow: 10px 10px 30px rgba(0,0,0,0.03); display: flex; align-items: center; gap: 15px; border: 1px solid rgba(0,0,0,0.05); transition: var(--transition); }
+        .virtue-card:hover { transform: translateX(10px); border-color: var(--orange); }
+        .virtue-icon { width: 40px; height: 40px; background: var(--lavender); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--orange); font-weight: 800; }
 
-  .nav-item {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem;
-    border-radius: var(--border-radius-md);
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  
-  .nav-item.active {
-    background: var(--surface-dark);
-    color: var(--text-main);
-  }
-  
-  .nav-item:not(.active):hover {
-    background: rgba(50, 48, 76, 0.05);
-  }
+        /* --- PAGE: DASHBOARD --- */
+        #dashboard { flex-direction: column; padding: 40px; gap: 30px; }
+        .dash-top { background: var(--purple-main); border-radius: 30px; padding: 40px; color: var(--white); display: flex; justify-content: space-between; align-items: center; }
+        .rank-box h2 { font-size: 3rem; color: var(--orange); }
+        
+        .network-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .net-card { background: var(--white); padding: 30px; border-radius: 25px; cursor: pointer; transition: var(--transition); position: relative; overflow: hidden; }
+        .net-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
+        .net-card h3 { font-size: 1.5rem; margin-bottom: 5px; }
+        .net-status { font-size: 12px; color: green; font-weight: 600; }
+        .net-phrase { font-size: 13px; color: var(--text-muted); margin-top: 15px; }
 
-  .nav-icon {
-    width: 20px;
-    height: 6px;
-    background: var(--accent-orange);
-    border-radius: 10px;
-  }
-  .nav-item:not(.active) .nav-icon { background: var(--text-muted); }
+        /* --- PAGE: BUNDLE --- */
+        #bundles { flex-direction: column; padding: 40px; gap: 30px; }
+        .bundle-header { background: var(--purple-main); padding: 40px; border-radius: 30px; color: white; text-align: center; }
+        .bundle-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+        .b-card { background: var(--white); padding: 25px; border-radius: 20px; display: flex; flex-direction: column; gap: 15px; }
+        .b-size { font-size: 2rem; font-weight: 800; color: var(--purple-main); }
+        .b-price { color: var(--orange); font-weight: 800; font-size: 1.2rem; }
+        .btn-sm { background: var(--purple-main); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: 600; cursor: pointer; }
 
-  .nav-line {
-    width: 60px;
-    height: 6px;
-    background: var(--text-muted);
-    border-radius: 10px;
-    opacity: 0.5;
-  }
-  .nav-item.active .nav-line { background: var(--surface-white); opacity: 1; }
+        /* --- PAGE: CHECKOUT --- */
+        #checkout { justify-content: center; align-items: center; padding: 40px; }
+        .checkout-card { background: var(--white); width: 100%; max-width: 500px; padding: 40px; border-radius: 30px; box-shadow: var(--shadow-floating); }
+        .summary-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px; }
+        .total-row { border-top: 1px solid #eee; margin-top: 15px; padding-top: 15px; font-weight: 800; font-size: 1.2rem; color: var(--orange); }
+        input { width: 100%; padding: 15px; margin-top: 10px; border-radius: 10px; border: 1px solid #ddd; background: #f9f9f9; }
 
-  /* MAIN DASHBOARD (Center Panel) */
-  .main-dashboard {
-    background: var(--surface-dark);
-    border-radius: 32px;
-    padding: 2.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    box-shadow: var(--shadow-floating);
-    position: relative;
-    overflow: hidden;
-  }
+        /* --- PAGE: HISTORY --- */
+        #history { flex-direction: column; padding: 40px; gap: 20px; align-items: center; }
+        .history-stats { background: var(--white); width: 100%; max-width: 800px; padding: 30px; border-radius: 20px; display: flex; justify-content: space-around; text-align: center; }
+        .stat-val { display: block; font-weight: 800; font-size: 1.5rem; color: var(--orange); }
+        .receipt-list { width: 100%; max-width: 800px; display: flex; flex-direction: column; gap: 15px; }
+        .receipt { background: var(--white); padding: 20px; border-radius: 15px; display: flex; justify-content: space-between; align-items: center; }
 
-  .dashboard-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+        /* --- PAGE: SETTINGS --- */
+        #settings { padding: 40px; gap: 30px; justify-content: center; }
+        .settings-container { width: 100%; max-width: 900px; display: flex; background: var(--white); border-radius: 30px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.05); }
+        .set-purple { flex: 1; background: var(--purple-main); padding: 40px; color: white; }
+        .set-white { flex: 1.5; padding: 40px; }
+        .profile-img { width: 80px; height: 80px; background: var(--orange); border-radius: 50%; margin-bottom: 20px; }
 
-  .search-bar {
-    width: 120px;
-    height: 12px;
-    background: var(--surface-white);
-    border-radius: 10px;
-    opacity: 0.8;
-  }
-
-  .header-action {
-    width: 80px;
-    height: 24px;
-    background: var(--accent-orange);
-    border-radius: 12px;
-  }
-
-  /* CHART AREA */
-  .chart-container {
-    height: 200px;
-    background: var(--surface-darker);
-    border-radius: var(--border-radius-lg);
-    position: relative;
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-  }
-
-  .chart-svg {
-    position: absolute;
-    bottom: 2rem;
-    left: 0;
-    width: 100%;
-    height: 60%;
-  }
-
-  .chart-points {
-    position: absolute;
-    bottom: 3.5rem;
-    left: 20%;
-    width: 12px; height: 12px;
-    background: var(--accent-yellow);
-    border-radius: 50%;
-    box-shadow: 0 0 0 4px rgba(255, 194, 89, 0.3);
-  }
-  .chart-points:nth-child(2) { left: 45%; bottom: 6rem; background: var(--surface-white); box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.2); }
-  .chart-points:nth-child(3) { left: 75%; bottom: 4.5rem; }
-
-  .chart-axis {
-    display: flex;
-    justify-content: space-between;
-    border-top: 2px dashed rgba(142, 139, 186, 0.3);
-    padding-top: 1rem;
-    margin-top: 2rem;
-  }
-
-  .axis-dot {
-    width: 8px; height: 8px;
-    background: var(--text-muted);
-    border-radius: 50%;
-  }
-
-  /* BOTTOM CARDS GRID */
-  .cards-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-  }
-
-  .data-card {
-    background: var(--surface-white);
-    border-radius: var(--border-radius-lg);
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .card-header {
-    width: 60%;
-    height: 10px;
-    background: var(--text-dark-muted);
-    border-radius: 10px;
-    opacity: 0.3;
-    margin-bottom: 0.5rem;
-  }
-
-  .list-item {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding-bottom: 0.8rem;
-    border-bottom: 1px solid rgba(0,0,0,0.05);
-  }
-  .list-item:last-child { border: none; padding-bottom: 0; }
-
-  .checkbox {
-    width: 24px; height: 24px;
-    border: 2px solid var(--text-muted);
-    border-radius: 6px;
-    opacity: 0.5;
-  }
-  .checkbox.checked {
-    background: var(--surface-dark);
-    border-color: var(--surface-dark);
-  }
-
-  .list-lines {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    flex-grow: 1;
-  }
-  .line-long { height: 6px; background: var(--text-dark); border-radius: 4px; width: 80%; }
-  .line-short { height: 6px; background: var(--text-muted); border-radius: 4px; width: 40%; opacity: 0.5; }
-
-  /* RIGHT PANEL (Analytics Widget) */
-  .right-panel {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-  }
-
-  .analytics-widget {
-    background: var(--surface-dark);
-    border-radius: var(--border-radius-lg);
-    padding: 2rem;
-    box-shadow: var(--shadow-floating);
-  }
-
-  .widget-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 2rem;
-  }
-  
-  .pie-chart {
-    width: 60px; height: 60px;
-    border-radius: 50%;
-    background: conic-gradient(var(--accent-orange) 0% 40%, var(--surface-white) 40% 75%, var(--text-muted) 75% 100%);
-  }
-
-  .bar-chart {
-    display: flex;
-    align-items: flex-end;
-    gap: 8px;
-    height: 60px;
-  }
-  .bar { width: 12px; background: var(--accent-orange); border-radius: 4px 4px 0 0; }
-  .bar:nth-child(2) { height: 40%; background: var(--surface-white); }
-  .bar:nth-child(3) { height: 80%; background: var(--text-muted); }
-  .bar:nth-child(4) { height: 100%; }
-
-  .secondary-widget {
-    background: var(--surface-darker);
-    border-radius: var(--border-radius-lg);
-    padding: 1.5rem;
-    flex-grow: 1;
-  }
-
-  /* Responsive Design */
-  @media (max-width: 1024px) {
-    .app-container { grid-template-columns: 80px 1fr; }
-    .nav-line { display: none; }
-    .nav-item { justify-content: center; }
-    .right-panel { display: none; }
-  }
-
-  @media (max-width: 768px) {
-    .app-container { grid-template-columns: 1fr; }
-    .sidebar { flex-direction: row; justify-content: center; padding: 1rem; }
-    .nav-menu { flex-direction: row; justify-content: center; }
-    .cards-grid { grid-template-columns: 1fr; }
-  }
-</style>
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            #home { flex-direction: column; }
+            .split-purple, .split-white { padding: 30px; }
+            .hero-title { font-size: 2.5rem; }
+            .network-grid { grid-template-columns: 1fr; }
+            nav { width: 90%; justify-content: space-around; gap: 0; }
+            .settings-container { flex-direction: column; }
+        }
+    </style>
 </head>
 <body>
 
-<div class="app-container">
-  
-  <!-- LEFT SIDEBAR -->
-  <aside class="sidebar">
-    <div class="logo-block"></div>
-    <div class="nav-menu">
-      <div class="nav-item active">
-        <div class="nav-icon"></div>
-        <div class="nav-line"></div>
-      </div>
-      <div class="nav-item">
-        <div class="nav-icon"></div>
-        <div class="nav-line"></div>
-      </div>
-      <div class="nav-item">
-        <div class="nav-icon"></div>
-        <div class="nav-line"></div>
-      </div>
-      <div class="nav-item">
-        <div class="nav-icon"></div>
-        <div class="nav-line"></div>
-      </div>
-    </div>
-  </aside>
+    <nav id="navbar">
+        <a onclick="showPage('home')" id="nav-home" class="active">HOME</a>
+        <a onclick="showPage('dashboard')" id="nav-dashboard">DASHBOARD</a>
+        <a onclick="showPage('history')" id="nav-history">HISTORY</a>
+        <a onclick="showPage('settings')" id="nav-settings">SETTINGS</a>
+    </nav>
 
-  <!-- MAIN DASHBOARD -->
-  <main class="main-dashboard">
-    <div class="dashboard-header">
-      <div class="search-bar"></div>
-      <div style="display: flex; gap: 10px;">
-        <div class="search-bar" style="width: 40px; border-radius: 20px;"></div>
-        <div class="header-action"></div>
-      </div>
-    </div>
-
-    <!-- Big Chart Area -->
-    <div class="chart-container">
-      <!-- Decorative SVG Wave Chart -->
-      <svg class="chart-svg" preserveAspectRatio="none" viewBox="0 0 100 100">
-        <path d="M0,80 Q10,20 30,50 T70,30 T100,60 L100,100 L0,100 Z" fill="rgba(255, 148, 49, 0.1)" stroke="var(--accent-orange)" stroke-width="2"/>
-      </svg>
-      <div class="chart-points"></div>
-      <div class="chart-points"></div>
-      <div class="chart-points"></div>
-
-      <div class="chart-axis">
-        <div class="axis-dot"></div><div class="axis-dot"></div>
-        <div class="axis-dot"></div><div class="axis-dot"></div>
-        <div class="axis-dot"></div><div class="axis-dot"></div>
-        <div class="axis-dot"></div><div class="axis-dot"></div>
-      </div>
-    </div>
-
-    <div style="display: flex; justify-content: center; gap: 10px; margin-top: -10px;">
-        <div class="axis-dot" style="background: var(--surface-white); width: 24px; border-radius: 12px;"></div>
-        <div class="axis-dot"></div>
-        <div class="axis-dot"></div>
-    </div>
-
-    <!-- Bottom Light Cards -->
-    <div class="cards-grid">
-      <!-- Card 1 -->
-      <div class="data-card">
-        <div class="card-header"></div>
-        <div class="list-item">
-          <div class="checkbox"></div>
-          <div class="list-lines">
-            <div class="line-long"></div><div class="line-short"></div>
-          </div>
+    <!-- HOME PAGE -->
+    <section id="home" class="page active">
+        <div class="split-purple">
+            <p class="hero-tag">UniLink GH</p>
+            <h1 class="hero-title">The Student <br>Bundle.</h1>
+            <p style="opacity: 0.7; margin-bottom: 30px;">Trusted by 1000+ Students in Ghana.</p>
+            <button class="btn-main" onclick="showPage('dashboard')">Buy Now</button>
         </div>
-        <div class="list-item">
-          <div class="checkbox checked"></div>
-          <div class="list-lines">
-            <div class="line-long"></div><div class="line-short"></div>
-          </div>
+        <div class="split-white">
+            <div class="virtue-card">
+                <div class="virtue-icon">₵</div>
+                <div><strong>Affordable</strong><br><small>Student-friendly rates.</small></div>
+            </div>
+            <div class="virtue-card">
+                <div class="virtue-icon">⚡</div>
+                <div><strong>Fast</strong><br><small>Instant delivery 24/7.</small></div>
+            </div>
+            <div class="virtue-card">
+                <div class="virtue-icon">🔒</div>
+                <div><strong>Secure</strong><br><small>Paystack encrypted.</small></div>
+            </div>
+            <div class="virtue-card">
+                <div class="virtue-icon">🤝</div>
+                <div><strong>Trust</strong><br><small>Built for the campus.</small></div>
+            </div>
         </div>
-      </div>
+    </section>
 
-      <!-- Card 2 -->
-      <div class="data-card">
-        <div class="card-header"></div>
-        <div class="list-item">
-          <div class="checkbox checked"></div>
-          <div class="list-lines">
-            <div class="line-long"></div><div class="line-short"></div>
-          </div>
+    <!-- DASHBOARD PAGE -->
+    <section id="dashboard" class="page">
+        <div class="dash-top">
+            <div class="rank-box">
+                <p style="opacity: 0.7; text-transform: uppercase; font-size: 12px; letter-spacing: 2px;">Weekly Ranking</p>
+                <h2>#90</h2>
+                <p style="margin-top: 10px;">Keep it up! You're in the top 10%.</p>
+            </div>
+            <div style="text-align: right;">
+                <p>Welcome back,</p>
+                <strong>Student User</strong>
+            </div>
         </div>
-        <div class="list-item">
-          <div class="checkbox"></div>
-          <div class="list-lines">
-            <div class="line-long"></div><div class="line-short"></div>
-          </div>
+
+        <div class="network-grid">
+            <div class="net-card" onclick="openBundles('MTN')">
+                <h3>MTN</h3>
+                <span class="net-status">● IN STOCK</span>
+                <p class="net-phrase">Everywhere you go.</p>
+            </div>
+            <div class="net-card" onclick="openBundles('TELECEL')">
+                <h3>Telecel</h3>
+                <span class="net-status">● IN STOCK</span>
+                <p class="net-phrase">Move forward.</p>
+            </div>
+            <div class="net-card" onclick="openBundles('AT')">
+                <h3>AT</h3>
+                <span class="net-status">● IN STOCK</span>
+                <p class="net-phrase">Simple. Professional.</p>
+            </div>
         </div>
-      </div>
-    </div>
-  </main>
+    </section>
 
-  <!-- RIGHT PANEL -->
-  <aside class="right-panel">
-    <!-- Top Analytics Widget -->
-    <div class="analytics-widget">
-      <div class="widget-header">
-        <div class="pie-chart"></div>
-        <div class="bar-chart">
-          <div class="bar" style="height: 60%;"></div>
-          <div class="bar" style="height: 80%;"></div>
-          <div class="bar" style="height: 40%;"></div>
-          <div class="bar" style="height: 100%;"></div>
+    <!-- BUNDLE PAGE -->
+    <section id="bundles" class="page">
+        <div class="bundle-header">
+            <h1 id="selected-network">MTN Bundles</h1>
+            <p id="bundle-urgency">Urgent: Only a few bundles remaining for today!</p>
         </div>
-      </div>
-      <div class="list-lines" style="margin-top: 20px;">
-        <div class="line-long" style="background: var(--surface-white); width: 100%;"></div>
-        <div class="line-short" style="background: var(--text-muted); width: 60%;"></div>
-      </div>
-    </div>
+        <div class="bundle-grid" id="bundle-list">
+            <!-- Bundles will be injected here by JS -->
+        </div>
+    </section>
 
-    <!-- Bottom Secondary Widget -->
-    <div class="secondary-widget">
-       <div class="list-lines" style="gap: 12px;">
-         <div class="line-long" style="background: var(--text-muted); width: 40%;"></div>
-         <div class="line-long" style="background: var(--surface-white); width: 90%; height: 8px;"></div>
-         <div class="line-long" style="background: var(--surface-white); width: 70%; height: 8px;"></div>
-       </div>
-       
-       <div style="margin-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; display: flex; align-items: center; gap: 15px;">
-         <div style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--accent-orange); display: flex; justify-content: center; align-items: center;">
-            <div style="width: 30px; height: 30px; border-radius: 50%; background: var(--surface-dark);"></div>
-         </div>
-         <div class="list-lines">
-            <div class="line-long" style="background: var(--surface-white);"></div>
-            <div class="line-short" style="background: var(--accent-orange);"></div>
-         </div>
-       </div>
-    </div>
-  </aside>
+    <!-- CHECKOUT PAGE -->
+    <section id="checkout" class="page">
+        <div class="checkout-card">
+            <h2 style="margin-bottom: 20px;">Order Summary</h2>
+            <div id="checkout-details">
+                <div class="summary-row"><span>Bundle Size</span><span id="sum-size">10GB</span></div>
+                <div class="summary-row"><span>Price</span><span id="sum-price">₵18.00</span></div>
+                <div class="summary-row"><span>Platform Fee</span><span>₵0.50</span></div>
+                <div class="summary-row"><span>Ref ID</span><span>#UL-9921</span></div>
+                <div class="total-row"><span>Total</span><span id="sum-total">₵18.50</span></div>
+            </div>
+            
+            <div style="margin-top: 30px;">
+                <input type="text" placeholder="Full Name">
+                <input type="email" placeholder="Email Address">
+                <input type="tel" placeholder="Recipient Number">
+                <button class="btn-main" style="width: 100%; margin-top: 20px;" onclick="processPayment()">Confirm & Pay</button>
+            </div>
+        </div>
+    </section>
 
-</div>
+    <!-- HISTORY PAGE -->
+    <section id="history" class="page">
+        <div class="history-stats">
+            <div><small>Money Spent</small><span class="stat-val">₵450.00</span></div>
+            <div><small>Data Bought</small><span class="stat-val">120 GB</span></div>
+            <div><small>Total Orders</small><span class="stat-val">24</span></div>
+        </div>
+        
+        <div class="receipt-list">
+            <div class="receipt">
+                <div>
+                    <strong>10GB MTN Bundle</strong><br>
+                    <small>Oct 24, 2023 • 14:20</small>
+                </div>
+                <button class="btn-sm" style="background: var(--lavender); color: var(--purple-main);">Copy Details</button>
+            </div>
+            <div class="receipt">
+                <div>
+                    <strong>20GB Telecel Bundle</strong><br>
+                    <small>Oct 20, 2023 • 09:15</small>
+                </div>
+                <button class="btn-sm" style="background: var(--lavender); color: var(--purple-main);">Copy Details</button>
+            </div>
+        </div>
+    </section>
 
+    <!-- SETTINGS PAGE -->
+    <section id="settings" class="page">
+        <div class="settings-container">
+            <div class="set-purple">
+                <div class="profile-img"></div>
+                <h2>Register Name</h2>
+                <p style="opacity: 0.6; font-size: 13px; margin-top: 10px;">Set your identity on the UniLink network.</p>
+                <input type="text" placeholder="Enter Name..." style="background: rgba(255,255,255,0.1); border: none; color: white;">
+                <button class="btn-sm" style="background: var(--orange); width: 100%; margin-top: 10px;">Update Profile</button>
+            </div>
+            <div class="set-white">
+                <h3 style="margin-bottom: 20px;">System Settings</h3>
+                <div class="summary-row"><span>Notifications</span><span>On</span></div>
+                <div class="summary-row"><span>Security Pin</span><span>Set</span></div>
+                <div class="summary-row"><span>Account Status</span><span style="color: green;">Verified</span></div>
+                <div class="summary-row"><span>App Version</span><span>v2.0.4</span></div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Update nav styling
+            document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+            const navItem = document.getElementById('nav-' + pageId);
+            if(navItem) navItem.classList.add('active');
+
+            window.scrollTo(0, 0);
+        }
+
+        const bundleData = {
+            'MTN': [
+                {size: '1GB', price: 3, duration: '1 Day'},
+                {size: '5GB', price: 10, duration: '7 Days'},
+                {size: '10GB', price: 18, duration: '30 Days'},
+                {size: '20GB', price: 32, duration: '30 Days'}
+            ],
+            'TELECEL': [
+                {size: '2GB', price: 5, duration: '2 Days'},
+                {size: '8GB', price: 15, duration: '7 Days'},
+                {size: '15GB', price: 25, duration: '30 Days'}
+            ],
+            'AT': [
+                {size: '3GB', price: 6, duration: '3 Days'},
+                {size: '10GB', price: 17, duration: '30 Days'},
+                {size: '25GB', price: 40, duration: '30 Days'}
+            ]
+        };
+
+        function openBundles(network) {
+            document.getElementById('selected-network').innerText = network + " Bundles";
+            const list = document.getElementById('bundle-list');
+            list.innerHTML = '';
+            
+            bundleData[network].forEach(b => {
+                list.innerHTML += `
+                    <div class="b-card">
+                        <span class="b-size">${b.size}</span>
+                        <span class="b-price">₵${b.price.toFixed(2)}</span>
+                        <small style="color: var(--text-muted)">Valid for ${b.duration}</small>
+                        <button class="btn-sm" onclick="goToCheckout('${b.size}', ${b.price})">Buy Now</button>
+                    </div>
+                `;
+            });
+            showPage('bundles');
+        }
+
+        function goToCheckout(size, price) {
+            document.getElementById('sum-size').innerText = size;
+            document.getElementById('sum-price').innerText = '₵' + price.toFixed(2);
+            document.getElementById('sum-total').innerText = '₵' + (price + 0.5).toFixed(2);
+            showPage('checkout');
+        }
+
+        function processPayment() {
+            alert("Redirecting to Paystack Secure Gateway...");
+            setTimeout(() => {
+                alert("Payment Successful! Redirecting to WhatsApp to complete your order.");
+                window.location.href = "https://wa.me/233XXXXXXXXX?text=Order confirmed! Bundle details sent.";
+            }, 2000);
+        }
+    </script>
 </body>
 </html>
