@@ -67,7 +67,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 
 /* NAV */
 .nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:68px;background:rgba(240,241,248,0.92);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);}
-.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;color:var(--navy);text-decoration:none;letter-spacing:-0.02em;}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;color:var(--navy);text-decoration:none;letter-spacing:-0.02em;display:flex;align-items:center;gap:8px;}
+.logo svg{flex-shrink:0;margin-top:-2px;}
 .logo span{color:var(--orange);}
 .nav-links{display:flex;gap:0.25rem;align-items:center;flex-wrap:wrap;}
 .nav-link{font-size:0.875rem;font-weight:500;color:var(--muted);text-decoration:none;padding:0.5rem 1rem;border-radius:100px;transition:all 0.2s;border:none;background:none;cursor:pointer;font-family:'DM Sans',sans-serif;}
@@ -382,6 +383,16 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .modal-note{font-size:0.74rem;color:var(--muted);text-align:center;margin-top:0.75rem;line-height:1.55;}
 .modal-note span{color:var(--orange);font-weight:600;}
 
+/* AMBASSADOR MODAL */
+#ambModal .modal{max-width:520px;}
+.amb-form-inner{background:var(--white);padding:1.75rem;border-radius:var(--rsm);box-shadow:var(--shadow);}
+.amb-form-inner .f-lbl{color:var(--muted);font-size:0.75rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;}
+.amb-form-inner .f-inp,
+.amb-form-inner textarea{background:var(--bg);border:1.5px solid var(--border);color:var(--navy);border-radius:var(--rsm);padding:0.85rem 1.1rem;font-size:0.95rem;outline:none;transition:border-color 0.2s;}
+.amb-form-inner .f-inp:focus,
+.amb-form-inner textarea:focus{border-color:var(--orange);}
+.amb-form-inner textarea{resize:vertical;min-height:110px;}
+
 /* MOBILE */
 @media(max-width:768px){
   .nav{padding:0 1.25rem;}
@@ -408,7 +419,33 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 <body>
 
 <nav class="nav">
-  <a href="#" class="logo" onclick="nav('home');return false;">Uni<span>Link</span> GH</a>
+  <!-- CONVERTED LOGO: Data Signal (U + signal bars) placed at left top corner -->
+  <!-- Name "UniLink GH" follows immediately after the SVG icon -->
+  <a href="#" class="logo" onclick="nav('home');return false;">
+    <!-- SVG converted from the provided logo image (Concept 2: Data Signal) -->
+    <!-- Dark navy U with cyan signal bars rising on the right side -->
+    <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 140 120" fill="none" aria-label="Data Signal Logo">
+      <!-- Thick U shape (dark navy) -->
+      <path 
+        d="M25 55 L25 92 C25 108 33 112 52 112 C72 112 85 105 92 92 L92 55" 
+        stroke="#2B2D4E" 
+        stroke-width="24" 
+        stroke-linecap="round" 
+        stroke-linejoin="round" />
+      
+      <!-- Signal bars (cyan, increasing height from left to right, attached to top-right of U) -->
+      <!-- Bar 1 (shortest) -->
+      <rect x="102" y="37" width="7" height="18" rx="1" fill="#00C4FF" />
+      <!-- Bar 2 -->
+      <rect x="111" y="28" width="7" height="27" rx="1" fill="#00C4FF" />
+      <!-- Bar 3 -->
+      <rect x="120" y="18" width="7" height="37" rx="1" fill="#00C4FF" />
+      <!-- Bar 4 (tallest) -->
+      <rect x="129" y="7" width="7" height="48" rx="1" fill="#00C4FF" />
+    </svg>
+    Uni<span>Link</span> GH
+  </a>
+  
   <div class="nav-links">
     <button class="nav-link active" id="nb-home"    onclick="nav('home')">Home</button>
     <button class="nav-link"        id="nb-bundles" onclick="nav('bundles')">Bundles</button>
@@ -419,13 +456,14 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     <button class="nav-link"        id="nb-offers"  onclick="nav('offers')">Offers</button>
     <!-- CHANGED: The button next to "Order Now →" is now Telegram bot -->
     <a class="nav-link" onclick="openTelegram('Hi UniLink GH! Join our Telegram channel for updates.'); return false;" style="color:#0088cc;font-weight:600">Channel</a>
+    <!-- Right corner now contains JUST "Order Now" (as requested) -->
     <button class="nav-link nav-cta" id="nb-contact" onclick="nav('contact')">Order Now →</button>
   </div>
 </nav>
 
 <div class="toast" id="toast">✓ Sending to Telegram bot...</div>
 
-<!-- PAYMENT MODAL -->
+<!-- PAYMENT MODAL (unchanged) -->
 <div class="modal-overlay" id="payModal">
   <div class="modal">
     <div class="modal-head">
@@ -464,6 +502,48 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
       Pay with Paystack
     </button>
     <div class="modal-note">Secured by <span>Paystack</span> · You'll receive your bundle on WhatsApp within 30+ minutes after payment</div>
+  </div>
+</div>
+
+<!-- NEW: AMBASSADOR APPLICATION MODAL -->
+<!-- Opens when "Apply" is clicked. Contains the exact fields requested. -->
+<div class="modal-overlay" id="ambModal">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title">Campus Ambassador Application</div>
+      <button class="modal-close" onclick="closeAmbModal()">✕</button>
+    </div>
+    <div class="amb-form-inner">
+      <div class="f-row">
+        <label class="f-lbl">Full Name</label>
+        <input class="f-inp" id="amb-name" type="text" placeholder="e.g. Joel Owusu Ansah">
+      </div>
+      <div class="f-g2">
+        <div class="f-row">
+          <label class="f-lbl">School / University</label>
+          <input class="f-inp" id="amb-school" type="text" placeholder="e.g. KNUST, UG, Ashesi">
+        </div>
+        <div class="f-row">
+          <label class="f-lbl">Level / Year</label>
+          <input class="f-inp" id="amb-level" type="text" placeholder="e.g. Level 200, Year 3">
+        </div>
+      </div>
+      <div class="f-row">
+        <label class="f-lbl">Why do you want to become a campus ambassador?</label>
+        <textarea class="f-inp" id="amb-reason" rows="3" placeholder="Tell us your motivation..."></textarea>
+      </div>
+      <div class="f-row">
+        <label class="f-lbl">Ways you will advertise / promote UniLink GH</label>
+        <textarea class="f-inp" id="amb-ways" rows="3" placeholder="WhatsApp status, class groups, flyers, Instagram, etc."></textarea>
+      </div>
+      <div class="f-row">
+        <label class="f-lbl">Other information (optional)</label>
+        <input class="f-inp" id="amb-other" type="text" placeholder="Phone number or any extra details">
+      </div>
+      <button class="f-submit" onclick="submitAmbassador()" style="margin-top:1rem;">
+        Submit Application
+      </button>
+    </div>
   </div>
 </div>
 
@@ -681,8 +761,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
           <div>
             <h3>Become a campus ambassador</h3>
             <p>Earn commissions selling data to your coursemates. Flexible, zero investment needed.</p>
-            <!-- CHANGED: Now uses Telegram bot -->
-            <button class="btn-orange" style="margin-top:1rem;font-size:0.82rem;padding:0.6rem 1.25rem" onclick="openTelegram('Hi UniLink GH! I want to become a campus ambassador.')">Apply on Telegram →</button>
+            <!-- CHANGED: No longer says "Apply on Telegram". Now just "Apply" and opens the form -->
+            <button class="btn-orange" style="margin-top:1rem;font-size:0.82rem;padding:0.6rem 1.25rem" onclick="openAmbassadorForm()">Apply</button>
           </div>
         </div>
       </div>
@@ -904,6 +984,52 @@ async function sendToTelegram(message) {
 function openTelegram(msg) {
   sendToTelegram(msg);
   showToast('✓ Sending to Telegram bot...');
+}
+
+// ==================== NEW AMBASSADOR FORM FUNCTIONS ====================
+function openAmbassadorForm() {
+  const modal = document.getElementById('ambModal');
+  if (modal) modal.classList.add('open');
+  
+  // Clear form fields
+  document.getElementById('amb-name').value = '';
+  document.getElementById('amb-school').value = '';
+  document.getElementById('amb-level').value = '';
+  document.getElementById('amb-reason').value = '';
+  document.getElementById('amb-ways').value = '';
+  document.getElementById('amb-other').value = '';
+}
+
+function closeAmbModal() {
+  const modal = document.getElementById('ambModal');
+  if (modal) modal.classList.remove('open');
+}
+
+function submitAmbassador() {
+  const name = document.getElementById('amb-name').value.trim();
+  const school = document.getElementById('amb-school').value.trim();
+  const level = document.getElementById('amb-level').value.trim();
+  const reason = document.getElementById('amb-reason').value.trim();
+  const ways = document.getElementById('amb-ways').value.trim();
+  const other = document.getElementById('amb-other').value.trim();
+
+  if (!name || !school || !level || !reason || !ways) {
+    showToast('⚠ Please fill all required fields');
+    return;
+  }
+
+  const msg = `🎓 New Campus Ambassador Application!\n\n` +
+    `👤 Name: ${name}\n` +
+    `🏫 School: ${school}\n` +
+    `📚 Level: ${level}\n` +
+    `💡 Reason: ${reason}\n` +
+    `📣 Ways of advertising: ${ways}\n` +
+    `📌 Other info: ${other || 'None provided'}\n\n` +
+    `Please review and contact the applicant. Thank you! 🙏`;
+
+  sendToTelegram(msg);
+  showToast('✓ Application sent to Telegram bot!');
+  closeAmbModal();
 }
 
 // Global variables
@@ -1263,13 +1389,6 @@ function closeModal() {
   if (modal) modal.classList.remove('open');
 }
 
-document.addEventListener('click', function(e) {
-  const modal = document.getElementById('payModal');
-  if (modal && modal.classList.contains('open') && e.target === modal) {
-    closeModal();
-  }
-});
-
 // ── PAYSTACK ──────────────────────────────────────────
 function initPaystack() {
   const name = document.getElementById('m-name').value.trim();
@@ -1379,6 +1498,18 @@ function reveal() {
   }, { threshold: 0.08 });
   document.querySelectorAll('.fi:not(.vis)').forEach(el => obs.observe(el));
 }
+
+// ── MODAL OUTSIDE CLICK (now supports both modals) ─────────────────────────────────
+document.addEventListener('click', function(e) {
+  const payModal = document.getElementById('payModal');
+  if (payModal && payModal.classList.contains('open') && e.target === payModal) {
+    closeModal();
+  }
+  const ambModal = document.getElementById('ambModal');
+  if (ambModal && ambModal.classList.contains('open') && e.target === ambModal) {
+    closeAmbModal();
+  }
+});
 
 // ── INIT ──────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', function() {
