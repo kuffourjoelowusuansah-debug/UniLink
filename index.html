@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="color-scheme" content="light only">
+<meta name="supported-color-schemes" content="light">
+<meta name="darkreader-lock">
 <title>UniLink GH — Student Data Bundles</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
 <!-- Firebase -->
@@ -30,8 +33,8 @@
 <script src="https://js.paystack.co/v1/inline.js"></script>
 <style>
 :root {
-  --bg:      #EAEBF4;
-  --bg2:     #F4F5FB;
+  --bg:      #F0F1F8;
+  --bg2:     #F8F9FF;
   --navy:    #2B2D4E;
   --navy2:   #3A3C60;
   --navy3:   #4E5080;
@@ -39,31 +42,34 @@
   --orange2: #FF9A3C;
   --white:   #FFFFFF;
   --muted:   #4A4B6A;
-  --border:  rgba(43,45,78,0.12);
-  --shadow:  0 4px 24px rgba(43,45,78,0.10);
-  --shadow-lg:0 12px 48px rgba(43,45,78,0.15);
+  --border:  rgba(43,45,78,0.10);
+  --shadow:  0 4px 24px rgba(43,45,78,0.08);
+  --shadow-lg:0 12px 48px rgba(43,45,78,0.12);
   --radius:  18px;
   --rsm:     10px;
+  
+  /* Force light mode */
+  color-scheme: only light;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
+html{scroll-behavior:smooth;background:var(--bg);forced-color-adjust:none;}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--navy);min-height:100vh;overflow-x:hidden;}
 
 /* circuit dot bg */
 body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   background-image:
-    radial-gradient(circle 1.5px at 80px 80px,rgba(43,45,78,0.15) 100%,transparent 0),
-    radial-gradient(circle 1.5px at 350px 180px,rgba(43,45,78,0.10) 100%,transparent 0),
-    radial-gradient(circle 1.5px at 720px 100px,rgba(43,45,78,0.10) 100%,transparent 0),
-    radial-gradient(circle 1.5px at 550px 420px,rgba(43,45,78,0.08) 100%,transparent 0),
-    radial-gradient(circle 1.5px at 180px 520px,rgba(43,45,78,0.08) 100%,transparent 0),
-    radial-gradient(circle 1.5px at 950px 300px,rgba(43,45,78,0.08) 100%,transparent 0);}
+    radial-gradient(circle 1.5px at 80px 80px,rgba(43,45,78,0.10) 100%,transparent 0),
+    radial-gradient(circle 1.5px at 350px 180px,rgba(43,45,78,0.07) 100%,transparent 0),
+    radial-gradient(circle 1.5px at 720px 100px,rgba(43,45,78,0.07) 100%,transparent 0),
+    radial-gradient(circle 1.5px at 550px 420px,rgba(43,45,78,0.05) 100%,transparent 0),
+    radial-gradient(circle 1.5px at 180px 520px,rgba(43,45,78,0.05) 100%,transparent 0),
+    radial-gradient(circle 1.5px at 950px 300px,rgba(43,45,78,0.05) 100%,transparent 0);}
 
 /* NAV */
-.nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:68px;background:rgba(234,235,244,0.88);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);}
+.nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:68px;background:rgba(240,241,248,0.92);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);}
 .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;color:var(--navy);text-decoration:none;letter-spacing:-0.02em;}
 .logo span{color:var(--orange);}
-.nav-links{display:flex;gap:0.25rem;align-items:center;}
+.nav-links{display:flex;gap:0.25rem;align-items:center;flex-wrap:wrap;}
 .nav-link{font-size:0.875rem;font-weight:500;color:var(--muted);text-decoration:none;padding:0.5rem 1rem;border-radius:100px;transition:all 0.2s;border:none;background:none;cursor:pointer;font-family:'DM Sans',sans-serif;}
 .nav-link:hover,.nav-link.active{color:var(--navy);background:var(--white);box-shadow:var(--shadow);}
 .nav-cta{background:var(--orange)!important;color:var(--white)!important;font-weight:600!important;padding:0.5rem 1.35rem!important;border-radius:100px;margin-left:0.5rem;box-shadow:0 4px 16px rgba(245,132,31,0.35);transition:transform 0.15s,box-shadow 0.2s!important;}
@@ -144,7 +150,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .fc-dark h3{color:white;}
 .fc-dark p{color:rgba(255,255,255,0.55);}
 
-/* NETWORK TABS — improved card style */
+/* NETWORK TABS */
 .net-tabs{display:flex;gap:1rem;margin-bottom:2.5rem;flex-wrap:wrap;}
 .net-tab{
   display:flex;align-items:center;gap:0.875rem;
@@ -187,7 +193,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .promo-card{background:var(--white);border-radius:var(--radius);padding:2rem;box-shadow:var(--shadow);border:1.5px solid var(--border);}
 .promo-card h3{font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;color:var(--navy);margin-bottom:0.4rem;}
 .promo-card .pc-sub{font-size:0.85rem;color:var(--muted);line-height:1.6;margin-bottom:1.5rem;}
-.code-input-wrap{position:relative;margin-bottom:0.875rem;}
 .code-input{width:100%;padding:0.85rem 1.1rem;background:var(--bg);border:2px solid var(--border);border-radius:var(--rsm);color:var(--navy);font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;outline:none;transition:border-color 0.2s;text-align:center;}
 .code-input::placeholder{color:rgba(43,45,78,0.25);letter-spacing:0.1em;font-family:'DM Sans',sans-serif;font-size:0.875rem;font-weight:400;}
 .code-input:focus{border-color:var(--orange);}
@@ -196,7 +201,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .code-dot.filled{background:var(--orange);}
 .phone-input{width:100%;padding:0.75rem 1rem;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--rsm);color:var(--navy);font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;transition:border-color 0.2s;margin-bottom:1rem;}
 .phone-input:focus{border-color:var(--orange);}
-.phone-input::placeholder{color:var(--muted);}
 .promo-submit{width:100%;padding:0.85rem;background:var(--orange);border:none;border-radius:var(--rsm);color:white;font-family:'DM Sans',sans-serif;font-weight:700;font-size:0.9rem;cursor:pointer;box-shadow:0 4px 16px rgba(245,132,31,0.3);transition:transform 0.15s,box-shadow 0.2s;display:flex;align-items:center;justify-content:center;gap:0.5rem;}
 .promo-submit:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(245,132,31,0.4);}
 .promo-result{margin-top:1rem;padding:1rem;border-radius:var(--rsm);font-size:0.875rem;font-weight:600;display:none;text-align:center;}
@@ -230,14 +234,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .wac-sub{font-size:0.8rem;color:rgba(255,255,255,0.55);}
 .wac-btn{background:#25D366;border:none;border-radius:100px;color:white;font-family:'DM Sans',sans-serif;font-weight:700;font-size:0.875rem;padding:0.75rem 1.5rem;cursor:pointer;white-space:nowrap;box-shadow:0 4px 14px rgba(37,211,102,0.4);transition:all 0.2s;text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;flex-shrink:0;}
 .wac-btn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(37,211,102,0.45);}
-
-@media(max-width:768px){
-  .offers-grid{grid-template-columns:1fr;}
-  .net-tabs{width:100%;}
-  .net-tab{flex:1;justify-content:center;padding:0.6rem 0.75rem;font-size:0.78rem;}
-  .wa-channel-banner{flex-direction:column;text-align:center;}
-  .wac-left{flex-direction:column;text-align:center;}
-}
 
 /* BUNDLE CARDS */
 .b-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:1.1rem;}
@@ -317,10 +313,35 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .f-submit{width:100%;padding:0.9rem;background:var(--orange);border:none;border-radius:var(--rsm);color:white;font-family:'DM Sans',sans-serif;font-weight:700;font-size:0.95rem;cursor:pointer;margin-top:0.5rem;box-shadow:0 6px 20px rgba(245,132,31,0.4);transition:transform 0.15s,box-shadow 0.2s;display:flex;align-items:center;justify-content:center;gap:0.5rem;}
 .f-submit:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(245,132,31,0.5);}
 
+/* HISTORY & RANKING PAGES */
+.history-filters{display:flex;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap;}
+.history-search{flex:1;padding:0.75rem 1rem;background:var(--white);border:1.5px solid var(--border);border-radius:var(--rsm);font-family:'DM Sans',sans-serif;font-size:0.9rem;}
+.history-stats{background:var(--white);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;text-align:center;}
+.history-stat-card{background:var(--bg2);border-radius:var(--rsm);padding:1rem;}
+.history-stat-value{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:var(--orange);}
+.history-stat-label{font-size:0.75rem;color:var(--muted);margin-top:0.25rem;}
+.history-list{display:flex;flex-direction:column;gap:1rem;}
+.history-item{background:var(--white);border-radius:var(--radius);padding:1.25rem;box-shadow:var(--shadow);border-left:4px solid var(--orange);transition:transform 0.2s;}
+.history-item:hover{transform:translateX(4px);}
+.history-ref{font-family:'Syne',sans-serif;font-weight:700;font-size:0.8rem;color:var(--orange);margin-bottom:0.5rem;}
+.history-details{display:flex;flex-wrap:wrap;gap:1rem;font-size:0.85rem;color:var(--muted);}
+.history-details strong{color:var(--navy);}
+.ranking-list{display:flex;flex-direction:column;gap:0.75rem;}
+.ranking-item{background:var(--white);border-radius:var(--radius);padding:1rem 1.25rem;display:flex;align-items:center;gap:1rem;box-shadow:var(--shadow);transition:transform 0.2s;}
+.ranking-item:hover{transform:translateX(4px);}
+.ranking-position{width:40px;height:40px;background:var(--orange);color:white;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;}
+.ranking-position.top1{background:gold;color:#333;}
+.ranking-position.top2{background:silver;color:#333;}
+.ranking-position.top3{background:#cd7f32;color:white;}
+.ranking-info{flex:1;}
+.ranking-name{font-weight:700;color:var(--navy);margin-bottom:0.25rem;}
+.ranking-stats{font-size:0.75rem;color:var(--muted);}
+.ranking-count{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;color:var(--orange);}
+
 /* FOOTER */
 .footer{background:var(--navy);color:rgba(255,255,255,0.5);padding:2.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;position:relative;z-index:1;}
 .footer .logo{color:white;}
-.ft-links{display:flex;gap:1.5rem;}
+.ft-links{display:flex;gap:1.5rem;flex-wrap:wrap;}
 .ft-links a{font-size:0.8rem;color:rgba(255,255,255,0.4);text-decoration:none;transition:color 0.2s;cursor:pointer;}
 .ft-links a:hover{color:white;}
 .ft-copy{font-size:0.78rem;}
@@ -347,10 +368,12 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .mb-info{font-size:0.78rem;color:var(--muted);margin-top:2px;}
 .mb-price{font-family:'Syne',sans-serif;font-weight:700;font-size:1.4rem;color:var(--orange);}
 .modal .m-lbl{font-size:0.72rem;font-weight:600;color:var(--muted);margin-bottom:0.35rem;display:block;letter-spacing:0.04em;text-transform:uppercase;}
-.modal .m-inp,.modal .m-sel{width:100%;padding:0.7rem 1rem;background:var(--bg2);border:1.5px solid var(--border);border-radius:var(--rsm);color:var(--navy);font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;transition:border-color 0.2s;margin-bottom:0.9rem;}
-.modal .m-inp:focus,.modal .m-sel:focus{border-color:var(--orange);}
+.modal .m-inp{width:100%;padding:0.7rem 1rem;background:var(--bg2);border:1.5px solid var(--border);border-radius:var(--rsm);color:var(--navy);font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;transition:border-color 0.2s;margin-bottom:0.9rem;}
+.modal .m-inp:focus{border-color:var(--orange);}
 .modal .m-inp::placeholder{color:var(--muted);}
 .modal .m-g2{display:grid;grid-template-columns:1fr 1fr;gap:0.875rem;}
+.modal-fee-row{display:flex;justify-content:space-between;margin-bottom:0.5rem;font-size:0.85rem;color:var(--muted);border-top:1px solid var(--border);padding-top:0.75rem;margin-top:0.5rem;}
+.modal-total-row{display:flex;justify-content:space-between;font-weight:700;color:var(--navy);margin-bottom:1rem;padding-top:0.5rem;font-size:1rem;}
 .pay-btn{width:100%;padding:0.9rem;background:var(--orange);border:none;border-radius:var(--rsm);color:white;font-family:'DM Sans',sans-serif;font-weight:700;font-size:0.95rem;cursor:pointer;box-shadow:0 6px 20px rgba(245,132,31,0.35);transition:transform 0.15s,box-shadow 0.2s;display:flex;align-items:center;justify-content:center;gap:0.5rem;margin-top:0.5rem;}
 .pay-btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(245,132,31,0.45);}
 .pay-btn:disabled{opacity:0.6;cursor:not-allowed;transform:none;}
@@ -370,8 +393,13 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   .f-g2{grid-template-columns:1fr;}
   .cmp-head,.cmp-row{font-size:0.72rem;padding:0.7rem 0.75rem;}
   .footer{flex-direction:column;text-align:center;padding:2rem 1.25rem;}
-  .ft-links{justify-content:center;flex-wrap:wrap;}
+  .ft-links{justify-content:center;}
   .modal .m-g2{grid-template-columns:1fr;}
+  .offers-grid{grid-template-columns:1fr;}
+  .net-tabs{width:100%;}
+  .net-tab{flex:1;justify-content:center;padding:0.6rem 0.75rem;font-size:0.78rem;}
+  .wa-channel-banner{flex-direction:column;text-align:center;}
+  .wac-left{flex-direction:column;text-align:center;}
 }
 </style>
 </head>
@@ -384,6 +412,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     <button class="nav-link"        id="nb-bundles" onclick="nav('bundles')">Bundles</button>
     <button class="nav-link"        id="nb-how"     onclick="nav('how')">How it works</button>
     <button class="nav-link"        id="nb-compare" onclick="nav('compare')">Compare</button>
+    <button class="nav-link"        id="nb-history" onclick="nav('history')">History</button>
+    <button class="nav-link"        id="nb-ranking" onclick="nav('ranking')">Ranking</button>
     <button class="nav-link"        id="nb-offers"  onclick="nav('offers')">Offers</button>
     <a class="nav-link" href="https://whatsapp.com/channel/0029Vb7tDpyFCCoZXLhKYy1Q" target="_blank" style="color:#25D366;font-weight:600">Channel</a>
     <button class="nav-link nav-cta" id="nb-contact" onclick="nav('contact')">Order Now →</button>
@@ -418,6 +448,14 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
         <input class="m-inp" id="m-phone" type="tel" placeholder="0XX XXX XXXX">
       </div>
     </div>
+    <div class="modal-fee-row" id="feeRow">
+      <span>Platform fee:</span>
+      <span id="feeAmount">GH₵ 0.00</span>
+    </div>
+    <div class="modal-total-row" id="totalRow">
+      <span>Total to pay:</span>
+      <span id="totalAmount">GH₵ 0.00</span>
+    </div>
     <button class="pay-btn" id="payBtn" onclick="initPaystack()">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
       Pay with Paystack
@@ -430,7 +468,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 <div class="page active" id="pg-home">
   <div class="hero-wrap">
     <div>
-      <div class="hero-tag">🎓 Student data bundles · Ghana</div>
+      <div class="hero-tag">Student data bundles · Ghana</div>
       <h1>Stay <em>online</em>,<br>spend less.</h1>
       <p>Affordable, no-expiry data bundles for university students across Ghana. MTN, AirtelTigo &amp; Telecel — delivered via WhatsApp.</p>
       <div class="hero-btns">
@@ -570,6 +608,34 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   </div>
 </div>
 
+<!-- HISTORY PAGE -->
+<div class="page" id="pg-history">
+  <div class="sec-wrap" style="padding-top:3rem">
+    <div class="sec-eye fi">Your History</div>
+    <h2 class="sec-title fi">Purchase History</h2>
+    <p class="sec-sub fi">View all your past purchases, track your spending, and see your unique reference IDs.</p>
+    
+    <div class="history-filters">
+      <input type="text" class="history-search" id="historySearch" placeholder="Search by name, phone, or ref ID..." oninput="filterHistory()">
+    </div>
+    
+    <div class="history-stats" id="historyStats"></div>
+    
+    <div class="history-list" id="historyList"></div>
+  </div>
+</div>
+
+<!-- RANKING PAGE -->
+<div class="page" id="pg-ranking">
+  <div class="sec-wrap" style="padding-top:3rem">
+    <div class="sec-eye fi">Leaderboard</div>
+    <h2 class="sec-title fi">Weekly Ranking</h2>
+    <p class="sec-sub fi">Based on number of purchases this week. Top performers earn bonus data!</p>
+    
+    <div class="ranking-list" id="rankingList"></div>
+  </div>
+</div>
+
 <!-- CONTACT / ORDER PAGE -->
 <div class="page" id="pg-contact">
   <div class="sec-wrap" style="padding-top:3rem">
@@ -631,8 +697,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 <!-- SPECIAL OFFERS PAGE -->
 <div class="page" id="pg-offers">
   <div class="sec-wrap" style="padding-top:3rem">
-
-    <!-- WA Channel Banner -->
     <div class="wa-channel-banner fi" style="margin-bottom:2rem">
       <div class="wac-left">
         <div class="wac-icon">📢</div>
@@ -647,7 +711,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
       </a>
     </div>
 
-    <!-- Hero -->
     <div class="offers-hero fi">
       <div class="sec-eye" style="color:var(--orange2);margin-bottom:0.5rem">Special Offers</div>
       <h2>Win free data &amp; earn with referrals</h2>
@@ -655,25 +718,18 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     </div>
 
     <div class="offers-grid fi">
-
-      <!-- PROMO CODE CHECKER -->
       <div class="promo-card">
         <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.5rem">
           <div style="width:38px;height:38px;background:rgba(245,132,31,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem">🎟️</div>
           <h3 style="margin:0">Promo Code</h3>
         </div>
         <p class="pc-sub">Have a 10-digit promo code? Enter it below with your phone number. Winners get <strong>2GB free data</strong> sent straight to their number!</p>
-
-        <label style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);display:block;margin-bottom:0.5rem">Your promo code</label>
         <input class="code-input" id="promoCode" type="text" maxlength="10" placeholder="XXXXXXXXXX" oninput="updateCodeDots(this.value)" autocomplete="off">
         <div class="code-dots" id="codeDots">
           <div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div>
           <div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div>
         </div>
-
-        <label style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);display:block;margin-bottom:0.5rem">Your phone number (to receive data)</label>
         <input class="phone-input" id="promoPhone" type="tel" placeholder="0XX XXX XXXX">
-
         <button class="promo-submit" onclick="checkPromoCode()">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
           Check My Code
@@ -681,20 +737,17 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
         <div class="promo-result" id="promoResult"></div>
       </div>
 
-      <!-- REFERRAL CODE GENERATOR -->
       <div class="ref-card">
         <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.5rem">
           <div style="width:38px;height:38px;background:rgba(245,132,31,0.15);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem">🔗</div>
           <h3 style="margin:0">Referral Code</h3>
         </div>
         <p class="rc-sub">Share your unique referral code with friends. When they buy their first bundle using your code, you <strong style="color:var(--orange2)">both earn bonus data</strong>.</p>
-
         <div class="ref-code-box">
           <div class="ref-code-label">Your unique code</div>
           <div class="ref-code-value" id="refCodeVal">—</div>
           <div class="ref-code-hint">Generated just for you · Valid forever</div>
         </div>
-
         <div class="ref-btns">
           <button class="ref-btn-wa" onclick="shareRefWA()">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
@@ -705,7 +758,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
             Copy Code
           </button>
         </div>
-
         <div class="ref-stats">
           <div class="ref-stat">
             <div class="ref-stat-num">2<span>GB</span></div>
@@ -719,7 +771,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
       </div>
     </div>
 
-    <!-- How offers work -->
     <div class="sec-eye fi" style="margin-top:1rem">How it works</div>
     <h2 class="sec-title fi" style="font-size:1.8rem">Offers explained</h2>
     <div class="feat-grid fi" style="margin-top:1.5rem">
@@ -754,6 +805,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     <a onclick="nav('bundles')">Bundles</a>
     <a onclick="nav('how')">How it works</a>
     <a onclick="nav('compare')">Compare</a>
+    <a onclick="nav('history')">History</a>
+    <a onclick="nav('ranking')">Ranking</a>
     <a onclick="nav('offers')">Offers</a>
     <a href="https://whatsapp.com/channel/0029Vb7tDpyFCCoZXLhKYy1Q" target="_blank">Channel</a>
     <a onclick="nav('contact')">Order</a>
@@ -806,11 +859,173 @@ const WA = '233248745662';
 const PS_KEY = 'pk_live_90305707d30b6282979eac837bbbc9509da579af';
 
 // Global variables
-let _order = { gb: 0, price: 0, net: '' };
+let _order = { gb: 0, price: 0, net: '', fee: 0, total: 0 };
 let _refCode = '';
+let _purchases = [];
 
 // Winning promo codes
 const WINNER_CODES = ['UNILINK2GB', 'WELCOME2GB', 'FRESHERS24', 'JOELDATA1X', 'CAMPUS2024', 'JOELDATA25', 'CAMPUS2025', 'GHDATA2025', 'WIN2GBFREE'];
+
+// Helper: Calculate platform fee
+function calculateFee(price) {
+  if (price < 30) return 0.30;
+  if (price >= 30 && price < 100) return 0.90;
+  return 1.50;
+}
+
+// Helper: Generate unique REF ID
+function generateRefId() {
+  const prefix = 'ULG';
+  const timestamp = Date.now().toString(36).toUpperCase();
+  const random = Math.random().toString(36).substring(2, 6).toUpperCase();
+  return `${prefix}-${timestamp}-${random}`;
+}
+
+// Helper: Get current week number
+function getWeekNumber() {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 1);
+  const days = Math.floor((now - start) / (24 * 60 * 60 * 1000));
+  return Math.ceil((days + start.getDay() + 1) / 7);
+}
+
+// Helper: Get current year-week string
+function getCurrentYearWeek() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const week = getWeekNumber();
+  return `${year}-W${week}`;
+}
+
+// Save purchase to localStorage
+function savePurchase(purchase) {
+  const stored = localStorage.getItem('unilink_purchases');
+  let purchases = stored ? JSON.parse(stored) : [];
+  purchases.unshift(purchase); // newest first
+  localStorage.setItem('unilink_purchases', JSON.stringify(purchases));
+  _purchases = purchases;
+  updateHistoryAndRanking();
+}
+
+// Load all purchases
+function loadPurchases() {
+  const stored = localStorage.getItem('unilink_purchases');
+  _purchases = stored ? JSON.parse(stored) : [];
+  return _purchases;
+}
+
+// Update both history and ranking displays
+function updateHistoryAndRanking() {
+  loadPurchases();
+  if (document.getElementById('pg-history').classList.contains('active')) {
+    renderHistory();
+  }
+  if (document.getElementById('pg-ranking').classList.contains('active')) {
+    renderRanking();
+  }
+}
+
+// Render History Page
+function renderHistory() {
+  const searchTerm = document.getElementById('historySearch')?.value.toLowerCase() || '';
+  let filtered = _purchases;
+  
+  if (searchTerm) {
+    filtered = _purchases.filter(p => 
+      p.name.toLowerCase().includes(searchTerm) || 
+      p.phone.includes(searchTerm) || 
+      p.refId.toLowerCase().includes(searchTerm)
+    );
+  }
+  
+  // Stats
+  const totalSpent = filtered.reduce((sum, p) => sum + p.total, 0);
+  const totalPurchases = filtered.length;
+  const uniqueCustomers = new Set(filtered.map(p => p.phone)).size;
+  
+  const statsHtml = `
+    <div class="history-stat-card"><div class="history-stat-value">${totalPurchases}</div><div class="history-stat-label">Total Purchases</div></div>
+    <div class="history-stat-card"><div class="history-stat-value">GH₵ ${totalSpent.toFixed(2)}</div><div class="history-stat-label">Total Spent</div></div>
+    <div class="history-stat-card"><div class="history-stat-value">${uniqueCustomers}</div><div class="history-stat-label">Unique Customers</div></div>
+  `;
+  document.getElementById('historyStats').innerHTML = statsHtml;
+  
+  // List
+  if (filtered.length === 0) {
+    document.getElementById('historyList').innerHTML = '<div style="text-align:center;padding:2rem;color:var(--muted)">No purchases found.</div>';
+    return;
+  }
+  
+  const listHtml = filtered.map(p => `
+    <div class="history-item">
+      <div class="history-ref">🔑 REF: ${p.refId}</div>
+      <div class="history-details">
+        <span><strong>${p.name}</strong></span>
+        <span>📱 ${p.phone}</span>
+        <span>📶 ${p.network}</span>
+        <span>📦 ${p.gb}GB</span>
+        <span>💰 GH₵ ${p.price.toFixed(2)}</span>
+        <span>➕ Fee: GH₵ ${p.fee.toFixed(2)}</span>
+        <span>💵 Total: GH₵ ${p.total.toFixed(2)}</span>
+        <span>📅 ${p.date}</span>
+      </div>
+    </div>
+  `).join('');
+  
+  document.getElementById('historyList').innerHTML = listHtml;
+}
+
+// Render Ranking Page
+function renderRanking() {
+  const currentWeek = getCurrentYearWeek();
+  
+  // Group purchases by phone/name and count for current week
+  const weekMap = new Map();
+  
+  _purchases.forEach(p => {
+    if (p.week === currentWeek) {
+      const key = p.phone;
+      if (!weekMap.has(key)) {
+        weekMap.set(key, { name: p.name, phone: p.phone, count: 0, totalSpent: 0 });
+      }
+      const entry = weekMap.get(key);
+      entry.count++;
+      entry.totalSpent += p.total;
+    }
+  });
+  
+  // Convert to array and sort by count descending
+  const ranking = Array.from(weekMap.values()).sort((a, b) => b.count - a.count);
+  
+  if (ranking.length === 0) {
+    document.getElementById('rankingList').innerHTML = '<div style="text-align:center;padding:2rem;color:var(--muted)">No purchases this week yet. Be the first!</div>';
+    return;
+  }
+  
+  const rankingHtml = ranking.map((r, idx) => {
+    let positionClass = '';
+    if (idx === 0) positionClass = 'top1';
+    else if (idx === 1) positionClass = 'top2';
+    else if (idx === 2) positionClass = 'top3';
+    
+    return `
+      <div class="ranking-item">
+        <div class="ranking-position ${positionClass}">${idx + 1}</div>
+        <div class="ranking-info">
+          <div class="ranking-name">${r.name}</div>
+          <div class="ranking-stats">📱 ${r.phone} | 💰 GH₵ ${r.totalSpent.toFixed(2)} spent</div>
+        </div>
+        <div class="ranking-count">${r.count} ${r.count === 1 ? 'purchase' : 'purchases'}</div>
+      </div>
+    `;
+  }).join('');
+  
+  document.getElementById('rankingList').innerHTML = rankingHtml;
+}
+
+function filterHistory() {
+  renderHistory();
+}
 
 // ── NAVIGATION ────────────────────────────────────────
 function nav(page) {
@@ -823,6 +1038,8 @@ function nav(page) {
   if (page === 'bundles') showB('MTN');
   if (page === 'compare') buildCmp();
   if (page === 'offers') initOffers();
+  if (page === 'history') renderHistory();
+  if (page === 'ranking') renderRanking();
   setTimeout(reveal, 60);
 }
 
@@ -850,7 +1067,6 @@ function showB(net) {
 
 // ── OFFERS ────────────────────────────────────────────
 function initOffers() {
-  // Generate or restore referral code from localStorage
   let stored = localStorage.getItem('ulg_ref');
   if (!stored) {
     stored = 'ULK-' + Math.random().toString(36).substring(2, 6).toUpperCase() +
@@ -862,7 +1078,6 @@ function initOffers() {
   const refCodeVal = document.getElementById('refCodeVal');
   if (refCodeVal) refCodeVal.textContent = _refCode;
   
-  // Reset promo UI
   const promoCode = document.getElementById('promoCode');
   const promoPhone = document.getElementById('promoPhone');
   const promoResult = document.getElementById('promoResult');
@@ -914,7 +1129,7 @@ function shareRefWA() {
     showToast('Code not ready yet');
     return;
   }
-  const msg = `Hey! 👋 I use UniLink GH for cheap data bundles — no expiry, instant delivery!\n\nUse my referral code when you order and we BOTH get 2GB free data:\n\n🔑 Code: *${_refCode}*\n\n👉 Order here: https://wa.me/${WA}\n\nJoin us: https://whatsapp.com/channel/0029Vb7tDpyFCCoZXLhKYy1Q`;
+  const msg = `Hey! 👋 I use UniLink GH for cheap data bundles — no expiry!\n\nUse my referral code when you order and we BOTH get 2GB free data:\n\n🔑 Code: *${_refCode}*\n\n👉 Order here: https://wa.me/${WA}\n\nJoin us: https://whatsapp.com/channel/0029Vb7tDpyFCCoZXLhKYy1Q`;
   window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
   showToast('✓ Sharing referral link...');
 }
@@ -978,14 +1193,22 @@ function submitOrder() {
 
 // ── PAYMENT MODAL ─────────────────────────────────────
 function openModal(gb, price, net) {
-  _order = { gb, price, net };
+  const fee = calculateFee(price);
+  const total = price + fee;
+  
+  _order = { gb, price, net, fee, total };
+  
   const mGb = document.getElementById('m-gb');
   const mNet = document.getElementById('m-net');
   const mPrice = document.getElementById('m-price');
+  const feeAmount = document.getElementById('feeAmount');
+  const totalAmount = document.getElementById('totalAmount');
   
   if (mGb) mGb.innerHTML = `${gb}<span style="font-size:1rem;font-weight:600;color:var(--muted)">GB</span>`;
   if (mNet) mNet.textContent = `${NL[net]} · Valid Forever`;
   if (mPrice) mPrice.textContent = `GH₵ ${price.toFixed(2)}`;
+  if (feeAmount) feeAmount.textContent = `GH₵ ${fee.toFixed(2)}`;
+  if (totalAmount) totalAmount.textContent = `GH₵ ${total.toFixed(2)}`;
   
   const modal = document.getElementById('payModal');
   if (modal) modal.classList.add('open');
@@ -1027,10 +1250,10 @@ function initPaystack() {
   const handler = PaystackPop.setup({
     key: PS_KEY,
     email: email,
-    amount: Math.round(_order.price * 100),
+    amount: Math.round(_order.total * 100),
     currency: 'GHS',
-    ref: 'ULG-' + Date.now(),
-    metadata: { name, phone, network: _order.net, bundle_gb: _order.gb },
+    ref: generateRefId(),
+    metadata: { name, phone, network: _order.net, bundle_gb: _order.gb, fee: _order.fee },
     onClose: () => {
       if (btn) {
         btn.disabled = false;
@@ -1047,27 +1270,44 @@ function initPaystack() {
 
 async function onPaymentSuccess(paystackRes, customer) {
   closeModal();
-  showToast('✓ Payment confirmed! Sending your bundle...');
+  showToast('✓ Payment confirmed! Saving your order...');
 
+  const refId = paystackRes.reference;
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-GH') + ' ' + now.toLocaleTimeString('en-GH');
+  const week = getCurrentYearWeek();
+  
   const orderData = {
-    reference: paystackRes.reference,
+    refId: refId,
     name: customer.name,
     email: customer.email,
     phone: customer.phone,
     network: NL[_order.net],
-    bundle_gb: _order.gb,
-    amount_ghc: _order.price,
-    status: 'paid',
+    gb: _order.gb,
+    price: _order.price,
+    fee: _order.fee,
+    total: _order.total,
+    date: dateStr,
+    week: week,
+    paystackRef: paystackRes.reference,
+    status: 'paid'
   };
 
+  // Save to localStorage
+  savePurchase(orderData);
+  
+  // Save to Firebase if available
   if (typeof window._saveOrder === 'function') {
     await window._saveOrder(orderData);
   }
 
+  // Open WhatsApp with full order details
   const msg = `Hi UniLink GH! ✅ I have successfully paid for my data bundle.\n\n`
+    + `• REF ID: ${refId}\n`
     + `• Bundle: ${_order.gb}GB ${NL[_order.net]}\n`
-    + `• Amount: GH₵ ${_order.price.toFixed(2)}\n`
-    + `• Paystack Ref: ${paystackRes.reference}\n`
+    + `• Bundle Price: GH₵ ${_order.price.toFixed(2)}\n`
+    + `• Platform Fee: GH₵ ${_order.fee.toFixed(2)}\n`
+    + `• Total Paid: GH₵ ${_order.total.toFixed(2)}\n`
     + `• Name: ${customer.name}\n`
     + `• Number: ${customer.phone}\n\n`
     + `Please send the bundle. Thank you! 🙏`;
@@ -1110,6 +1350,7 @@ document.addEventListener('DOMContentLoaded', function() {
   showB('MTN');
   buildCmp();
   initOffers();
+  loadPurchases();
 });
 </script>
 </body>
