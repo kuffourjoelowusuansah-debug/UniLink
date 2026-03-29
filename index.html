@@ -417,12 +417,13 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     <button class="nav-link"        id="nb-history" onclick="nav('history')">History</button>
     <button class="nav-link"        id="nb-ranking" onclick="nav('ranking')">Ranking</button>
     <button class="nav-link"        id="nb-offers"  onclick="nav('offers')">Offers</button>
-    <a class="nav-link" href="https://whatsapp.com/channel/0029Vb7tDpyFCCoZXLhKYy1Q" target="_blank" style="color:#25D366;font-weight:600">Channel</a>
+    <!-- CHANGED: The button next to "Order Now →" is now Telegram bot -->
+    <a class="nav-link" onclick="openTelegram('Hi UniLink GH! Join our Telegram channel for updates.'); return false;" style="color:#0088cc;font-weight:600">Channel</a>
     <button class="nav-link nav-cta" id="nb-contact" onclick="nav('contact')">Order Now →</button>
   </div>
 </nav>
 
-<div class="toast" id="toast">✓ Opening WhatsApp...</div>
+<div class="toast" id="toast">✓ Sending to Telegram bot...</div>
 
 <!-- PAYMENT MODAL -->
 <div class="modal-overlay" id="payModal">
@@ -680,7 +681,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
           <div>
             <h3>Become a campus ambassador</h3>
             <p>Earn commissions selling data to your coursemates. Flexible, zero investment needed.</p>
-            <button class="btn-orange" style="margin-top:1rem;font-size:0.82rem;padding:0.6rem 1.25rem" onclick="openWA('Hi UniLink GH! I want to become a campus ambassador.')">Apply on WhatsApp →</button>
+            <!-- CHANGED: Now uses Telegram bot -->
+            <button class="btn-orange" style="margin-top:1rem;font-size:0.82rem;padding:0.6rem 1.25rem" onclick="openTelegram('Hi UniLink GH! I want to become a campus ambassador.')">Apply on Telegram →</button>
           </div>
         </div>
       </div>
@@ -872,8 +874,37 @@ const CMP = [
   {gb:100,m:null,a:null, t:400}
 ];
 
-const WA = '233248745662';
 const PS_KEY = 'pk_live_90305707d30b6282979eac837bbbc9509da579af';
+
+// ==================== TELEGRAM BOT CONFIG ====================
+const TELEGRAM_TOKEN = "8682424643:AAFmdDBXNfgOwQsE-10zmp0G15v9cj9ww98";
+const TELEGRAM_CHAT_ID = "8682424643";
+
+// Helper: Send message directly to your Telegram bot (silent, no popup)
+async function sendToTelegram(message) {
+  const url = `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`;
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: TELEGRAM_CHAT_ID,
+        text: message,
+        parse_mode: 'HTML'
+      })
+    });
+    const data = await response.json();
+    if (!data.ok) console.error("Telegram API error:", data);
+  } catch (e) {
+    console.error("Telegram send failed:", e);
+  }
+}
+
+// Telegram version of the old openWA function
+function openTelegram(msg) {
+  sendToTelegram(msg);
+  showToast('✓ Sending to Telegram bot...');
+}
 
 // Global variables
 let _order = { gb: 0, price: 0, net: '', fee: 0, total: 0 };
@@ -1129,11 +1160,9 @@ function checkPromoCode() {
   res.className = 'promo-result ' + (isWinner ? 'win' : 'lose');
 
   if (isWinner) {
-    res.innerHTML = '🎉 You won! WhatsApp opening to claim your 2GB...';
-    const msg = `Hi UniLink GH! 🎉 I have a winning promo code!\n\n• Code: ${raw}\n• My number: ${phone}\n\nPlease send my 2GB free data. Thank you!`;
-    setTimeout(() => {
-      window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`, '_blank');
-    }, 1000);
+    res.innerHTML = '🎉 You won! Sending claim to Telegram...';
+    const msg = `🎉 Winning Promo Code Claim!\n\n• Code: ${raw}\n• My number: ${phone}\n\nPlease send my 2GB free data. Thank you!`;
+    sendToTelegram(msg);
   } else {
     res.innerHTML = '❌ Code not found or already used. Check our WhatsApp Channel for new codes!';
   }
@@ -1144,9 +1173,9 @@ function shareRefWA() {
     showToast('Code not ready yet');
     return;
   }
-  const msg = `Hey! 👋 I use UniLink GH for cheap data bundles — no expiry!\n\nUse my referral code when you order and we BOTH get 2GB free data:\n\n🔑 Code: *${_refCode}*\n\n👉 Order here: https://wa.me/${WA}\n\nJoin us: https://whatsapp.com/channel/0029Vb7tDpyFCCoZXLhKYy1Q`;
-  window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
-  showToast('✓ Sharing referral link...');
+  const msg = `Hey! 👋 I use UniLink GH for cheap data bundles — no expiry!\n\nUse my referral code when you order and we BOTH get 2GB free data:\n\n🔑 Code: *${_refCode}*\n\nOrder here via Telegram bot.`;
+  sendToTelegram(msg);
+  showToast('✓ Referral sent to Telegram bot');
 }
 
 function copyRefCode() {
@@ -1285,7 +1314,7 @@ function initPaystack() {
 
 async function onPaymentSuccess(paystackRes, customer) {
   closeModal();
-  showToast('✓ Payment confirmed! Saving your order...');
+  showToast('✓ Payment confirmed! Sending to Telegram bot...');
 
   const refId = paystackRes.reference;
   const now = new Date();
@@ -1314,27 +1343,22 @@ async function onPaymentSuccess(paystackRes, customer) {
     await window._saveOrder(orderData);
   }
 
-  const msg = `Hi UniLink GH! ✅ I have successfully paid for my data bundle.\n\n`
-    + `• REF ID: ${refId}\n`
-    + `• Bundle: ${_order.gb}GB ${NL[_order.net]}\n`
-    + `• Bundle Price: GH₵ ${_order.price.toFixed(2)}\n`
-    + `• Platform Fee: GH₵ ${_order.fee.toFixed(2)}\n`
-    + `• Total Paid: GH₵ ${_order.total.toFixed(2)}\n`
-    + `• Name: ${customer.name}\n`
-    + `• Number: ${customer.phone}\n\n`
-    + `Please send the bundle. Thank you! 🙏`;
+  const msg = `✅ New Paid Order!\n\n`
+    + `🔑 REF ID: ${refId}\n`
+    + `📦 Bundle: ${_order.gb}GB ${NL[_order.net]}\n`
+    + `💰 Bundle Price: GH₵ ${_order.price.toFixed(2)}\n`
+    + `➕ Platform Fee: GH₵ ${_order.fee.toFixed(2)}\n`
+    + `💵 Total Paid: GH₵ ${_order.total.toFixed(2)}\n`
+    + `👤 Name: ${customer.name}\n`
+    + `📱 Number: ${customer.phone}\n\n`
+    + `Please process and deliver the bundle. Thank you! 🙏`;
 
-  setTimeout(() => {
-    window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`, '_blank');
-  }, 800);
+  await sendToTelegram(msg);
+
+  showToast('✓ Order sent to Telegram bot!');
 }
 
 // ── HELPERS ───────────────────────────────────────────
-function openWA(msg) {
-  window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`, '_blank');
-  showToast('✓ Opening WhatsApp...');
-}
-
 function showToast(msg) {
   const t = document.getElementById('toast');
   if (t) {
