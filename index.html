@@ -3,100 +3,228 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UniLink GH | The Student Bundle</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <title>UniLink GH | The Student Bundle (Glassmorphism Edit)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --purple-main: #32304C;
-            --purple-dark: #26243D;
-            --lavender: #E4E2F1;
-            --white: #FFFFFF;
-            --orange: #FF9431;
+            --purple-black: #1F1D33; /* Even deeper illustrative tone */
+            --purple-frosted: rgba(31, 29, 51, 0.88); /* Frosted deep base */
+            --lavender: #E4E2F1; /* Body background */
+            --card-frosted: rgba(240, 240, 248, 0.9); /* Frosted light card base */
+            --white: #FFFFFF; /* Pure white for elements inside cards */
+            --accent-orange: #FF9431; /* Action button accent */
+            --accent-amber: #FFB35B; /* Decorative accent and some highlights */
             --text-muted: #8E8BBA;
+            --glass-border: 1px solid rgba(255,255,255,0.08);
+            --glass-border-dark: 1px solid rgba(0,0,0,0.06);
             --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            --shadow-soft: 0 10px 30px rgba(0,0,0,0.02);
+            --shadow-floating: 0 20px 40px rgba(0,0,0,0.05);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background-color: var(--lavender); overflow-x: hidden; color: var(--purple-main); }
+        body { background-color: var(--lavender); overflow-x: hidden; color: var(--purple-black); position: relative; }
 
-        /* Navigation */
-        nav {
-            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-            background: var(--purple-main); padding: 12px 25px; border-radius: 40px;
-            display: flex; gap: 30px; z-index: 1000; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        /* Subtle Geometric Background Pattern */
+        body::before {
+            content: '';
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(142, 139, 186, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(142, 139, 186, 0.05) 1px, transparent 1px);
+            background-size: 80px 80px;
+            z-index: -1;
         }
-        nav a { color: var(--text-muted); text-decoration: none; font-size: 12px; font-weight: 600; cursor: pointer; transition: var(--transition); }
-        nav a.active { color: var(--orange); }
 
-        .page { display: none; min-height: 100vh; width: 100%; animation: fadeIn 0.5s ease forwards; }
+        /* --- NAVIGATION (Frosted Pill with illustrative feel) --- */
+        nav {
+            position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
+            background: var(--purple-frosted);
+            padding: 15px 30px;
+            border-radius: 50px;
+            display: flex; gap: 30px; z-index: 1000;
+            backdrop-filter: blur(20px);
+            border: var(--glass-border);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            align-items: center;
+        }
+        nav a { color: var(--text-muted); text-decoration: none; font-size: 13px; font-weight: 600; cursor: pointer; transition: var(--transition); text-transform: uppercase; letter-spacing: 1px; }
+        nav a.active { color: var(--accent-orange); }
+
+        .page { display: none; min-height: 100vh; width: 100%; animation: fadeIn 0.5s ease forwards; padding-bottom: 120px; /* Space for nav */ }
         .page.active { display: flex; }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Decorative Vector Elements (Illustrative feel) */
+        .decor { position: absolute; pointer-events: none; opacity: 0.1; }
+        .decor-square { width: 10px; height: 10px; background: var(--accent-amber); border-radius: 2px; }
+        .decor-dot { width: 6px; height: 6px; background: var(--purple-black); border-radius: 50%; }
 
         /* --- PAGE: HOME --- */
         #home { flex-direction: row; }
-        .split-purple { flex: 1.2; background: var(--purple-main); display: flex; flex-direction: column; justify-content: center; padding: 60px; color: var(--white); }
-        .split-white { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 60px; gap: 20px; }
+        .split-purple { 
+            flex: 1.2; 
+            background: var(--purple-frosted); 
+            display: flex; flex-direction: column; justify-content: center; 
+            padding: 80px; color: var(--white); 
+            border-radius: 0 30px 30px 0;
+            backdrop-filter: blur(25px);
+            border-right: var(--glass-border);
+            position: relative;
+        }
+        .split-white { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 60px; gap: 20px; position: relative;}
         
-        .hero-tag { color: var(--orange); font-weight: 800; margin-bottom: 10px; }
-        .hero-title { font-size: 4rem; line-height: 1; margin-bottom: 20px; }
-        .btn-main { background: var(--orange); color: var(--white); padding: 18px 40px; border-radius: 12px; border: none; font-weight: 800; cursor: pointer; width: fit-content; transition: var(--transition); }
-        .btn-main:hover { transform: scale(1.05); box-shadow: 0 10px 20px rgba(255, 148, 49, 0.3); }
+        .hero-tag { color: var(--accent-amber); font-weight: 800; margin-bottom: 10px; text-transform: uppercase; font-size: 14px; letter-spacing: 2px;}
+        .hero-title { font-size: 4.5rem; line-height: 1; margin-bottom: 25px; }
+        .btn-main { background: var(--accent-orange); color: var(--white); padding: 20px 45px; border-radius: 12px; border: none; font-weight: 800; cursor: pointer; width: fit-content; transition: var(--transition); box-shadow: 0 10px 30px rgba(255, 148, 49, 0.2); }
+        .btn-main:hover { transform: scale(1.05) translateY(-3px); box-shadow: 0 15px 35px rgba(255, 148, 49, 0.3); }
 
-        .virtue-card { background: var(--white); padding: 25px; border-radius: 20px; box-shadow: 10px 10px 30px rgba(0,0,0,0.03); display: flex; align-items: center; gap: 15px; border: 1px solid rgba(0,0,0,0.05); transition: var(--transition); }
-        .virtue-card:hover { transform: translateX(10px); border-color: var(--orange); }
-        .virtue-icon { width: 40px; height: 40px; background: var(--lavender); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--orange); font-weight: 800; }
+        .virtue-card { 
+            background: var(--card-frosted); 
+            padding: 30px; border-radius: 20px; 
+            box-shadow: var(--shadow-soft); 
+            display: flex; align-items: center; gap: 20px; 
+            border: var(--glass-border-dark); 
+            transition: var(--transition);
+            backdrop-filter: blur(15px);
+        }
+        .virtue-card:hover { transform: translateX(12px) translateY(-5px); border-color: var(--accent-orange); box-shadow: var(--shadow-floating); }
+        .virtue-icon { 
+            width: 50px; height: 50px; 
+            background: var(--white); 
+            border-radius: 12px; 
+            display: flex; align-items: center; justify-content: center; 
+            color: var(--accent-orange); 
+            font-weight: 800; 
+            font-size: 1.4rem;
+            border: var(--glass-border-dark);
+        }
 
         /* --- PAGE: DASHBOARD --- */
-        #dashboard { flex-direction: column; padding: 40px; gap: 30px; }
-        .dash-top { background: var(--purple-main); border-radius: 30px; padding: 40px; color: var(--white); display: flex; justify-content: space-between; align-items: center; }
-        .rank-box h2 { font-size: 3rem; color: var(--orange); }
+        #dashboard { flex-direction: column; padding: 50px; gap: 40px; }
+        .dash-top { 
+            background: var(--purple-frosted); 
+            border-radius: 30px; 
+            padding: 50px; color: var(--white); 
+            display: flex; justify-content: space-between; align-items: center; 
+            backdrop-filter: blur(25px);
+            border: var(--glass-border);
+            position: relative;
+        }
+        .rank-box h2 { font-size: 3.5rem; color: var(--accent-amber); font-weight: 800;}
         
-        .network-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-        .net-card { background: var(--white); padding: 30px; border-radius: 25px; cursor: pointer; transition: var(--transition); position: relative; overflow: hidden; }
-        .net-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
-        .net-card h3 { font-size: 1.5rem; margin-bottom: 5px; }
-        .net-status { font-size: 12px; color: green; font-weight: 600; }
-        .net-phrase { font-size: 13px; color: var(--text-muted); margin-top: 15px; }
+        .network-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
+        .net-card { 
+            background: var(--card-frosted); 
+            padding: 40px; border-radius: 25px; 
+            cursor: pointer; transition: var(--transition); 
+            position: relative; overflow: hidden;
+            border: var(--glass-border-dark);
+            backdrop-filter: blur(15px);
+            box-shadow: var(--shadow-soft);
+        }
+        .net-card:hover { transform: translateY(-12px) scale(1.02); box-shadow: var(--shadow-floating); border-color: var(--accent-orange); }
+        .net-card h3 { font-size: 1.8rem; margin-bottom: 8px; font-weight: 800; color: var(--purple-black); }
+        .net-status { font-size: 12px; color: green; font-weight: 600; display: flex; align-items: center; gap: 5px; }
+        .net-phrase { font-size: 14px; color: var(--text-muted); margin-top: 18px; }
 
         /* --- PAGE: BUNDLE --- */
-        #bundles { flex-direction: column; padding: 40px; gap: 30px; }
-        .bundle-header { background: var(--purple-main); padding: 40px; border-radius: 30px; color: white; text-align: center; }
-        .bundle-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-        .b-card { background: var(--white); padding: 25px; border-radius: 20px; display: flex; flex-direction: column; gap: 15px; }
-        .b-size { font-size: 2rem; font-weight: 800; color: var(--purple-main); }
-        .b-price { color: var(--orange); font-weight: 800; font-size: 1.2rem; }
-        .btn-sm { background: var(--purple-main); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: 600; cursor: pointer; }
+        #bundles { flex-direction: column; padding: 50px; gap: 40px; }
+        .bundle-header { 
+            background: var(--purple-frosted); 
+            padding: 50px; border-radius: 30px; 
+            color: white; text-align: center; 
+            backdrop-filter: blur(25px);
+            border: var(--glass-border);
+        }
+        .bundle-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; }
+        .b-card { 
+            background: var(--card-frosted); 
+            padding: 30px; border-radius: 20px; 
+            display: flex; flex-direction: column; gap: 18px; 
+            border: var(--glass-border-dark);
+            backdrop-filter: blur(15px);
+            box-shadow: var(--shadow-soft);
+        }
+        .b-size { font-size: 2.2rem; font-weight: 800; color: var(--purple-black); letter-spacing: -1px;}
+        .b-price { color: var(--accent-orange); font-weight: 800; font-size: 1.3rem; }
+        .btn-sm { 
+            background: var(--purple-frosted); color: white; border: none; padding: 14px; border-radius: 12px; font-weight: 600; cursor: pointer; transition: var(--transition); 
+            border: var(--glass-border);
+        }
+        .btn-sm:hover { background: var(--purple-black); transform: translateY(-3px); box-shadow: var(--shadow-soft); }
 
         /* --- PAGE: CHECKOUT --- */
-        #checkout { justify-content: center; align-items: center; padding: 40px; }
-        .checkout-card { background: var(--white); width: 100%; max-width: 500px; padding: 40px; border-radius: 30px; box-shadow: var(--shadow-floating); }
-        .summary-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px; }
-        .total-row { border-top: 1px solid #eee; margin-top: 15px; padding-top: 15px; font-weight: 800; font-size: 1.2rem; color: var(--orange); }
-        input { width: 100%; padding: 15px; margin-top: 10px; border-radius: 10px; border: 1px solid #ddd; background: #f9f9f9; }
+        #checkout { justify-content: center; align-items: center; padding: 50px; }
+        .checkout-card { 
+            background: var(--card-frosted); 
+            width: 100%; max-width: 550px; padding: 50px; 
+            border-radius: 30px; 
+            backdrop-filter: blur(20px);
+            border: var(--glass-border-dark);
+            box-shadow: var(--shadow-floating); 
+            position: relative;
+        }
+        .summary-row { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 15px; color: var(--text-muted); }
+        .total-row { border-top: 1px solid rgba(0,0,0,0.05); margin-top: 18px; padding-top: 18px; font-weight: 800; font-size: 1.3rem; color: var(--accent-orange); }
+        input { 
+            width: 100%; padding: 18px; margin-top: 12px; 
+            border-radius: 12px; border: var(--glass-border-dark); 
+            background: var(--white); 
+            color: var(--purple-black);
+            transition: var(--transition);
+        }
+        input:focus { border-color: var(--accent-amber); outline: none; background: rgba(255,179,91,0.05); }
 
         /* --- PAGE: HISTORY --- */
-        #history { flex-direction: column; padding: 40px; gap: 20px; align-items: center; }
-        .history-stats { background: var(--white); width: 100%; max-width: 800px; padding: 30px; border-radius: 20px; display: flex; justify-content: space-around; text-align: center; }
-        .stat-val { display: block; font-weight: 800; font-size: 1.5rem; color: var(--orange); }
-        .receipt-list { width: 100%; max-width: 800px; display: flex; flex-direction: column; gap: 15px; }
-        .receipt { background: var(--white); padding: 20px; border-radius: 15px; display: flex; justify-content: space-between; align-items: center; }
+        #history { flex-direction: column; padding: 50px; gap: 30px; align-items: center; }
+        .history-stats { 
+            background: var(--card-frosted); 
+            width: 100%; max-width: 850px; padding: 40px; border-radius: 25px; 
+            display: flex; justify-content: space-around; text-align: center; 
+            backdrop-filter: blur(15px);
+            border: var(--glass-border-dark);
+            box-shadow: var(--shadow-soft);
+        }
+        .stat-val { display: block; font-weight: 800; font-size: 1.8rem; color: var(--accent-orange); }
+        .history-header { font-size: 12px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 2px; }
+        .receipt-list { width: 100%; max-width: 850px; display: flex; flex-direction: column; gap: 20px; }
+        .receipt { 
+            background: var(--card-frosted); padding: 25px; border-radius: 18px; 
+            display: flex; justify-content: space-between; align-items: center; 
+            backdrop-filter: blur(12px);
+            border: var(--glass-border-dark);
+            box-shadow: var(--shadow-soft);
+        }
 
         /* --- PAGE: SETTINGS --- */
-        #settings { padding: 40px; gap: 30px; justify-content: center; }
-        .settings-container { width: 100%; max-width: 900px; display: flex; background: var(--white); border-radius: 30px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.05); }
-        .set-purple { flex: 1; background: var(--purple-main); padding: 40px; color: white; }
-        .set-white { flex: 1.5; padding: 40px; }
-        .profile-img { width: 80px; height: 80px; background: var(--orange); border-radius: 50%; margin-bottom: 20px; }
+        #settings { padding: 50px; gap: 40px; justify-content: center; }
+        .settings-container { width: 100%; max-width: 1000px; display: flex; background: var(--card-frosted); border-radius: 35px; overflow: hidden; border: var(--glass-border-dark); backdrop-filter: blur(20px); box-shadow: var(--shadow-floating); }
+        .set-purple { 
+            flex: 1; background: var(--purple-frosted); padding: 50px; color: white; 
+            backdrop-filter: blur(25px); border-right: var(--glass-border);
+        }
+        .set-white { flex: 1.6; padding: 50px; }
+        .profile-img { 
+            width: 90px; height: 90px; 
+            background: rgba(255,255,255,0.05); 
+            border-radius: 50%; margin-bottom: 25px; 
+            border: 4px solid var(--accent-amber);
+            position: relative;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .profile-img::after { content:''; width: 30px; height: 30px; background: var(--white); border-radius: 50%; border: 3px solid var(--purple-black); }
 
         /* Mobile Adjustments */
         @media (max-width: 768px) {
             #home { flex-direction: column; }
-            .split-purple, .split-white { padding: 30px; }
-            .hero-title { font-size: 2.5rem; }
-            .network-grid { grid-template-columns: 1fr; }
-            nav { width: 90%; justify-content: space-around; gap: 0; }
+            .split-purple, .split-white { padding: 40px; }
+            .hero-title { font-size: 3rem; }
+            .network-grid { grid-template-columns: 1fr; gap: 15px; }
+            nav { width: 90%; justify-content: space-around; gap: 0; padding: 12px 20px;}
             .settings-container { flex-direction: column; }
+            .set-purple { border-right: none; border-bottom: var(--glass-border); }
         }
     </style>
 </head>
@@ -109,13 +237,15 @@
         <a onclick="showPage('settings')" id="nav-settings">SETTINGS</a>
     </nav>
 
-    <!-- HOME PAGE -->
-    <section id="home" class="page active">
+    
+<section id="home" class="page active">
         <div class="split-purple">
             <p class="hero-tag">UniLink GH</p>
             <h1 class="hero-title">The Student <br>Bundle.</h1>
-            <p style="opacity: 0.7; margin-bottom: 30px;">Trusted by 1000+ Students in Ghana.</p>
+            <p style="opacity: 0.8; margin-bottom: 40px;">Trusted by 1000+ Students in Ghana.</p>
             <button class="btn-main" onclick="showPage('dashboard')">Buy Now</button>
+            <div class="decor decor-dot" style="top: 10%; right: 15%;"></div>
+            <div class="decor decor-square" style="top: 80%; left: 10%; opacity: 0.3;"></div>
         </div>
         <div class="split-white">
             <div class="virtue-card">
@@ -137,54 +267,58 @@
         </div>
     </section>
 
-    <!-- DASHBOARD PAGE -->
-    <section id="dashboard" class="page">
+    
+<section id="dashboard" class="page">
         <div class="dash-top">
             <div class="rank-box">
-                <p style="opacity: 0.7; text-transform: uppercase; font-size: 12px; letter-spacing: 2px;">Weekly Ranking</p>
+                <p style="opacity: 0.8; text-transform: uppercase; font-size: 13px; letter-spacing: 2px;">Weekly Ranking</p>
                 <h2>#90</h2>
-                <p style="margin-top: 10px;">Keep it up! You're in the top 10%.</p>
+                <p style="margin-top: 12px; font-size: 14px;">Great job! Keep the momentum to enter top 50.</p>
             </div>
-            <div style="text-align: right;">
+            <div style="text-align: right; color: white;">
                 <p>Welcome back,</p>
                 <strong>Student User</strong>
             </div>
+            <div class="decor decor-dot" style="top: 15%; right: 40%;"></div>
+            <div class="decor decor-square" style="bottom: 10%; left: 30%; opacity: 0.2;"></div>
         </div>
 
         <div class="network-grid">
             <div class="net-card" onclick="openBundles('MTN')">
                 <h3>MTN</h3>
-                <span class="net-status">● IN STOCK</span>
+                <span class="net-status"><div class="decor-dot" style="background: green; opacity: 1;"></div>IN STOCK</span>
                 <p class="net-phrase">Everywhere you go.</p>
             </div>
             <div class="net-card" onclick="openBundles('TELECEL')">
                 <h3>Telecel</h3>
-                <span class="net-status">● IN STOCK</span>
+                <span class="net-status"><div class="decor-dot" style="background: green; opacity: 1;"></div>IN STOCK</span>
                 <p class="net-phrase">Move forward.</p>
             </div>
             <div class="net-card" onclick="openBundles('AT')">
                 <h3>AT</h3>
-                <span class="net-status">● IN STOCK</span>
+                <span class="net-status"><div class="decor-dot" style="background: green; opacity: 1;"></div>IN STOCK</span>
                 <p class="net-phrase">Simple. Professional.</p>
             </div>
         </div>
     </section>
 
-    <!-- BUNDLE PAGE -->
-    <section id="bundles" class="page">
+    
+<section id="bundles" class="page">
         <div class="bundle-header">
             <h1 id="selected-network">MTN Bundles</h1>
-            <p id="bundle-urgency">Urgent: Only a few bundles remaining for today!</p>
+            <p id="bundle-urgency">Hurry! Limited bundles left for today's special prices.</p>
         </div>
         <div class="bundle-grid" id="bundle-list">
-            <!-- Bundles will be injected here by JS -->
-        </div>
+            
+</div>
     </section>
 
-    <!-- CHECKOUT PAGE -->
-    <section id="checkout" class="page">
+    
+<section id="checkout" class="page">
         <div class="checkout-card">
-            <h2 style="margin-bottom: 20px;">Order Summary</h2>
+            <div class="decor decor-square" style="top: 10%; right: 10%;"></div>
+            <div class="decor decor-dot" style="bottom: 10%; left: 5%;"></div>
+            <h2 style="margin-bottom: 25px; color: var(--purple-black);">Order Summary</h2>
             <div id="checkout-details">
                 <div class="summary-row"><span>Bundle Size</span><span id="sum-size">10GB</span></div>
                 <div class="summary-row"><span>Price</span><span id="sum-price">₵18.00</span></div>
@@ -193,56 +327,56 @@
                 <div class="total-row"><span>Total</span><span id="sum-total">₵18.50</span></div>
             </div>
             
-            <div style="margin-top: 30px;">
+            <div style="margin-top: 35px;">
                 <input type="text" placeholder="Full Name">
                 <input type="email" placeholder="Email Address">
                 <input type="tel" placeholder="Recipient Number">
-                <button class="btn-main" style="width: 100%; margin-top: 20px;" onclick="processPayment()">Confirm & Pay</button>
+                <button class="btn-main" style="width: 100%; margin-top: 25px;" onclick="processPayment()">Confirm & Pay</button>
             </div>
         </div>
     </section>
 
-    <!-- HISTORY PAGE -->
-    <section id="history" class="page">
+    
+<section id="history" class="page">
         <div class="history-stats">
-            <div><small>Money Spent</small><span class="stat-val">₵450.00</span></div>
-            <div><small>Data Bought</small><span class="stat-val">120 GB</span></div>
-            <div><small>Total Orders</small><span class="stat-val">24</span></div>
+            <div><p class="history-header">Money Spent</p><span class="stat-val">₵450.00</span></div>
+            <div><p class="history-header">Data Bought</p><span class="stat-val">120 GB</span></div>
+            <div><p class="history-header">Total Orders</p><span class="stat-val">24</span></div>
         </div>
         
         <div class="receipt-list">
             <div class="receipt">
                 <div>
                     <strong>10GB MTN Bundle</strong><br>
-                    <small>Oct 24, 2023 • 14:20</small>
+                    <small style="color: var(--text-muted); font-size: 13px;">Oct 24, 2023 • 14:20</small>
                 </div>
-                <button class="btn-sm" style="background: var(--lavender); color: var(--purple-main);">Copy Details</button>
+                <button class="btn-sm" style="background: rgba(142, 139, 186, 0.1); color: var(--purple-black); border-color: rgba(0,0,0,0.02)">Copy Details</button>
             </div>
             <div class="receipt">
                 <div>
                     <strong>20GB Telecel Bundle</strong><br>
-                    <small>Oct 20, 2023 • 09:15</small>
+                    <small style="color: var(--text-muted); font-size: 13px;">Oct 20, 2023 • 09:15</small>
                 </div>
-                <button class="btn-sm" style="background: var(--lavender); color: var(--purple-main);">Copy Details</button>
+                <button class="btn-sm" style="background: rgba(142, 139, 186, 0.1); color: var(--purple-black); border-color: rgba(0,0,0,0.02)">Copy Details</button>
             </div>
         </div>
     </section>
 
-    <!-- SETTINGS PAGE -->
-    <section id="settings" class="page">
+    
+<section id="settings" class="page">
         <div class="settings-container">
             <div class="set-purple">
                 <div class="profile-img"></div>
                 <h2>Register Name</h2>
-                <p style="opacity: 0.6; font-size: 13px; margin-top: 10px;">Set your identity on the UniLink network.</p>
-                <input type="text" placeholder="Enter Name..." style="background: rgba(255,255,255,0.1); border: none; color: white;">
-                <button class="btn-sm" style="background: var(--orange); width: 100%; margin-top: 10px;">Update Profile</button>
+                <p style="opacity: 0.7; font-size: 14px; margin-top: 12px; line-height: 1.5;">Set your identity on the UniLink network to personalize your rank.</p>
+                <input type="text" placeholder="Enter Full Name..." style="background: rgba(255,255,255,0.05); border: var(--glass-border); color: white;">
+                <button class="btn-main" style="width: 100%; margin-top: 20px; box-shadow: 0 10px 20px rgba(255,148,49,0.3);">Update Profile</button>
             </div>
             <div class="set-white">
-                <h3 style="margin-bottom: 20px;">System Settings</h3>
+                <h3 style="margin-bottom: 25px; color: var(--purple-black);">System Settings</h3>
                 <div class="summary-row"><span>Notifications</span><span>On</span></div>
                 <div class="summary-row"><span>Security Pin</span><span>Set</span></div>
-                <div class="summary-row"><span>Account Status</span><span style="color: green;">Verified</span></div>
+                <div class="summary-row"><span>Account Status</span><span style="color: green; font-weight: 600;">● Verified</span></div>
                 <div class="summary-row"><span>App Version</span><span>v2.0.4</span></div>
             </div>
         </div>
