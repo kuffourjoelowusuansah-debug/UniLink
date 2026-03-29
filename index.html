@@ -3,393 +3,361 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UniLink GH | The Student Bundle (Glassmorphism Edit)</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+    <title>UniLink GH | Ultimate Dribbble Style</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --purple-black: #1F1D33; /* Even deeper illustrative tone */
-            --purple-frosted: rgba(31, 29, 51, 0.88); /* Frosted deep base */
-            --lavender: #E4E2F1; /* Body background */
-            --card-frosted: rgba(240, 240, 248, 0.9); /* Frosted light card base */
-            --white: #FFFFFF; /* Pure white for elements inside cards */
-            --accent-orange: #FF9431; /* Action button accent */
-            --accent-amber: #FFB35B; /* Decorative accent and some highlights */
-            --text-muted: #8E8BBA;
-            --glass-border: 1px solid rgba(255,255,255,0.08);
-            --glass-border-dark: 1px solid rgba(0,0,0,0.06);
+            --bg-lavender: #E6E4F0;
+            --grad-dark-card: linear-gradient(180deg, #4A466A 0%, #2A2740 100%);
+            --grad-dark-inner: linear-gradient(180deg, #56517A 0%, #3B3754 100%);
+            --grad-orange: linear-gradient(90deg, #FFB85C 0%, #FF8D36 100%);
+            --white: #FFFFFF;
+            --text-dark: #2A2740;
+            --text-muted: #9592B6;
+            --line-grey: #E0DFEC;
+            --shadow-soft: 0 15px 35px rgba(42, 39, 64, 0.08);
+            --shadow-float: 0 25px 50px rgba(42, 39, 64, 0.2);
+            --shadow-orange: 0 10px 20px rgba(255, 141, 54, 0.3);
             --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            --shadow-soft: 0 10px 30px rgba(0,0,0,0.02);
-            --shadow-floating: 0 20px 40px rgba(0,0,0,0.05);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background-color: var(--lavender); overflow-x: hidden; color: var(--purple-black); position: relative; }
+        
+        body { 
+            background-color: var(--bg-lavender); 
+            color: var(--text-dark); 
+            overflow-x: hidden; 
+            min-height: 100vh;
+        }
 
-        /* Subtle Geometric Background Pattern */
-        body::before {
-            content: '';
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        /* The exact connecting lines and nodes background */
+        .bg-nodes {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1;
             background-image: 
-                linear-gradient(rgba(142, 139, 186, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(142, 139, 186, 0.05) 1px, transparent 1px);
-            background-size: 80px 80px;
-            z-index: -1;
+                radial-gradient(circle at 15% 50px, var(--white) 3px, transparent 4px),
+                radial-gradient(circle at 85% 30px, var(--white) 3px, transparent 4px),
+                radial-gradient(circle at 10% 80%, var(--white) 4px, transparent 5px),
+                radial-gradient(circle at 90% 70%, var(--white) 4px, transparent 5px);
+        }
+        .bg-line {
+            position: fixed; border: 1.5px solid var(--white); border-radius: 20px; z-index: -1;
+            opacity: 0.7;
+        }
+        .floating-cube {
+            position: fixed; width: 24px; height: 24px; border-radius: 6px; 
+            background: var(--grad-orange); box-shadow: var(--shadow-orange); z-index: -1;
+            animation: float 6s ease-in-out infinite;
         }
 
-        /* --- NAVIGATION (Frosted Pill with illustrative feel) --- */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Navigation */
         nav {
-            position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
-            background: var(--purple-frosted);
-            padding: 15px 30px;
-            border-radius: 50px;
-            display: flex; gap: 30px; z-index: 1000;
-            backdrop-filter: blur(20px);
-            border: var(--glass-border);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-            align-items: center;
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+            background: var(--grad-dark-card); padding: 15px 35px; border-radius: 40px;
+            display: flex; gap: 30px; z-index: 1000; box-shadow: var(--shadow-float);
         }
-        nav a { color: var(--text-muted); text-decoration: none; font-size: 13px; font-weight: 600; cursor: pointer; transition: var(--transition); text-transform: uppercase; letter-spacing: 1px; }
-        nav a.active { color: var(--accent-orange); }
+        nav a { color: var(--text-muted); text-decoration: none; font-size: 13px; font-weight: 600; cursor: pointer; transition: var(--transition); letter-spacing: 1px; }
+        nav a.active { color: #FFB85C; }
 
-        .page { display: none; min-height: 100vh; width: 100%; animation: fadeIn 0.5s ease forwards; padding-bottom: 120px; /* Space for nav */ }
-        .page.active { display: flex; }
+        .page { display: none; min-height: 100vh; width: 100%; padding: 60px 20px 120px; animation: fadeIn 0.5s ease forwards; justify-content: center; align-items: center; }
+        .page.active { display: flex; flex-direction: column; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Decorative Vector Elements (Illustrative feel) */
-        .decor { position: absolute; pointer-events: none; opacity: 0.1; }
-        .decor-square { width: 10px; height: 10px; background: var(--accent-amber); border-radius: 2px; }
-        .decor-dot { width: 6px; height: 6px; background: var(--purple-black); border-radius: 50%; }
-
-        /* --- PAGE: HOME --- */
-        #home { flex-direction: row; }
-        .split-purple { 
-            flex: 1.2; 
-            background: var(--purple-frosted); 
-            display: flex; flex-direction: column; justify-content: center; 
-            padding: 80px; color: var(--white); 
-            border-radius: 0 30px 30px 0;
-            backdrop-filter: blur(25px);
-            border-right: var(--glass-border);
-            position: relative;
+        /* Shared Components */
+        .btn-grad {
+            background: var(--grad-orange); color: var(--white); padding: 16px 32px; 
+            border-radius: 25px; border: none; font-weight: 800; cursor: pointer; 
+            transition: var(--transition); box-shadow: var(--shadow-orange);
+            display: inline-flex; justify-content: center; align-items: center;
         }
-        .split-white { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 60px; gap: 20px; position: relative;}
+        .btn-grad:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 15px 25px rgba(255, 141, 54, 0.4); }
         
-        .hero-tag { color: var(--accent-amber); font-weight: 800; margin-bottom: 10px; text-transform: uppercase; font-size: 14px; letter-spacing: 2px;}
-        .hero-title { font-size: 4.5rem; line-height: 1; margin-bottom: 25px; }
-        .btn-main { background: var(--accent-orange); color: var(--white); padding: 20px 45px; border-radius: 12px; border: none; font-weight: 800; cursor: pointer; width: fit-content; transition: var(--transition); box-shadow: 0 10px 30px rgba(255, 148, 49, 0.2); }
-        .btn-main:hover { transform: scale(1.05) translateY(-3px); box-shadow: 0 15px 35px rgba(255, 148, 49, 0.3); }
+        .pill-line { height: 6px; background: var(--line-grey); border-radius: 10px; margin: 8px 0; }
+        .pill-dark { background: var(--grad-dark-inner); }
+        .pill-orange { background: var(--grad-orange); }
 
-        .virtue-card { 
-            background: var(--card-frosted); 
-            padding: 30px; border-radius: 20px; 
-            box-shadow: var(--shadow-soft); 
-            display: flex; align-items: center; gap: 20px; 
-            border: var(--glass-border-dark); 
-            transition: var(--transition);
-            backdrop-filter: blur(15px);
+        /* --- DASHBOARD (Matches Center Screen) --- */
+        .dash-container {
+            width: 100%; max-width: 600px; border-radius: 35px;
+            background: var(--white); box-shadow: var(--shadow-float);
+            display: flex; flex-direction: column; overflow: hidden;
         }
-        .virtue-card:hover { transform: translateX(12px) translateY(-5px); border-color: var(--accent-orange); box-shadow: var(--shadow-floating); }
-        .virtue-icon { 
-            width: 50px; height: 50px; 
-            background: var(--white); 
-            border-radius: 12px; 
-            display: flex; align-items: center; justify-content: center; 
-            color: var(--accent-orange); 
-            font-weight: 800; 
-            font-size: 1.4rem;
-            border: var(--glass-border-dark);
+        .dash-top {
+            background: var(--grad-dark-card); padding: 40px; color: var(--white);
+            position: relative; border-bottom-left-radius: 35px; border-bottom-right-radius: 35px;
+            z-index: 2; box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
-
-        /* --- PAGE: DASHBOARD --- */
-        #dashboard { flex-direction: column; padding: 50px; gap: 40px; }
-        .dash-top { 
-            background: var(--purple-frosted); 
-            border-radius: 30px; 
-            padding: 50px; color: var(--white); 
-            display: flex; justify-content: space-between; align-items: center; 
-            backdrop-filter: blur(25px);
-            border: var(--glass-border);
-            position: relative;
-        }
-        .rank-box h2 { font-size: 3.5rem; color: var(--accent-amber); font-weight: 800;}
+        .dash-top-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .dash-pill { width: 60px; height: 12px; border-radius: 10px; background: var(--white); opacity: 0.2; }
         
-        .network-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
-        .net-card { 
-            background: var(--card-frosted); 
-            padding: 40px; border-radius: 25px; 
-            cursor: pointer; transition: var(--transition); 
-            position: relative; overflow: hidden;
-            border: var(--glass-border-dark);
-            backdrop-filter: blur(15px);
-            box-shadow: var(--shadow-soft);
+        /* Mock Wavy Chart */
+        .mock-chart { width: 100%; height: 120px; position: relative; margin-top: 20px; }
+        .chart-svg { width: 100%; height: 100%; overflow: visible; }
+        .chart-path { fill: none; stroke: #FFB85C; stroke-width: 3; stroke-linecap: round; }
+        .chart-dot { fill: var(--white); opacity: 0.2; }
+        
+        .dash-bottom { padding: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; background: var(--white); margin-top: -20px; padding-top: 50px; }
+        .net-card {
+            background: var(--white); border-radius: 20px; padding: 25px;
+            box-shadow: var(--shadow-soft); cursor: pointer; transition: var(--transition);
+            border: 2px solid var(--bg-lavender); position: relative;
         }
-        .net-card:hover { transform: translateY(-12px) scale(1.02); box-shadow: var(--shadow-floating); border-color: var(--accent-orange); }
-        .net-card h3 { font-size: 1.8rem; margin-bottom: 8px; font-weight: 800; color: var(--purple-black); }
-        .net-status { font-size: 12px; color: green; font-weight: 600; display: flex; align-items: center; gap: 5px; }
-        .net-phrase { font-size: 14px; color: var(--text-muted); margin-top: 18px; }
-
-        /* --- PAGE: BUNDLE --- */
-        #bundles { flex-direction: column; padding: 50px; gap: 40px; }
-        .bundle-header { 
-            background: var(--purple-frosted); 
-            padding: 50px; border-radius: 30px; 
-            color: white; text-align: center; 
-            backdrop-filter: blur(25px);
-            border: var(--glass-border);
-        }
-        .bundle-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; }
-        .b-card { 
-            background: var(--card-frosted); 
-            padding: 30px; border-radius: 20px; 
-            display: flex; flex-direction: column; gap: 18px; 
-            border: var(--glass-border-dark);
-            backdrop-filter: blur(15px);
-            box-shadow: var(--shadow-soft);
-        }
-        .b-size { font-size: 2.2rem; font-weight: 800; color: var(--purple-black); letter-spacing: -1px;}
-        .b-price { color: var(--accent-orange); font-weight: 800; font-size: 1.3rem; }
-        .btn-sm { 
-            background: var(--purple-frosted); color: white; border: none; padding: 14px; border-radius: 12px; font-weight: 600; cursor: pointer; transition: var(--transition); 
-            border: var(--glass-border);
-        }
-        .btn-sm:hover { background: var(--purple-black); transform: translateY(-3px); box-shadow: var(--shadow-soft); }
-
-        /* --- PAGE: CHECKOUT --- */
-        #checkout { justify-content: center; align-items: center; padding: 50px; }
-        .checkout-card { 
-            background: var(--card-frosted); 
-            width: 100%; max-width: 550px; padding: 50px; 
-            border-radius: 30px; 
-            backdrop-filter: blur(20px);
-            border: var(--glass-border-dark);
-            box-shadow: var(--shadow-floating); 
+        .net-card:hover { transform: translateY(-5px); border-color: #FFB85C; box-shadow: var(--shadow-float); }
+        .net-icon { width: 30px; height: 30px; border-radius: 8px; background: var(--grad-dark-inner); margin-bottom: 15px; }
+        
+        /* --- BUNDLES (Matches Top Left Screen) --- */
+        .bundles-card {
+            width: 100%; max-width: 400px; background: var(--grad-dark-card);
+            border-radius: 35px; padding: 40px; box-shadow: var(--shadow-float);
             position: relative;
         }
-        .summary-row { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 15px; color: var(--text-muted); }
-        .total-row { border-top: 1px solid rgba(0,0,0,0.05); margin-top: 18px; padding-top: 18px; font-weight: 800; font-size: 1.3rem; color: var(--accent-orange); }
-        input { 
-            width: 100%; padding: 18px; margin-top: 12px; 
-            border-radius: 12px; border: var(--glass-border-dark); 
-            background: var(--white); 
-            color: var(--purple-black);
-            transition: var(--transition);
-        }
-        input:focus { border-color: var(--accent-amber); outline: none; background: rgba(255,179,91,0.05); }
-
-        /* --- PAGE: HISTORY --- */
-        #history { flex-direction: column; padding: 50px; gap: 30px; align-items: center; }
-        .history-stats { 
-            background: var(--card-frosted); 
-            width: 100%; max-width: 850px; padding: 40px; border-radius: 25px; 
-            display: flex; justify-content: space-around; text-align: center; 
-            backdrop-filter: blur(15px);
-            border: var(--glass-border-dark);
-            box-shadow: var(--shadow-soft);
-        }
-        .stat-val { display: block; font-weight: 800; font-size: 1.8rem; color: var(--accent-orange); }
-        .history-header { font-size: 12px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 2px; }
-        .receipt-list { width: 100%; max-width: 850px; display: flex; flex-direction: column; gap: 20px; }
-        .receipt { 
-            background: var(--card-frosted); padding: 25px; border-radius: 18px; 
-            display: flex; justify-content: space-between; align-items: center; 
-            backdrop-filter: blur(12px);
-            border: var(--glass-border-dark);
-            box-shadow: var(--shadow-soft);
-        }
-
-        /* --- PAGE: SETTINGS --- */
-        #settings { padding: 50px; gap: 40px; justify-content: center; }
-        .settings-container { width: 100%; max-width: 1000px; display: flex; background: var(--card-frosted); border-radius: 35px; overflow: hidden; border: var(--glass-border-dark); backdrop-filter: blur(20px); box-shadow: var(--shadow-floating); }
-        .set-purple { 
-            flex: 1; background: var(--purple-frosted); padding: 50px; color: white; 
-            backdrop-filter: blur(25px); border-right: var(--glass-border);
-        }
-        .set-white { flex: 1.6; padding: 50px; }
-        .profile-img { 
-            width: 90px; height: 90px; 
-            background: rgba(255,255,255,0.05); 
-            border-radius: 50%; margin-bottom: 25px; 
-            border: 4px solid var(--accent-amber);
+        .b-inner-dark { background: var(--grad-dark-inner); padding: 25px; border-radius: 20px; margin-bottom: 30px; }
+        .b-white-card {
+            background: var(--white); padding: 30px; border-radius: 25px;
+            box-shadow: var(--shadow-float); margin-bottom: 15px; color: var(--text-dark);
             position: relative;
-            display: flex; align-items: center; justify-content: center;
         }
-        .profile-img::after { content:''; width: 30px; height: 30px; background: var(--white); border-radius: 50%; border: 3px solid var(--purple-black); }
+        
+        /* --- CHECKOUT (Matches Top Right Screen) --- */
+        .checkout-wrapper { position: relative; width: 100%; max-width: 600px; display: flex; align-items: center; justify-content: center;}
+        .checkout-main {
+            background: var(--white); width: 100%; padding: 50px; border-radius: 35px;
+            box-shadow: var(--shadow-float);
+        }
+        /* The overlapping dark widget from the image */
+        .checkout-widget {
+            position: absolute; right: -40px; top: 80px; width: 160px;
+            background: var(--grad-dark-card); padding: 25px; border-radius: 25px;
+            box-shadow: var(--shadow-float); z-index: 10;
+        }
+        .widget-box { width: 100%; height: 60px; border: 2px solid #FFB85C; border-radius: 12px; margin-bottom: 15px; display: flex; align-items:center; justify-content: center; color: #FFB85C; font-weight: bold;}
+        .form-row { display: flex; gap: 15px; margin-bottom: 25px; align-items: center; }
+        .checkbox-mock { width: 20px; height: 20px; border-radius: 6px; border: 2px solid var(--text-muted); }
+        input { width: 100%; padding: 18px; background: var(--bg-lavender); border: none; border-radius: 15px; font-weight: 600; color: var(--text-dark); margin-bottom: 15px; }
+        input:focus { outline: 2px solid #FFB85C; }
 
-        /* Mobile Adjustments */
+        /* --- SETTINGS (Matches Bottom Left Screen) --- */
+        .settings-card {
+            width: 100%; max-width: 700px; display: flex; background: var(--white);
+            border-radius: 35px; box-shadow: var(--shadow-float); overflow: hidden;
+            padding: 10px; gap: 10px;
+        }
+        .set-dark { background: var(--grad-dark-card); flex: 1; border-radius: 25px; padding: 40px; color: var(--white); display: flex; flex-direction: column; align-items: center; }
+        .set-white { flex: 1.5; background: var(--white); border-radius: 25px; padding: 40px; }
+        .set-avatar { width: 80px; height: 80px; background: var(--grad-dark-inner); border-radius: 20px; margin-bottom: 30px; border: 2px solid rgba(255,255,255,0.1); }
+        
+        .list-item { display: flex; align-items: center; gap: 15px; margin-bottom: 25px; }
+        .list-icon { width: 40px; height: 40px; border-radius: 12px; background: var(--bg-lavender); }
+
         @media (max-width: 768px) {
-            #home { flex-direction: column; }
-            .split-purple, .split-white { padding: 40px; }
-            .hero-title { font-size: 3rem; }
-            .network-grid { grid-template-columns: 1fr; gap: 15px; }
-            nav { width: 90%; justify-content: space-around; gap: 0; padding: 12px 20px;}
-            .settings-container { flex-direction: column; }
-            .set-purple { border-right: none; border-bottom: var(--glass-border); }
+            .dash-bottom { grid-template-columns: 1fr; }
+            .checkout-widget { position: relative; right: auto; top: auto; width: 100%; margin-top: 20px; }
+            .settings-card { flex-direction: column; }
+            nav { width: 90%; justify-content: space-around; padding: 15px 10px; }
         }
     </style>
 </head>
 <body>
 
+    <!-- Background Elements mapping to the image -->
+    <div class="bg-nodes"></div>
+    <div class="bg-line" style="top: 10%; left: 10%; width: 200px; height: 100px; border-bottom: none; border-right: none;"></div>
+    <div class="bg-line" style="top: 50%; right: 5%; width: 150px; height: 300px; border-top: none; border-left: none;"></div>
+    <div class="bg-line" style="bottom: 10%; left: 15%; width: 300px; height: 50px; border-top: none; border-right: none;"></div>
+    
+    <div class="floating-cube" style="top: 15%; left: 25%;"></div>
+    <div class="floating-cube" style="bottom: 25%; right: 10%; width: 30px; height: 30px;"></div>
+    <div class="floating-cube" style="bottom: 15%; left: 45%; width: 20px; height: 20px;"></div>
+
     <nav id="navbar">
-        <a onclick="showPage('home')" id="nav-home" class="active">HOME</a>
-        <a onclick="showPage('dashboard')" id="nav-dashboard">DASHBOARD</a>
-        <a onclick="showPage('history')" id="nav-history">HISTORY</a>
+        <a onclick="showPage('dashboard')" id="nav-dashboard" class="active">DASHBOARD</a>
+        <a onclick="showPage('bundles')" id="nav-bundles">BUNDLES</a>
+        <a onclick="showPage('checkout')" id="nav-checkout">CHECKOUT</a>
         <a onclick="showPage('settings')" id="nav-settings">SETTINGS</a>
     </nav>
 
-    
-<section id="home" class="page active">
-        <div class="split-purple">
-            <p class="hero-tag">UniLink GH</p>
-            <h1 class="hero-title">The Student <br>Bundle.</h1>
-            <p style="opacity: 0.8; margin-bottom: 40px;">Trusted by 1000+ Students in Ghana.</p>
-            <button class="btn-main" onclick="showPage('dashboard')">Buy Now</button>
-            <div class="decor decor-dot" style="top: 10%; right: 15%;"></div>
-            <div class="decor decor-square" style="top: 80%; left: 10%; opacity: 0.3;"></div>
-        </div>
-        <div class="split-white">
-            <div class="virtue-card">
-                <div class="virtue-icon">₵</div>
-                <div><strong>Affordable</strong><br><small>Student-friendly rates.</small></div>
-            </div>
-            <div class="virtue-card">
-                <div class="virtue-icon">⚡</div>
-                <div><strong>Fast</strong><br><small>Instant delivery 24/7.</small></div>
-            </div>
-            <div class="virtue-card">
-                <div class="virtue-icon">🔒</div>
-                <div><strong>Secure</strong><br><small>Paystack encrypted.</small></div>
-            </div>
-            <div class="virtue-card">
-                <div class="virtue-icon">🤝</div>
-                <div><strong>Trust</strong><br><small>Built for the campus.</small></div>
-            </div>
-        </div>
-    </section>
-
-    
-<section id="dashboard" class="page">
-        <div class="dash-top">
-            <div class="rank-box">
-                <p style="opacity: 0.8; text-transform: uppercase; font-size: 13px; letter-spacing: 2px;">Weekly Ranking</p>
-                <h2>#90</h2>
-                <p style="margin-top: 12px; font-size: 14px;">Great job! Keep the momentum to enter top 50.</p>
-            </div>
-            <div style="text-align: right; color: white;">
-                <p>Welcome back,</p>
-                <strong>Student User</strong>
-            </div>
-            <div class="decor decor-dot" style="top: 15%; right: 40%;"></div>
-            <div class="decor decor-square" style="bottom: 10%; left: 30%; opacity: 0.2;"></div>
-        </div>
-
-        <div class="network-grid">
-            <div class="net-card" onclick="openBundles('MTN')">
-                <h3>MTN</h3>
-                <span class="net-status"><div class="decor-dot" style="background: green; opacity: 1;"></div>IN STOCK</span>
-                <p class="net-phrase">Everywhere you go.</p>
-            </div>
-            <div class="net-card" onclick="openBundles('TELECEL')">
-                <h3>Telecel</h3>
-                <span class="net-status"><div class="decor-dot" style="background: green; opacity: 1;"></div>IN STOCK</span>
-                <p class="net-phrase">Move forward.</p>
-            </div>
-            <div class="net-card" onclick="openBundles('AT')">
-                <h3>AT</h3>
-                <span class="net-status"><div class="decor-dot" style="background: green; opacity: 1;"></div>IN STOCK</span>
-                <p class="net-phrase">Simple. Professional.</p>
-            </div>
-        </div>
-    </section>
-
-    
-<section id="bundles" class="page">
-        <div class="bundle-header">
-            <h1 id="selected-network">MTN Bundles</h1>
-            <p id="bundle-urgency">Hurry! Limited bundles left for today's special prices.</p>
-        </div>
-        <div class="bundle-grid" id="bundle-list">
-            
-</div>
-    </section>
-
-    
-<section id="checkout" class="page">
-        <div class="checkout-card">
-            <div class="decor decor-square" style="top: 10%; right: 10%;"></div>
-            <div class="decor decor-dot" style="bottom: 10%; left: 5%;"></div>
-            <h2 style="margin-bottom: 25px; color: var(--purple-black);">Order Summary</h2>
-            <div id="checkout-details">
-                <div class="summary-row"><span>Bundle Size</span><span id="sum-size">10GB</span></div>
-                <div class="summary-row"><span>Price</span><span id="sum-price">₵18.00</span></div>
-                <div class="summary-row"><span>Platform Fee</span><span>₵0.50</span></div>
-                <div class="summary-row"><span>Ref ID</span><span>#UL-9921</span></div>
-                <div class="total-row"><span>Total</span><span id="sum-total">₵18.50</span></div>
+    <!-- DASHBOARD PAGE (Center Image Match) -->
+    <section id="dashboard" class="page active">
+        <div class="dash-container">
+            <div class="dash-top">
+                <div class="dash-top-header">
+                    <div class="dash-pill" style="width: 40px;"></div>
+                    <div class="dash-pill" style="background: #FFB85C; opacity: 1;"></div>
+                </div>
+                <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                    <div class="dash-pill" style="width: 80px;"></div>
+                    <div class="dash-pill" style="width: 40px;"></div>
+                </div>
+                <h2 style="font-size: 2.5rem; margin: 10px 0;">Rank #90</h2>
+                
+                <!-- Glowing SVG Chart matching image -->
+                <div class="mock-chart">
+                    <svg class="chart-svg" viewBox="0 0 500 100">
+                        <path class="chart-path" d="M0,80 Q50,20 100,60 T200,40 T300,70 T400,20 T500,80" />
+                        <circle cx="100" cy="60" r="15" class="chart-dot"/>
+                        <circle cx="200" cy="40" r="25" class="chart-dot"/>
+                        <circle cx="300" cy="70" r="10" class="chart-dot"/>
+                        <circle cx="400" cy="20" r="20" class="chart-dot"/>
+                        <!-- Bottom baseline -->
+                        <line x1="0" y1="95" x2="500" y2="95" stroke="rgba(255,255,255,0.2)" stroke-width="2" />
+                        <circle cx="50" cy="95" r="3" fill="#fff" />
+                        <circle cx="150" cy="95" r="3" fill="#fff" />
+                        <circle cx="250" cy="95" r="3" fill="#fff" />
+                        <circle cx="350" cy="95" r="3" fill="#fff" />
+                        <circle cx="450" cy="95" r="3" fill="#fff" />
+                    </svg>
+                </div>
             </div>
             
-            <div style="margin-top: 35px;">
+            <div class="dash-bottom">
+                <div class="net-card" onclick="openBundles('MTN')">
+                    <div class="net-icon"></div>
+                    <div class="pill-line" style="width: 60%; background: var(--text-dark);"></div>
+                    <div class="pill-line" style="width: 40%;"></div>
+                    <h3 style="margin-top: 10px; font-weight: 800;">MTN</h3>
+                </div>
+                <div class="net-card" onclick="openBundles('TELECEL')">
+                    <div class="net-icon" style="background: var(--line-grey);"></div>
+                    <div class="pill-line" style="width: 70%; background: var(--text-dark);"></div>
+                    <div class="pill-line" style="width: 30%;"></div>
+                    <h3 style="margin-top: 10px; font-weight: 800;">Telecel</h3>
+                </div>
+                <div class="net-card" onclick="openBundles('AT')" style="grid-column: span 2; display: flex; align-items: center; gap: 20px;">
+                    <div class="net-icon" style="margin: 0; background: var(--line-grey);"></div>
+                    <div style="flex: 1;">
+                        <h3 style="font-weight: 800;">AT Network</h3>
+                        <div class="pill-line" style="width: 40%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BUNDLES PAGE (Top Left Image Match) -->
+    <section id="bundles" class="page">
+        <div class="bundles-card">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+                <div class="dash-pill" style="width: 30px;"></div>
+                <div class="dash-pill" style="width: 30px;"></div>
+            </div>
+            
+            <div class="b-inner-dark">
+                <div class="pill-line pill-orange" style="width: 40%;"></div>
+                <div class="pill-line pill-dark" style="width: 80%; background: rgba(255,255,255,0.2);"></div>
+                <div class="pill-line pill-dark" style="width: 60%; background: rgba(255,255,255,0.2);"></div>
+            </div>
+
+            <h2 id="selected-network" style="color: white; margin-bottom: 20px;">MTN Bundles</h2>
+
+            <div id="bundle-list">
+                <!-- Javascript populated -->
+            </div>
+        </div>
+    </section>
+
+    <!-- CHECKOUT PAGE (Top Right Image Match) -->
+    <section id="checkout" class="page">
+        <div class="checkout-wrapper">
+            <div class="checkout-main">
+                <div style="display: flex; gap: 20px; margin-bottom: 40px;">
+                    <div class="net-icon" style="background: var(--text-dark);"></div>
+                    <div>
+                        <div class="pill-line" style="width: 100px; background: var(--text-dark);"></div>
+                        <div class="pill-line" style="width: 60px;"></div>
+                    </div>
+                </div>
+                
+                <div class="pill-line pill-orange" style="width: 100%; height: 8px; margin-bottom: 30px;"></div>
+                
+                <h2 style="margin-bottom: 20px;">Enter Details</h2>
+                
+                <div class="form-row">
+                    <div class="checkbox-mock"></div>
+                    <div style="flex: 1;">
+                        <div class="pill-line" style="width: 80%; background: var(--text-dark);"></div>
+                        <div class="pill-line" style="width: 100%;"></div>
+                    </div>
+                </div>
+
                 <input type="text" placeholder="Full Name">
-                <input type="email" placeholder="Email Address">
-                <input type="tel" placeholder="Recipient Number">
-                <button class="btn-main" style="width: 100%; margin-top: 25px;" onclick="processPayment()">Confirm & Pay</button>
+                <input type="tel" placeholder="Phone Number">
+                
+            </div>
+            
+            <!-- Overlapping Dark Widget -->
+            <div class="checkout-widget">
+                <div class="widget-box">₵18.50</div>
+                <div class="pill-line" style="background: rgba(255,255,255,0.2); width: 80%; margin: 0 auto 15px;"></div>
+                <button class="btn-grad" style="width: 100%; padding: 12px; font-size: 14px;" onclick="processPayment()">Pay</button>
             </div>
         </div>
     </section>
 
-    
-<section id="history" class="page">
-        <div class="history-stats">
-            <div><p class="history-header">Money Spent</p><span class="stat-val">₵450.00</span></div>
-            <div><p class="history-header">Data Bought</p><span class="stat-val">120 GB</span></div>
-            <div><p class="history-header">Total Orders</p><span class="stat-val">24</span></div>
-        </div>
-        
-        <div class="receipt-list">
-            <div class="receipt">
-                <div>
-                    <strong>10GB MTN Bundle</strong><br>
-                    <small style="color: var(--text-muted); font-size: 13px;">Oct 24, 2023 • 14:20</small>
+    <!-- SETTINGS PAGE (Bottom Left Image Match) -->
+    <section id="settings" class="page">
+        <div class="settings-card">
+            <!-- Left Dark Column -->
+            <div class="set-dark">
+                <div class="set-avatar"></div>
+                <div class="pill-line pill-orange" style="width: 60%; margin-bottom: 5px;"></div>
+                <div class="pill-line pill-orange" style="width: 40%; margin-bottom: 20px;"></div>
+                
+                <div class="pill-line" style="width: 100%; background: rgba(255,255,255,0.1); margin-top: 20px;"></div>
+                <div style="display: flex; gap: 10px; margin-top: 10px;">
+                    <div class="dash-pill" style="width: 20px;"></div>
+                    <div class="dash-pill" style="width: 40px;"></div>
                 </div>
-                <button class="btn-sm" style="background: rgba(142, 139, 186, 0.1); color: var(--purple-black); border-color: rgba(0,0,0,0.02)">Copy Details</button>
+                
+                <div class="set-avatar" style="height: 60px; border-radius: 10px; margin-top: auto; background: rgba(255,255,255,0.05);"></div>
+                <div class="dash-pill" style="width: 30px; margin-top: 10px;"></div>
             </div>
-            <div class="receipt">
-                <div>
-                    <strong>20GB Telecel Bundle</strong><br>
-                    <small style="color: var(--text-muted); font-size: 13px;">Oct 20, 2023 • 09:15</small>
-                </div>
-                <button class="btn-sm" style="background: rgba(142, 139, 186, 0.1); color: var(--purple-black); border-color: rgba(0,0,0,0.02)">Copy Details</button>
-            </div>
-        </div>
-    </section>
-
-    
-<section id="settings" class="page">
-        <div class="settings-container">
-            <div class="set-purple">
-                <div class="profile-img"></div>
-                <h2>Register Name</h2>
-                <p style="opacity: 0.7; font-size: 14px; margin-top: 12px; line-height: 1.5;">Set your identity on the UniLink network to personalize your rank.</p>
-                <input type="text" placeholder="Enter Full Name..." style="background: rgba(255,255,255,0.05); border: var(--glass-border); color: white;">
-                <button class="btn-main" style="width: 100%; margin-top: 20px; box-shadow: 0 10px 20px rgba(255,148,49,0.3);">Update Profile</button>
-            </div>
+            
+            <!-- Right White Column -->
             <div class="set-white">
-                <h3 style="margin-bottom: 25px; color: var(--purple-black);">System Settings</h3>
-                <div class="summary-row"><span>Notifications</span><span>On</span></div>
-                <div class="summary-row"><span>Security Pin</span><span>Set</span></div>
-                <div class="summary-row"><span>Account Status</span><span style="color: green; font-weight: 600;">● Verified</span></div>
-                <div class="summary-row"><span>App Version</span><span>v2.0.4</span></div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 40px;">
+                    <div class="pill-line" style="width: 30%; background: var(--text-dark);"></div>
+                    <div class="pill-line" style="width: 20%; background: var(--text-dark);"></div>
+                </div>
+
+                <h3 style="margin-bottom: 20px;">Profile Details</h3>
+                
+                <div class="list-item">
+                    <div class="list-icon" style="background: var(--text-muted); opacity: 0.5;"></div>
+                    <div style="flex: 1;">
+                        <div class="pill-line" style="width: 60%; background: var(--text-dark);"></div>
+                        <div class="pill-line" style="width: 40%;"></div>
+                    </div>
+                </div>
+                <div class="list-item">
+                    <div class="list-icon"></div>
+                    <div style="flex: 1;">
+                        <div class="pill-line" style="width: 70%; background: var(--text-dark);"></div>
+                        <div class="pill-line" style="width: 50%;"></div>
+                    </div>
+                </div>
+                <div class="list-item">
+                    <div class="list-icon" style="background: var(--text-muted); opacity: 0.5;"></div>
+                    <div style="flex: 1;">
+                        <div class="pill-line" style="width: 50%; background: var(--text-dark);"></div>
+                        <div class="pill-line" style="width: 30%;"></div>
+                    </div>
+                </div>
+
+                <input type="text" placeholder="Update Name..." style="margin-top: 20px;">
             </div>
         </div>
     </section>
 
     <script>
         function showPage(pageId) {
-            // Hide all pages
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            // Show selected page
             document.getElementById(pageId).classList.add('active');
             
-            // Update nav styling
             document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
             const navItem = document.getElementById('nav-' + pageId);
             if(navItem) navItem.classList.add('active');
@@ -399,20 +367,16 @@
 
         const bundleData = {
             'MTN': [
-                {size: '1GB', price: 3, duration: '1 Day'},
-                {size: '5GB', price: 10, duration: '7 Days'},
-                {size: '10GB', price: 18, duration: '30 Days'},
-                {size: '20GB', price: 32, duration: '30 Days'}
+                {size: '5GB', price: 10},
+                {size: '10GB', price: 18},
             ],
             'TELECEL': [
-                {size: '2GB', price: 5, duration: '2 Days'},
-                {size: '8GB', price: 15, duration: '7 Days'},
-                {size: '15GB', price: 25, duration: '30 Days'}
+                {size: '8GB', price: 15},
+                {size: '15GB', price: 25}
             ],
             'AT': [
-                {size: '3GB', price: 6, duration: '3 Days'},
-                {size: '10GB', price: 17, duration: '30 Days'},
-                {size: '25GB', price: 40, duration: '30 Days'}
+                {size: '10GB', price: 17},
+                {size: '25GB', price: 40}
             ]
         };
 
@@ -423,30 +387,35 @@
             
             bundleData[network].forEach(b => {
                 list.innerHTML += `
-                    <div class="b-card">
-                        <span class="b-size">${b.size}</span>
-                        <span class="b-price">₵${b.price.toFixed(2)}</span>
-                        <small style="color: var(--text-muted)">Valid for ${b.duration}</small>
-                        <button class="btn-sm" onclick="goToCheckout('${b.size}', ${b.price})">Buy Now</button>
+                    <div class="b-white-card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <div class="pill-line" style="width: 40%; background: var(--text-dark);"></div>
+                            <div style="color: #FFB85C; font-weight: bold; display: flex; gap: 5px;">
+                                <div style="width: 6px; height: 6px; border-radius: 50%; background: #FFB85C; margin-top: 6px;"></div>
+                                <div style="width: 6px; height: 6px; border-radius: 50%; background: #FFB85C; margin-top: 6px;"></div>
+                                <div style="width: 6px; height: 6px; border-radius: 50%; background: #FFB85C; margin-top: 6px;"></div>
+                            </div>
+                        </div>
+                        <div class="pill-line" style="width: 80%; margin-bottom: 20px;"></div>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+                            <div>
+                                <h3 style="font-size: 1.8rem;">${b.size}</h3>
+                                <p style="color: var(--text-muted);">₵${b.price.toFixed(2)}</p>
+                            </div>
+                            <button class="btn-grad" style="padding: 10px 20px; border-radius: 12px;" onclick="showPage('checkout')">Buy</button>
+                        </div>
                     </div>
                 `;
             });
             showPage('bundles');
         }
 
-        function goToCheckout(size, price) {
-            document.getElementById('sum-size').innerText = size;
-            document.getElementById('sum-price').innerText = '₵' + price.toFixed(2);
-            document.getElementById('sum-total').innerText = '₵' + (price + 0.5).toFixed(2);
-            showPage('checkout');
-        }
-
         function processPayment() {
-            alert("Redirecting to Paystack Secure Gateway...");
+            alert("Processing in Paystack Gateway...");
             setTimeout(() => {
-                alert("Payment Successful! Redirecting to WhatsApp to complete your order.");
-                window.location.href = "https://wa.me/233XXXXXXXXX?text=Order confirmed! Bundle details sent.";
-            }, 2000);
+                alert("Success! Redirecting to WhatsApp...");
+            }, 1500);
         }
     </script>
 </body>
