@@ -3,316 +3,272 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UniLink GH | Student Data Portal</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <title>UniLink GH | Glassmorphic Interface</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-lavender: #E6E4F0;
-            --grad-dark-card: linear-gradient(180deg, #4A466A 0%, #2A2740 100%);
-            --grad-dark-inner: linear-gradient(180deg, #56517A 0%, #3B3754 100%);
-            --grad-orange: linear-gradient(90deg, #FFB85C 0%, #FF8D36 100%);
-            --white: #FFFFFF;
-            --text-dark: #2A2740;
-            --text-muted: #9592B6;
-            --line-grey: #E0DFEC;
-            --shadow-soft: 0 15px 35px rgba(42, 39, 64, 0.08);
-            --shadow-float: 0 25px 50px rgba(42, 39, 64, 0.2);
-            --shadow-orange: 0 10px 20px rgba(255, 141, 54, 0.3);
-            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            --bg: #B8B5D0; /* The soft lavender background */
+            --dark-panel: #322F4B;
+            --glass-light: rgba(255, 255, 255, 0.85);
+            --amber: #FF9F43;
+            --accent-purple: #4A466A;
+            --text-main: #2A2740;
+            --text-muted: #7D7A9B;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         
         body { 
-            background-color: var(--bg-lavender); 
-            color: var(--text-dark); 
-            overflow-x: hidden; 
-            min-height: 100vh;
+            background-color: var(--bg);
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background-image: radial-gradient(circle at 50% 50%, #C9C6DE 0%, #B8B5D0 100%);
         }
 
-        /* Connecting lines and nodes background */
-        .bg-nodes {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1;
-            background-image: 
-                radial-gradient(circle at 15% 50px, var(--white) 3px, transparent 4px),
-                radial-gradient(circle at 85% 30px, var(--white) 3px, transparent 4px),
-                radial-gradient(circle at 10% 80%, var(--white) 4px, transparent 5px);
-        }
-        .bg-line {
-            position: fixed; border: 1.5px solid var(--white); border-radius: 20px; z-index: -1;
-            opacity: 0.6;
-        }
-        .floating-cube {
-            position: fixed; width: 24px; height: 24px; border-radius: 6px; 
-            background: var(--grad-orange); box-shadow: var(--shadow-orange); z-index: -1;
-            animation: float 6s ease-in-out infinite;
+        /* The Canvas for the composition */
+        .canvas {
+            position: relative;
+            width: 1100px;
+            height: 800px;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
+        /* CIRCUIT LINES (The background nodes) */
+        .lines-container {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+        .line {
+            position: absolute;
+            border: 1.5px solid rgba(255, 255, 255, 0.5);
+            border-radius: 20px;
+        }
+        .node {
+            position: absolute;
+            width: 8px; height: 8px;
+            background: white;
+            border-radius: 50%;
         }
 
-        /* Navigation */
-        nav {
-            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
-            background: var(--grad-dark-card); padding: 15px 35px; border-radius: 40px;
-            display: flex; gap: 30px; z-index: 1000; box-shadow: var(--shadow-float);
+        /* BASE CARD STYLES */
+        .card {
+            position: absolute;
+            background: var(--glass-light);
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            z-index: 10;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.4);
+            transition: transform 0.3s ease;
         }
-        nav a { color: var(--text-muted); text-decoration: none; font-size: 12px; font-weight: 800; cursor: pointer; transition: var(--transition); letter-spacing: 1px; }
-        nav a.active { color: #FFB85C; }
+        .card:hover { transform: translateY(-5px); }
 
-        .page { display: none; min-height: 100vh; width: 100%; padding: 40px 20px 120px; animation: fadeIn 0.5s ease forwards; justify-content: center; align-items: center; }
-        .page.active { display: flex; flex-direction: column; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Buttons */
-        .btn-grad {
-            background: var(--grad-orange); color: var(--white); padding: 16px 32px; 
-            border-radius: 25px; border: none; font-weight: 800; cursor: pointer; 
-            transition: var(--transition); box-shadow: var(--shadow-orange);
-            text-transform: uppercase; font-size: 14px;
+        .dark-card {
+            background: var(--dark-panel);
+            color: white;
+            border: none;
         }
-        .btn-grad:hover { transform: translateY(-3px); box-shadow: 0 15px 25px rgba(255, 141, 54, 0.4); }
 
-        /* --- DASHBOARD --- */
-        .dash-container {
-            width: 100%; max-width: 550px; border-radius: 35px;
-            background: var(--white); box-shadow: var(--shadow-float);
+        /* SPECIFIC ELEMENT LAYOUTS */
+        
+        /* 1. TOP LEFT: Small Phone/Menu */
+        .card-phone-mini {
+            top: 80px; left: 100px;
+            width: 130px; height: 260px;
+            background: var(--dark-panel);
+        }
+
+        /* 2. CENTER: Main Dashboard (The Tablet) */
+        .card-main {
+            top: 120px; left: 350px;
+            width: 320px; height: 530px;
+            padding: 0;
             overflow: hidden;
         }
-        .dash-top {
-            background: var(--grad-dark-card); padding: 40px; color: var(--white);
-            border-bottom-left-radius: 35px; border-bottom-right-radius: 35px;
+        .main-top {
+            background: var(--dark-panel);
+            height: 330px;
+            padding: 25px;
+            position: relative;
         }
-        .dash-label { font-size: 12px; text-transform: uppercase; color: #FFB85C; font-weight: 800; letter-spacing: 1.5px; margin-bottom: 5px;}
+        .main-bottom {
+            background: white;
+            height: 200px;
+            display: flex; padding: 15px; gap: 10px;
+        }
+
+        /* 3. BOTTOM LEFT: Profile/Settings */
+        .card-profile {
+            bottom: 80px; left: 100px;
+            width: 220px; height: 320px;
+            display: flex;
+        }
+
+        /* 4. TOP RIGHT: Documentation */
+        .card-doc {
+            top: 100px; right: 80px;
+            width: 250px; height: 280px;
+        }
+
+        /* 5. BOTTOM RIGHT: Sub-Stats */
+        .card-substats {
+            bottom: 120px; right: 100px;
+            width: 240px; height: 180px;
+            background: var(--accent-purple);
+        }
+
+        /* UI ELEMENTS FROM THE IMAGE */
+        .amber-bar { height: 6px; background: var(--amber); border-radius: 10px; margin: 8px 0; }
+        .grey-bar { height: 6px; background: rgba(0,0,0,0.05); border-radius: 10px; margin: 8px 0; }
+        .white-bar { height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; margin: 8px 0; }
         
-        .mock-chart { width: 100%; height: 100px; margin-top: 20px; border-bottom: 2px solid rgba(255,255,255,0.1); }
-        .chart-path { fill: none; stroke: #FFB85C; stroke-width: 3; }
-        
-        .dash-bottom { padding: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .net-card {
-            background: var(--white); border-radius: 20px; padding: 20px;
-            box-shadow: var(--shadow-soft); cursor: pointer; transition: var(--transition);
-            border: 2px solid var(--bg-lavender);
+        .mock-chart {
+            width: 100%; height: 100px;
+            margin: 20px 0;
+            border-bottom: 2px solid rgba(255,255,255,0.1);
+            position: relative;
         }
-        .net-card:hover { border-color: #FFB85C; transform: scale(1.02); }
-        .net-tag { font-size: 10px; font-weight: 800; color: var(--text-muted); margin-bottom: 5px; display: block;}
-
-        /* --- BUNDLES --- */
-        .bundles-card {
-            width: 100%; max-width: 450px; background: var(--grad-dark-card);
-            border-radius: 35px; padding: 35px; box-shadow: var(--shadow-float);
-        }
-        .b-header-box { background: var(--grad-dark-inner); padding: 20px; border-radius: 20px; margin-bottom: 25px; text-align: center;}
-        .b-white-card {
-            background: var(--white); padding: 25px; border-radius: 25px;
-            margin-bottom: 15px; color: var(--text-dark); display: flex; justify-content: space-between; align-items: center;
+        .wave {
+            fill: none;
+            stroke: var(--amber);
+            stroke-width: 3;
+            stroke-linecap: round;
         }
 
-        /* --- CHECKOUT --- */
-        .checkout-main {
-            background: var(--white); width: 100%; max-width: 500px; padding: 40px; border-radius: 35px;
-            box-shadow: var(--shadow-float); text-align: center;
+        .mini-window {
+            background: white;
+            border-radius: 12px;
+            flex: 1;
+            padding: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
-        .input-group { text-align: left; margin-bottom: 20px; }
-        label { font-size: 12px; font-weight: 800; color: var(--text-muted); margin-left: 10px; }
-        input { width: 100%; padding: 18px; background: var(--bg-lavender); border: none; border-radius: 15px; font-weight: 600; margin-top: 5px; }
 
-        /* --- SETTINGS --- */
-        .settings-card {
-            width: 100%; max-width: 750px; display: flex; background: var(--white);
-            border-radius: 35px; box-shadow: var(--shadow-float); overflow: hidden;
-        }
-        .set-dark { background: var(--grad-dark-card); flex: 1; padding: 40px; color: var(--white); text-align: center; }
-        .set-white { flex: 1.5; padding: 40px; }
-        .avatar-circle { width: 80px; height: 80px; background: var(--grad-orange); border-radius: 50%; margin: 0 auto 20px; border: 4px solid rgba(255,255,255,0.1); }
-        .info-row { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid var(--bg-lavender); }
-
-        @media (max-width: 768px) {
-            .settings-card { flex-direction: column; }
-            .dash-bottom { grid-template-columns: 1fr; }
+        /* ORANGE CUBES */
+        .cube {
+            position: absolute;
+            width: 22px; height: 22px;
+            background: var(--amber);
+            border-radius: 6px;
+            box-shadow: 0 10px 20px rgba(255, 159, 67, 0.4);
+            z-index: 5;
         }
     </style>
 </head>
 <body>
 
-    <div class="bg-nodes"></div>
-    <div class="bg-line" style="top: 5%; left: 5%; width: 150px; height: 150px; border-bottom: none; border-right: none;"></div>
-    <div class="bg-line" style="bottom: 5%; right: 5%; width: 200px; height: 100px; border-top: none; border-left: none;"></div>
-    
-    <div class="floating-cube" style="top: 10%; right: 20%;"></div>
-    <div class="floating-cube" style="bottom: 20%; left: 10%; width: 35px; height: 35px;"></div>
+    <div class="canvas">
+        <!-- BACKGROUND CIRCUITRY -->
+        <div class="lines-container">
+            <div class="line" style="width: 200px; height: 150px; top: 50px; left: 150px; border-bottom: none; border-right: none;"></div>
+            <div class="line" style="width: 300px; height: 100px; bottom: 50px; right: 150px; border-top: none; border-left: none;"></div>
+            <div class="node" style="top: 45px; left: 150px;"></div>
+            <div class="node" style="bottom: 145px; right: 145px;"></div>
+        </div>
 
-    <nav>
-        <a onclick="showPage('dashboard')" id="nav-dashboard" class="active">DASHBOARD</a>
-        <a onclick="showPage('bundles')" id="nav-bundles">BUNDLES</a>
-        <a onclick="showPage('checkout')" id="nav-checkout">CHECKOUT</a>
-        <a onclick="showPage('settings')" id="nav-settings">SETTINGS</a>
-    </nav>
+        <!-- ORANGE DECOR CUBES -->
+        <div class="cube" style="top: 130px; left: 245px;"></div>
+        <div class="cube" style="bottom: 70px; left: 600px;"></div>
+        <div class="cube" style="bottom: 230px; right: 70px;"></div>
 
-    <!-- DASHBOARD -->
-    <section id="dashboard" class="page active">
-        <div class="dash-container">
-            <div class="dash-top">
-                <p class="dash-label">Usage Statistics</p>
-                <h1 style="font-size: 2.2rem;">Data Rank #90</h1>
-                <p style="font-size: 14px; opacity: 0.7; margin-top: 5px;">You are in the top 10% of campus users!</p>
-                
+        <!-- 1. LEFT MINI PHONE -->
+        <div class="card card-phone-mini">
+            <div class="white-bar" style="width: 40%;"></div>
+            <div class="white-bar" style="width: 80%;"></div>
+            <div class="mock-chart" style="height: 40px; border: none; margin: 30px 0;">
+                <div class="white-bar" style="width: 100%; opacity: 0.05;"></div>
+                <div class="white-bar" style="width: 100%; opacity: 0.05; margin-top: 10px;"></div>
+            </div>
+            <div class="amber-bar" style="width: 60%; margin-top: auto;"></div>
+        </div>
+
+        <!-- 2. MAIN CENTRAL DASHBOARD -->
+        <div class="card card-main">
+            <div class="main-top">
+                <div style="display: flex; justify-content: space-between;">
+                    <div class="white-bar" style="width: 30px;"></div>
+                    <div class="white-bar" style="width: 60px;"></div>
+                </div>
+                <h2 style="margin-top: 20px; font-size: 14px; letter-spacing: 1px; opacity: 0.8;">NETWORK USAGE</h2>
                 <div class="mock-chart">
-                    <svg viewBox="0 0 500 100" style="width: 100%; height: 100%;">
-                        <path class="chart-path" d="M0,80 Q50,20 100,60 T200,40 T300,70 T400,20 T500,80" />
-                        <circle cx="200" cy="40" r="6" fill="#FFB85C" />
+                    <svg viewBox="0 0 200 60">
+                        <path class="wave" d="M0,40 Q25,10 50,30 T100,20 T150,40 T200,10" />
+                        <circle cx="50" cy="30" r="4" fill="white" />
+                        <circle cx="100" cy="20" r="6" fill="white" opacity="0.3" />
                     </svg>
                 </div>
+                <div style="display: flex; gap: 5px; margin-top: 20px;">
+                    <div class="white-bar" style="width: 15px; opacity: 1; background: white;"></div>
+                    <div class="white-bar" style="width: 15px;"></div>
+                    <div class="white-bar" style="width: 15px;"></div>
+                    <div class="white-bar" style="width: 15px;"></div>
+                </div>
             </div>
-            
-            <div class="dash-bottom">
-                <div class="net-card" onclick="openBundles('MTN')">
-                    <span class="net-tag">PROVIDER</span>
-                    <h3 style="font-weight: 800; color: #FFB85C;">MTN Ghana</h3>
-                    <p style="font-size: 12px; color: var(--text-muted); margin-top: 5px;">Best for 4G Stability</p>
+            <div class="main-bottom">
+                <div class="mini-window">
+                    <div class="grey-bar" style="width: 40%;"></div>
+                    <div class="grey-bar" style="width: 80%;"></div>
+                    <div class="grey-bar" style="width: 60%;"></div>
+                    <div class="amber-bar" style="width: 30%; margin-top: 20px;"></div>
                 </div>
-                <div class="net-card" onclick="openBundles('TELECEL')">
-                    <span class="net-tag">PROVIDER</span>
-                    <h3 style="font-weight: 800;">Telecel</h3>
-                    <p style="font-size: 12px; color: var(--text-muted); margin-top: 5px;">Speed & Efficiency</p>
-                </div>
-                <div class="net-card" style="grid-column: span 2;" onclick="openBundles('AT')">
-                    <span class="net-tag">PROMO ACTIVE</span>
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <h3 style="font-weight: 800;">AT Network</h3>
-                        <span style="background: var(--bg-lavender); padding: 4px 10px; border-radius: 10px; font-size: 10px; font-weight: 800;">OFFER</span>
-                    </div>
+                <div class="mini-window">
+                    <div class="grey-bar" style="width: 30%;"></div>
+                    <div class="grey-bar" style="width: 70%;"></div>
+                    <div class="grey-bar" style="width: 50%;"></div>
+                    <div class="amber-bar" style="width: 40%; margin-top: 20px;"></div>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- BUNDLES -->
-    <section id="bundles" class="page">
-        <div class="bundles-card">
-            <div class="b-header-box">
-                <p class="dash-label" style="color: white;">Current Selection</p>
-                <h2 id="selected-network" style="color: white; margin-top: 5px;">MTN Ghana</h2>
+        <!-- 3. BOTTOM LEFT PROFILE -->
+        <div class="card card-profile">
+            <div style="width: 80px; background: var(--accent-purple); border-radius: 12px; margin-right: 15px;">
+                <div class="white-bar" style="width: 20px; margin: 15px auto;"></div>
             </div>
-
-            <div id="bundle-list">
-                <!-- Populated by JS -->
-            </div>
-        </div>
-    </section>
-
-    <!-- CHECKOUT -->
-    <section id="checkout" class="page">
-        <div class="checkout-main">
-            <div style="width: 50px; height: 50px; background: var(--grad-dark-card); border-radius: 15px; margin: 0 auto 20px;"></div>
-            <h2 style="margin-bottom: 10px;">Complete Purchase</h2>
-            <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 30px;">Your bundle will be delivered within 2-5 minutes.</p>
-            
-            <div class="input-group">
-                <label>RECIPIENT NAME</label>
-                <input type="text" placeholder="e.g. Kwesi Arthur">
-            </div>
-            <div class="input-group">
-                <label>PHONE NUMBER</label>
-                <input type="tel" placeholder="054 XXX XXXX">
-            </div>
-
-            <div style="background: var(--bg-lavender); padding: 20px; border-radius: 20px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
-                <span style="font-weight: 800; font-size: 14px;">Total Payable</span>
-                <span id="sum-total" style="font-weight: 800; color: #FF8D36; font-size: 1.2rem;">₵0.00</span>
-            </div>
-
-            <button class="btn-grad" style="width: 100%;" onclick="processPayment()">Confirm & Pay</button>
-        </div>
-    </section>
-
-    <!-- SETTINGS -->
-    <section id="settings" class="page">
-        <div class="settings-card">
-            <div class="set-dark">
-                <div class="avatar-circle"></div>
-                <h3>Student User</h3>
-                <p style="font-size: 12px; color: #FFB85C; font-weight: 800; margin-top: 5px;">PREMIUM MEMBER</p>
-                
-                <div style="margin-top: 40px; text-align: left;">
-                    <p style="font-size: 11px; opacity: 0.6; margin-bottom: 15px;">QUICK ACTIONS</p>
-                    <button style="width: 100%; background: rgba(255,255,255,0.1); border: none; color: white; padding: 12px; border-radius: 10px; margin-bottom: 10px; cursor: pointer;">Support Chat</button>
-                    <button style="width: 100%; background: rgba(255,255,255,0.1); border: none; color: white; padding: 12px; border-radius: 10px; cursor: pointer;">Transaction Logs</button>
-                </div>
-            </div>
-            <div class="set-white">
-                <h2 style="margin-bottom: 25px;">Account Settings</h2>
-                <div class="info-row">
-                    <span style="color: var(--text-muted); font-weight: 600;">Full Name</span>
-                    <span style="font-weight: 800;">Register Name</span>
-                </div>
-                <div class="info-row">
-                    <span style="color: var(--text-muted); font-weight: 600;">Status</span>
-                    <span style="color: green; font-weight: 800;">Verified</span>
-                </div>
-                <div class="info-row">
-                    <span style="color: var(--text-muted); font-weight: 600;">Region</span>
-                    <span style="font-weight: 800;">Ashanti</span>
-                </div>
-                <div class="info-row" style="border: none;">
-                    <span style="color: var(--text-muted); font-weight: 600;">App Version</span>
-                    <span style="font-weight: 800;">v3.0.1</span>
-                </div>
-                
-                <button class="btn-grad" style="margin-top: 30px; width: 100%;">Edit Profile</button>
+            <div style="flex: 1;">
+                <div class="grey-bar" style="width: 100%;"></div>
+                <div class="grey-bar" style="width: 60%;"></div>
+                <div class="grey-bar" style="width: 80%; height: 20px; margin-top: 20px;"></div>
+                <div class="amber-bar" style="width: 40%; margin-top: 50px;"></div>
             </div>
         </div>
-    </section>
 
-    <script>
-        function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-            
-            document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
-            const navItem = document.getElementById('nav-' + pageId);
-            if(navItem) navItem.classList.add('active');
-            window.scrollTo(0, 0);
-        }
+        <!-- 4. TOP RIGHT DOCS -->
+        <div class="card card-doc">
+            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                <div style="width: 20px; height: 20px; background: var(--text-muted); border-radius: 4px;"></div>
+                <div style="width: 20px; height: 20px; background: var(--text-muted); border-radius: 4px;"></div>
+            </div>
+            <div class="amber-bar" style="width: 100%;"></div>
+            <div class="grey-bar" style="width: 80%;"></div>
+            <div class="grey-bar" style="width: 90%;"></div>
+            <div class="grey-bar" style="width: 70%;"></div>
+            <div class="card dark-card" style="position: relative; width: 60px; height: 60px; top: 10px; left: 140px; padding: 10px;">
+                <div class="amber-bar" style="width: 100%;"></div>
+            </div>
+        </div>
 
-        const bundleData = {
-            'MTN': [{size: '5GB', price: 10}, {size: '10GB', price: 18}, {size: '20GB', price: 35}],
-            'TELECEL': [{size: '8GB', price: 15}, {size: '15GB', price: 25}],
-            'AT': [{size: '10GB', price: 17}, {size: '25GB', price: 40}]
-        };
+        <!-- 5. BOTTOM RIGHT STATS -->
+        <div class="card dark-card card-substats">
+            <div class="white-bar" style="width: 30%;"></div>
+            <div class="white-bar" style="width: 70%;"></div>
+            <div class="mock-chart" style="height: 30px; border-color: rgba(255,255,255,0.1);">
+                 <svg viewBox="0 0 200 30">
+                    <path d="M0,20 L50,15 L100,22 L150,10 L200,18" fill="none" stroke="white" stroke-width="1" opacity="0.3"/>
+                </svg>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <div style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--amber);"></div>
+                <div class="white-bar" style="width: 40px;"></div>
+            </div>
+        </div>
 
-        function openBundles(network) {
-            document.getElementById('selected-network').innerText = network + " Bundles";
-            const list = document.getElementById('bundle-list');
-            list.innerHTML = '';
-            
-            bundleData[network].forEach(b => {
-                list.innerHTML += `
-                    <div class="b-white-card">
-                        <div>
-                            <h3 style="font-size: 1.4rem; font-weight: 800;">${b.size}</h3>
-                            <p style="color: var(--text-muted); font-size: 14px;">₵${b.price.toFixed(2)}</p>
-                        </div>
-                        <button class="btn-grad" style="padding: 10px 20px; font-size: 12px;" onclick="goToCheckout(${b.price})">Select</button>
-                    </div>
-                `;
-            });
-            showPage('bundles');
-        }
+    </div>
 
-        function goToCheckout(price) {
-            document.getElementById('sum-total').innerText = '₵' + price.toFixed(2);
-            showPage('checkout');
-        }
-
-        function processPayment() {
-            alert("Securely connecting to Paystack...");
-            setTimeout(() => {
-                alert("Redirecting to WhatsApp for instant verification.");
-            }, 1000);
-        }
-    </script>
 </body>
 </html>
