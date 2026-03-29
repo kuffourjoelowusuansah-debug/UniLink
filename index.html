@@ -150,7 +150,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .fc-dark h3{color:white;}
 .fc-dark p{color:rgba(255,255,255,0.55);}
 
-/* NETWORK TABS */
+/* NETWORK TABS - with SVG logos */
 .net-tabs{display:flex;gap:1rem;margin-bottom:2.5rem;flex-wrap:wrap;}
 .net-tab{
   display:flex;align-items:center;gap:0.875rem;
@@ -164,13 +164,14 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 }
 .net-tab:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg);border-color:rgba(43,45,78,0.25);}
 .net-tab.active{color:var(--white);border-color:transparent;box-shadow:0 8px 24px rgba(43,45,78,0.2);}
-.net-tab.mtn-tab.active{background:var(--navy);border-left:4px solid #FFCC00;}
-.net-tab.at-tab.active{background:var(--navy);border-left:4px solid #E60000;}
-.net-tab.tel-tab.active{background:var(--navy);border-left:4px solid #00AEEF;}
-.net-tab-logo{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:800;letter-spacing:-0.01em;flex-shrink:0;line-height:1.1;text-align:center;}
-.net-tab.mtn-tab .net-tab-logo{background:#FFCC00;color:#3D2E00;}
-.net-tab.at-tab .net-tab-logo{background:#E60000;color:white;}
-.net-tab.tel-tab .net-tab-logo{background:#00AEEF;color:white;}
+.net-tab.mtn-tab.active{background:var(--navy);}
+.net-tab.at-tab.active{background:var(--navy);}
+.net-tab.tel-tab.active{background:var(--navy);}
+.net-tab-logo{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.net-tab.mtn-tab .net-tab-logo{background:#FFCC00;}
+.net-tab.at-tab .net-tab-logo{background:#E60000;}
+.net-tab.tel-tab .net-tab-logo{background:#00AEEF;}
+.net-tab-logo svg{width:28px;height:28px;}
 .net-tab-info{text-align:left;}
 .net-tab-name{font-size:0.9rem;font-weight:700;color:var(--navy);line-height:1.2;}
 .net-tab.active .net-tab-name{color:white;}
@@ -250,6 +251,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .bc.pop .bc-btn{background:var(--orange);border-color:var(--orange);color:white;}
 .pop-badge{position:absolute;top:0.9rem;right:0.9rem;background:var(--orange);color:white;font-size:0.62rem;font-weight:700;padding:0.2rem 0.55rem;border-radius:100px;letter-spacing:0.05em;}
 .bc-net{display:inline-flex;align-items:center;gap:0.35rem;background:rgba(43,45,78,0.07);padding:0.25rem 0.65rem;border-radius:100px;font-size:0.7rem;color:var(--muted);font-weight:600;margin-bottom:1rem;}
+.bc-net svg{width:12px;height:12px;margin-right:2px;}
 .bc-gb{font-family:'Syne',sans-serif;font-size:2.4rem;font-weight:800;letter-spacing:-0.04em;line-height:1;color:var(--navy);}
 .bc-gb span{font-size:1rem;font-weight:600;color:var(--muted);}
 .bc-valid{font-size:0.72rem;color:var(--orange);font-weight:600;margin:0.3rem 0 1rem;}
@@ -540,21 +542,36 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     <p class="sec-sub fi">All bundles valid forever — no expiry. Delivered within 30+ minutes via WhatsApp after MoMo payment.</p>
     <div class="net-tabs fi" id="netTabs">
       <button class="net-tab mtn-tab active" data-net="MTN" onclick="showB('MTN')">
-        <div class="net-tab-logo">MTN</div>
+        <div class="net-tab-logo">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="24" height="24" rx="6" fill="#FFCC00"/>
+            <text x="12" y="17" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-size="14" fill="#3D2E00">MTN</text>
+          </svg>
+        </div>
         <div class="net-tab-info">
           <div class="net-tab-name">MTN</div>
           <div class="net-tab-sub">15 bundles · from GH₵5</div>
         </div>
       </button>
       <button class="net-tab at-tab" data-net="AT" onclick="showB('AT')">
-        <div class="net-tab-logo">AT</div>
+        <div class="net-tab-logo">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="24" height="24" rx="6" fill="#E60000"/>
+            <text x="12" y="17" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-size="10" fill="white">AT</text>
+          </svg>
+        </div>
         <div class="net-tab-info">
           <div class="net-tab-name">AirtelTigo</div>
           <div class="net-tab-sub">14 bundles · from GH₵4.50</div>
         </div>
       </button>
       <button class="net-tab tel-tab" data-net="Telecel" onclick="showB('Telecel')">
-        <div class="net-tab-logo">Tel</div>
+        <div class="net-tab-logo">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="24" height="24" rx="6" fill="#00AEEF"/>
+            <text x="12" y="17" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-size="9" fill="white">TEL</text>
+          </svg>
+        </div>
         <div class="net-tab-info">
           <div class="net-tab-name">Telecel</div>
           <div class="net-tab-sub">9 bundles · from GH₵40</div>
@@ -901,7 +918,7 @@ function getCurrentYearWeek() {
 function savePurchase(purchase) {
   const stored = localStorage.getItem('unilink_purchases');
   let purchases = stored ? JSON.parse(stored) : [];
-  purchases.unshift(purchase); // newest first
+  purchases.unshift(purchase);
   localStorage.setItem('unilink_purchases', JSON.stringify(purchases));
   _purchases = purchases;
   updateHistoryAndRanking();
@@ -938,7 +955,6 @@ function renderHistory() {
     );
   }
   
-  // Stats
   const totalSpent = filtered.reduce((sum, p) => sum + p.total, 0);
   const totalPurchases = filtered.length;
   const uniqueCustomers = new Set(filtered.map(p => p.phone)).size;
@@ -950,7 +966,6 @@ function renderHistory() {
   `;
   document.getElementById('historyStats').innerHTML = statsHtml;
   
-  // List
   if (filtered.length === 0) {
     document.getElementById('historyList').innerHTML = '<div style="text-align:center;padding:2rem;color:var(--muted)">No purchases found.</div>';
     return;
@@ -979,7 +994,6 @@ function renderHistory() {
 function renderRanking() {
   const currentWeek = getCurrentYearWeek();
   
-  // Group purchases by phone/name and count for current week
   const weekMap = new Map();
   
   _purchases.forEach(p => {
@@ -994,7 +1008,6 @@ function renderRanking() {
     }
   });
   
-  // Convert to array and sort by count descending
   const ranking = Array.from(weekMap.values()).sort((a, b) => b.count - a.count);
   
   if (ranking.length === 0) {
@@ -1052,11 +1065,13 @@ function showB(net) {
   const bGrid = document.getElementById('bGrid');
   if (!bGrid) return;
   
+  const networkLogo = net === 'MTN' ? '📶' : (net === 'AT' ? '📶' : '📶');
+  
   bGrid.innerHTML = DS[net].map((b, i) => {
     const pop = b.pop ? ' bc pop' : ' bc';
     const badge = b.pop ? '<div class="pop-badge">POPULAR</div>' : '';
     return `<div class="${pop}" style="animation-delay:${i * 35}ms">${badge}
-      <div class="bc-net">📶 ${NL[net]}</div>
+      <div class="bc-net">${networkLogo} ${NL[net]}</div>
       <div class="bc-gb">${b.gb}<span>GB</span></div>
       <div class="bc-valid">✦ Valid Forever</div>
       <div class="bc-price">GH₵ ${b.p.toFixed(2)} <small>/ bundle</small></div>
@@ -1293,15 +1308,12 @@ async function onPaymentSuccess(paystackRes, customer) {
     status: 'paid'
   };
 
-  // Save to localStorage
   savePurchase(orderData);
   
-  // Save to Firebase if available
   if (typeof window._saveOrder === 'function') {
     await window._saveOrder(orderData);
   }
 
-  // Open WhatsApp with full order details
   const msg = `Hi UniLink GH! ✅ I have successfully paid for my data bundle.\n\n`
     + `• REF ID: ${refId}\n`
     + `• Bundle: ${_order.gb}GB ${NL[_order.net]}\n`
