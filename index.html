@@ -534,51 +534,59 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--navy);min
 
 <!-- HOME PAGE -->
 <div class="page active" id="pg-home">
-  <div class="hero-wrap">
-    <div>
-      <div class="hero-tag">Student data bundles · Ghana</div>
-      <h1>Stay <em>online</em>,<br>spend less.</h1>
-      <p>Affordable, no-expiry data bundles for university students across Ghana. MTN, AirtelTigo &amp; Telecel — delivered via WhatsApp.</p>
-      <div class="hero-btns">
-        <button class="btn-orange" onclick="nav('bundles')">View Bundles →</button>
-        <button class="btn-outline" onclick="nav('how')">How it works</button>
-      </div>
-    </div>
-    <div class="hero-visual">
-      <div class="mock-card mock-dark hc1">
-        <div class="mci">
-          <div class="mlabel-w">POPULAR BUNDLE</div>
-          <div class="mbig-w">10<span style="font-size:1rem;font-weight:500;color:rgba(255,255,255,0.45)">GB</span></div>
-          <div class="msub-w">MTN · Valid Forever</div>
-          <div class="mbar"><div class="mbar-fill" style="width:72%"></div></div>
+  <!-- HERO WITH NEW BACKGROUND IMAGE (exactly as requested) -->
+  <div class="hero-wrap" style="background: linear-gradient(rgba(43,45,78,0.65), rgba(43,45,78,0.65)), url('https://raw.githubusercontent.com/kuffourjoelowusuansah-debug/UniLink/main/IMG_3593.jpeg') center/cover no-repeat; border-radius: var(--radius); overflow: hidden; padding: 5rem 2.5rem 3rem; position: relative;">
+    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: center;">
+      <div>
+        <div class="hero-tag">Student data bundles · Ghana</div>
+        <h1 style="color: white; text-shadow: 0 4px 20px rgba(0,0,0,0.75);">Stay <em>online</em>,<br>spend less.</h1>
+        <p style="color: rgba(255,255,255,0.95); font-size: 1.05rem; line-height: 1.75; margin-bottom: 2rem; max-width: 420px;">
+          Affordable, no-expiry data bundles for university students across Ghana. MTN, AirtelTigo &amp; Telecel — delivered via WhatsApp.
+        </p>
+        <div class="hero-btns">
+          <button class="btn-orange" onclick="nav('bundles')">View Bundles →</button>
+          <button class="btn-outline" onclick="nav('how')" style="background: rgba(255,255,255,0.15); color: white; border-color: rgba(255,255,255,0.4);">How it works</button>
         </div>
       </div>
-      <div class="mock-card mock-light hc2">
-        <div class="mci">
-          <div class="mlabel">NETWORKS</div>
-          <div class="mrow"><span class="mnet">MTN</span><span class="mpill p-grn">✓ Live</span></div>
-          <div class="mrow"><span class="mnet">AirtelTigo</span><span class="mpill p-grn">✓ Live</span></div>
-          <div class="mrow"><span class="mnet">Telecel</span><span class="mpill p-grn">✓ Live</span></div>
+
+      <!-- Mock cards stay on the right (they look great over the photo) -->
+      <div class="hero-visual">
+        <div class="mock-card mock-dark hc1">
+          <div class="mci">
+            <div class="mlabel-w">POPULAR BUNDLE</div>
+            <div class="mbig-w">10<span style="font-size:1rem;font-weight:500;color:rgba(255,255,255,0.45)">GB</span></div>
+            <div class="msub-w">MTN · Valid Forever</div>
+            <div class="mbar"><div class="mbar-fill" style="width:72%"></div></div>
+          </div>
         </div>
-      </div>
-      <div class="mock-card mock-light hc3">
-        <div class="mci">
-          <div class="mlabel">DELIVERY</div>
-          <div class="mbig" style="color:var(--navy)">30<span style="font-size:0.95rem;color:var(--muted);font-weight:500">min+</span></div>
-          <div class="msub">Delivery time</div>
-          <div style="margin-top:0.75rem;display:flex;gap:0.4rem;"><span class="mpill p-ora">MoMo</span><span class="mpill p-grn">Reliable</span></div>
+        <div class="mock-card mock-light hc2">
+          <div class="mci">
+            <div class="mlabel">NETWORKS</div>
+            <div class="mrow"><span class="mnet">MTN</span><span class="mpill p-grn">✓ Live</span></div>
+            <div class="mrow"><span class="mnet">AirtelTigo</span><span class="mpill p-grn">✓ Live</span></div>
+            <div class="mrow"><span class="mnet">Telecel</span><span class="mpill p-grn">✓ Live</span></div>
+          </div>
         </div>
-      </div>
-      <div class="mock-card mock-dark hc4">
-        <div class="mci">
-          <div class="mlabel-w">STUDENTS SERVED</div>
-          <div class="mbig-w">5K<span style="font-size:1rem;color:rgba(255,255,255,0.45)">+</span></div>
-          <div class="msub-w">Across Ghana campuses</div>
-          <div class="mbar"><div class="mbar-fill" style="width:85%"></div></div>
+        <div class="mock-card mock-light hc3">
+          <div class="mci">
+            <div class="mlabel">DELIVERY</div>
+            <div class="mbig" style="color:var(--navy)">30<span style="font-size:0.95rem;color:var(--muted);font-weight:500">min+</span></div>
+            <div class="msub">Delivery time</div>
+            <div style="margin-top:0.75rem;display:flex;gap:0.4rem;"><span class="mpill p-ora">MoMo</span><span class="mpill p-grn">Reliable</span></div>
+          </div>
+        </div>
+        <div class="mock-card mock-dark hc4">
+          <div class="mci">
+            <div class="mlabel-w">STUDENTS SERVED</div>
+            <div class="mbig-w">5K<span style="font-size:1rem;color:rgba(255,255,255,0.45)">+</span></div>
+            <div class="msub-w">Across Ghana campuses</div>
+            <div class="mbar"><div class="mbar-fill" style="width:85%"></div></div>
+          </div>
         </div>
       </div>
     </div>
   </div>
+
   <div class="stats-bar fi">
     <div class="stat-item"><div class="stat-num">5K<span>+</span></div><div class="stat-lbl">Students served</div></div>
     <div class="stat-item"><div class="stat-num">3</div><div class="stat-lbl">Networks covered</div></div>
