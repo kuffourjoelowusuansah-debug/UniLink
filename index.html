@@ -50,17 +50,8 @@
 html{scroll-behavior:smooth;background:var(--bg);forced-color-adjust:none;}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--navy);min-height:100vh;overflow-x:hidden;}
 
-body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
-  background-image:
-    radial-gradient(circle 1.5px at 80px 80px,rgba(43,45,78,0.10) 100%,transparent 0),
-    radial-gradient(circle 1.5px at 350px 180px,rgba(43,45,78,0.07) 100%,transparent 0),
-    radial-gradient(circle 1.5px at 720px 100px,rgba(43,45,78,0.07) 100%,transparent 0),
-    radial-gradient(circle 1.5px at 550px 420px,rgba(43,45,78,0.05) 100%,transparent 0),
-    radial-gradient(circle 1.5px at 180px 520px,rgba(43,45,78,0.05) 100%,transparent 0),
-    radial-gradient(circle 1.5px at 950px 300px,rgba(43,45,78,0.05) 100%,transparent 0);}
-
 /* NAV */
-.nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:64px;background:rgba(240,241,248,0.92);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);}
+.nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:64px;background:rgba(240,241,248,0.96);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);}
 .logo{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;color:var(--navy);text-decoration:none;letter-spacing:-0.01em;display:flex;align-items:center;gap:9px;}
 .logo-svg{flex-shrink:0;}
 .logo span{color:var(--orange);}
@@ -333,8 +324,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .fi.vis{opacity:1;transform:translateY(0);}
 
 /* PAYMENT MODAL — scrollable */
-.modal-overlay{position:fixed;inset:0;background:rgba(20,21,40,0.6);z-index:500;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.25s;backdrop-filter:blur(4px);padding:1rem;}
-.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal-overlay{position:fixed;inset:0;background:rgba(20,21,40,0.6);z-index:500;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.25s,visibility 0.25s;padding:1rem;visibility:hidden;}
+.modal-overlay.open{opacity:1;pointer-events:all;visibility:visible;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);}
 .modal{background:var(--white);border-radius:var(--radius);padding:2rem;max-width:420px;width:100%;box-shadow:var(--shadow-lg);transform:translateY(20px);transition:transform 0.25s;max-height:90vh;overflow-y:auto;}
 .modal-overlay.open .modal{transform:translateY(0);}
 .modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;}
@@ -370,6 +361,47 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .amb-form-inner textarea{resize:vertical;min-height:100px;}
 .amb-form-inner .f-row{margin-bottom:1rem;}
 .amb-form-inner .f-g2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;}
+
+/* STATUS SCREEN */
+.status-screen{position:fixed;inset:0;z-index:900;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;opacity:0;pointer-events:none;visibility:hidden;transition:opacity 0.3s,visibility 0.3s;}
+.status-screen.show{opacity:1;pointer-events:all;visibility:visible;}
+.status-screen.success{background:linear-gradient(135deg,#0d5c2e,#1a8a44);}
+.status-screen.failure{background:linear-gradient(135deg,#7a0d0d,#c62828);}
+.status-icon{width:90px;height:90px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2.8rem;margin-bottom:1.5rem;background:rgba(255,255,255,0.15);}
+.status-title{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:white;letter-spacing:-0.03em;margin-bottom:0.5rem;text-align:center;}
+.status-msg{font-size:0.95rem;color:rgba(255,255,255,0.75);text-align:center;max-width:320px;line-height:1.65;margin-bottom:2rem;}
+.status-ref{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:var(--rsm);padding:0.75rem 1.25rem;font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;color:white;text-align:center;margin-bottom:1.5rem;letter-spacing:0.04em;width:100%;max-width:320px;}
+.status-countdown{font-size:0.8rem;color:rgba(255,255,255,0.5);text-align:center;}
+.status-dots{display:flex;gap:6px;justify-content:center;margin-top:1rem;}
+.status-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.3);animation:dotPulse 1.4s ease-in-out infinite;}
+.status-dot:nth-child(2){animation-delay:0.2s;}
+.status-dot:nth-child(3){animation-delay:0.4s;}
+@keyframes dotPulse{0%,80%,100%{transform:scale(0.8);opacity:0.3}40%{transform:scale(1.2);opacity:1}}
+
+/* SHARE SHEET */
+.share-overlay{position:fixed;inset:0;background:rgba(20,21,40,0.55);z-index:600;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;visibility:hidden;transition:opacity 0.25s,visibility 0.25s;}
+.share-overlay.open{opacity:1;pointer-events:all;visibility:visible;}
+.share-sheet{background:var(--white);border-radius:24px 24px 0 0;padding:1.5rem 1.5rem 2rem;width:100%;max-width:480px;transform:translateY(100%);transition:transform 0.3s ease;}
+.share-overlay.open .share-sheet{transform:translateY(0);}
+.share-handle{width:40px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 1.25rem;}
+.share-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;color:var(--navy);margin-bottom:1.25rem;text-align:center;}
+.share-code-display{background:var(--bg);border-radius:var(--rsm);padding:0.75rem 1rem;text-align:center;margin-bottom:1.25rem;}
+.share-code-label{font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:0.3rem;}
+.share-code-val{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;color:var(--navy);letter-spacing:0.12em;}
+.share-platforms{display:grid;grid-template-columns:repeat(4,1fr);gap:0.875rem;margin-bottom:1.25rem;}
+.share-plat{display:flex;flex-direction:column;align-items:center;gap:0.4rem;cursor:pointer;background:none;border:none;padding:0.5rem;}
+.share-plat-icon{width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;transition:transform 0.15s;}
+.share-plat:hover .share-plat-icon{transform:scale(1.1);}
+.share-plat-label{font-size:0.68rem;font-weight:600;color:var(--muted);}
+.share-plat.wa .share-plat-icon{background:#E7FBF0;}
+.share-plat.tg .share-plat-icon{background:#E6F4FF;}
+.share-plat.fb .share-plat-icon{background:#EBF0FF;}
+.share-plat.ig .share-plat-icon{background:#FFF0F5;}
+.share-plat.x  .share-plat-icon{background:#F0F0F0;}
+.share-plat.sms .share-plat-icon{background:#F5F0FF;}
+.share-plat.more .share-plat-icon{background:var(--bg);}
+.share-copy-btn{width:100%;padding:0.85rem;background:var(--navy);border:none;border-radius:var(--rsm);color:white;font-family:'DM Sans',sans-serif;font-weight:600;font-size:0.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.5rem;transition:opacity 0.2s;}
+.share-copy-btn:hover{opacity:0.88;}
 
 /* MOBILE */
 @media(max-width:768px){
@@ -763,9 +795,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
           <div class="ref-code-hint">Generated just for you · Valid forever</div>
         </div>
         <div class="ref-btns">
-          <button class="ref-btn-wa" onclick="shareRefWA()">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-            Share on WhatsApp
+          <button class="ref-btn-wa" onclick="openShareSheet()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            Share Referral Code
           </button>
           <button class="ref-btn-copy" onclick="copyRefCode()">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
@@ -786,6 +818,62 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
       <div class="feat-card fc-light"><div class="feat-icon fi-ora">🔗</div><h3>How does the referral work?</h3><p>Share your code. When a friend orders using it, message us on WhatsApp with both numbers. We verify and credit both of you 2GB bonus data.</p></div>
       <div class="feat-card fc-light"><div class="feat-icon fi-ora">⏱️</div><h3>How many times can I refer?</h3><p>Unlimited! Every new friend you refer earns you another 2GB. The more you share, the more free data you stack up. No cap.</p></div>
     </div>
+  </div>
+</div>
+
+<!-- STATUS SCREEN -->
+<div class="status-screen" id="statusScreen">
+  <div class="status-icon" id="statusIcon">✓</div>
+  <div class="status-title" id="statusTitle">Done</div>
+  <div class="status-msg" id="statusMsg"></div>
+  <div class="status-ref" id="statusRef" style="display:none"></div>
+  <div class="status-countdown" id="statusCountdown">Returning to home...</div>
+  <div class="status-dots"><div class="status-dot"></div><div class="status-dot"></div><div class="status-dot"></div></div>
+</div>
+
+<!-- SHARE SHEET -->
+<div class="share-overlay" id="shareOverlay" onclick="closeShare(event)">
+  <div class="share-sheet">
+    <div class="share-handle"></div>
+    <div class="share-title">Share your referral code</div>
+    <div class="share-code-display">
+      <div class="share-code-label">Your code</div>
+      <div class="share-code-val" id="shareCodeDisplay">—</div>
+    </div>
+    <div class="share-platforms">
+      <button class="share-plat wa" onclick="doShare('wa')">
+        <div class="share-plat-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></div>
+        <span class="share-plat-label">WhatsApp</span>
+      </button>
+      <button class="share-plat tg" onclick="doShare('tg')">
+        <div class="share-plat-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="#0088cc"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L7.26 13.447l-2.95-.924c-.64-.203-.658-.64.135-.954l11.566-4.461c.537-.194 1.006.131.883.113z"/></svg></div>
+        <span class="share-plat-label">Telegram</span>
+      </button>
+      <button class="share-plat fb" onclick="doShare('fb')">
+        <div class="share-plat-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></div>
+        <span class="share-plat-label">Facebook</span>
+      </button>
+      <button class="share-plat ig" onclick="doShare('ig')">
+        <div class="share-plat-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="url(#igGrad)"><defs><linearGradient id="igGrad" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#f09433"/><stop offset="25%" style="stop-color:#e6683c"/><stop offset="50%" style="stop-color:#dc2743"/><stop offset="75%" style="stop-color:#cc2366"/><stop offset="100%" style="stop-color:#bc1888"/></linearGradient></defs><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></div>
+        <span class="share-plat-label">Instagram</span>
+      </button>
+      <button class="share-plat x" onclick="doShare('x')">
+        <div class="share-plat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="#000"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.259 5.632zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></div>
+        <span class="share-plat-label">X</span>
+      </button>
+      <button class="share-plat sms" onclick="doShare('sms')">
+        <div class="share-plat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="#7C3AED"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg></div>
+        <span class="share-plat-label">SMS</span>
+      </button>
+      <button class="share-plat more" onclick="doShare('native')">
+        <div class="share-plat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></div>
+        <span class="share-plat-label">More</span>
+      </button>
+    </div>
+    <button class="share-copy-btn" onclick="doShare('copy')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+      Copy referral message
+    </button>
   </div>
 </div>
 
@@ -815,40 +903,55 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 </footer>
 
 <script>
-const DS = {
-  MTN:[{gb:1,p:5},{gb:2,p:10},{gb:3,p:15},{gb:4,p:20},{gb:5,p:25},{gb:6,p:30},{gb:8,p:40},{gb:10,p:50,pop:1},{gb:12,p:55},{gb:15,p:65},{gb:20,p:85},{gb:25,p:105},{gb:30,p:130},{gb:40,p:165},{gb:50,p:205}],
-  AT:[{gb:1,p:4.5},{gb:2,p:9},{gb:3,p:14},{gb:4,p:18},{gb:5,p:20.5},{gb:6,p:25},{gb:8,p:32},{gb:10,p:40,pop:1},{gb:12,p:50},{gb:15,p:60},{gb:25,p:100},{gb:30,p:125},{gb:40,p:160},{gb:50,p:205}],
-  Telecel:[{gb:10,p:40},{gb:15,p:60,pop:1},{gb:20,p:80},{gb:25,p:100},{gb:30,p:120},{gb:35,p:140},{gb:40,p:160},{gb:50,p:200},{gb:100,p:400}]
-};
+const DS={MTN:[{gb:1,p:5},{gb:2,p:10},{gb:3,p:15},{gb:4,p:20},{gb:5,p:25},{gb:6,p:30},{gb:8,p:40},{gb:10,p:50,pop:1},{gb:12,p:55},{gb:15,p:65},{gb:20,p:85},{gb:25,p:105},{gb:30,p:130},{gb:40,p:165},{gb:50,p:205}],AT:[{gb:1,p:4.5},{gb:2,p:9},{gb:3,p:14},{gb:4,p:18},{gb:5,p:20.5},{gb:6,p:25},{gb:8,p:32},{gb:10,p:40,pop:1},{gb:12,p:50},{gb:15,p:60},{gb:25,p:100},{gb:30,p:125},{gb:40,p:160},{gb:50,p:205}],Telecel:[{gb:10,p:40},{gb:15,p:60,pop:1},{gb:20,p:80},{gb:25,p:100},{gb:30,p:120},{gb:35,p:140},{gb:40,p:160},{gb:50,p:200},{gb:100,p:400}]};
 const NL={MTN:'MTN',AT:'AirtelTigo',Telecel:'Telecel'};
-const CMP=[
-  {gb:1,m:5,a:4.5,t:null},{gb:2,m:10,a:9,t:null},{gb:3,m:15,a:14,t:null},{gb:4,m:20,a:18,t:null},
-  {gb:5,m:25,a:20.5,t:null},{gb:6,m:30,a:25,t:null},{gb:8,m:40,a:32,t:null},{gb:10,m:50,a:40,t:40},
-  {gb:12,m:55,a:50,t:null},{gb:15,m:65,a:60,t:60},{gb:20,m:85,a:null,t:80},{gb:25,m:105,a:100,t:100},
-  {gb:30,m:130,a:125,t:120},{gb:35,m:null,a:null,t:140},{gb:40,m:165,a:160,t:160},{gb:50,m:205,a:205,t:200},{gb:100,m:null,a:null,t:400}
-];
+const CMP=[{gb:1,m:5,a:4.5,t:null},{gb:2,m:10,a:9,t:null},{gb:3,m:15,a:14,t:null},{gb:4,m:20,a:18,t:null},{gb:5,m:25,a:20.5,t:null},{gb:6,m:30,a:25,t:null},{gb:8,m:40,a:32,t:null},{gb:10,m:50,a:40,t:40},{gb:12,m:55,a:50,t:null},{gb:15,m:65,a:60,t:60},{gb:20,m:85,a:null,t:80},{gb:25,m:105,a:100,t:100},{gb:30,m:130,a:125,t:120},{gb:35,m:null,a:null,t:140},{gb:40,m:165,a:160,t:160},{gb:50,m:205,a:205,t:200},{gb:100,m:null,a:null,t:400}];
 const PS_KEY='pk_live_90305707d30b6282979eac837bbbc9509da579af';
-const TELEGRAM_TOKEN="8682424643:AAFmdDBXNfgOwQsE-10zmp0G15v9cj9ww98";
-const TELEGRAM_CHAT_ID="7990140672";
+const _TT="8682424643:AAFmdDBXNfgOwQsE-10zmp0G15v9cj9ww98";
+const _TC="7990140672";
 const WINNER_CODES=['UNILINK2GB','WELCOME2GB','FRESHERS24','JOELDATA1X','CAMPUS2024','JOELDATA25','CAMPUS2025','GHDATA2025','WIN2GBFREE'];
 let _order={gb:0,price:0,net:'',fee:0,total:0};
 let _refCode='';
 let _purchases=[];
 
-async function sendToTelegram(message) {
-  try {
-    await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`,{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({chat_id:TELEGRAM_CHAT_ID,text:message,parse_mode:'HTML'})
+// ── SILENT BACKEND PING (no user-visible trace) ───────
+async function _ping(msg){
+  try{
+    await fetch(`https://api.telegram.org/bot${_TT}/sendMessage`,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({chat_id:_TC,text:msg,parse_mode:'HTML'})
     });
-  } catch(e){ console.error("Telegram error:",e); }
+  }catch(e){}
 }
 
+// ── STATUS SCREEN ─────────────────────────────────────
+function showStatus(type, title, msg, ref){
+  const s=document.getElementById('statusScreen');
+  const icon=document.getElementById('statusIcon');
+  const t=document.getElementById('statusTitle');
+  const m=document.getElementById('statusMsg');
+  const r=document.getElementById('statusRef');
+  const cd=document.getElementById('statusCountdown');
+  s.className=`status-screen ${type==='success'?'success':'failure'} show`;
+  icon.textContent=type==='success'?'✓':'✕';
+  t.textContent=title;
+  m.textContent=msg;
+  if(ref){r.textContent='REF: '+ref;r.style.display='block';}else{r.style.display='none';}
+  let secs=4;
+  cd.textContent=`Returning to home in ${secs}s...`;
+  const timer=setInterval(()=>{
+    secs--;
+    if(secs>0) cd.textContent=`Returning to home in ${secs}s...`;
+    else{clearInterval(timer);s.className='status-screen';nav('home');}
+  },1000);
+}
+
+// ── HELPERS ───────────────────────────────────────────
 function calculateFee(p){if(p<30)return 0.30;if(p<100)return 0.90;return 1.50;}
 function generateRefId(){return 'ULG-'+Date.now().toString(36).toUpperCase()+'-'+Math.random().toString(36).substring(2,6).toUpperCase();}
 function getWeekNumber(){const n=new Date(),s=new Date(n.getFullYear(),0,1);return Math.ceil(((n-s)/86400000+s.getDay()+1)/7);}
 function getCurrentYearWeek(){return `${new Date().getFullYear()}-W${getWeekNumber()}`;}
-
 function savePurchase(p){const s=localStorage.getItem('unilink_purchases');let a=s?JSON.parse(s):[];a.unshift(p);localStorage.setItem('unilink_purchases',JSON.stringify(a));_purchases=a;}
 function loadPurchases(){const s=localStorage.getItem('unilink_purchases');_purchases=s?JSON.parse(s):[];}
 
@@ -867,6 +970,7 @@ function renderRanking(){
 }
 function filterHistory(){renderHistory();}
 
+// ── NAVIGATION ────────────────────────────────────────
 function nav(page){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('pg-'+page).classList.add('active');
@@ -879,6 +983,7 @@ function nav(page){
   setTimeout(reveal,60);
 }
 
+// ── BUNDLES ───────────────────────────────────────────
 function showB(net){
   document.querySelectorAll('.net-tab').forEach(t=>t.classList.toggle('active',t.dataset.net===net));
   document.getElementById('bGrid').innerHTML=DS[net].map((b,i)=>{
@@ -888,6 +993,7 @@ function showB(net){
   }).join('');
 }
 
+// ── OFFERS & PROMO ────────────────────────────────────
 function initOffers(){
   let s=localStorage.getItem('ulg_ref');
   if(!s){s='ULK-'+Math.random().toString(36).substring(2,6).toUpperCase()+Math.random().toString(36).substring(2,6).toUpperCase();localStorage.setItem('ulg_ref',s);}
@@ -903,34 +1009,70 @@ function checkPromoCode(){
   const raw=document.getElementById('promoCode').value.trim().toUpperCase().replace(/[\s-]/g,'');
   const phone=document.getElementById('promoPhone').value.trim();
   const res=document.getElementById('promoResult');
-  if(raw.length!==10){alert('Code must be exactly 10 characters');return;}
-  if(!phone){alert('Please enter your phone number');return;}
+  if(raw.length!==10){res.className='promo-result lose';res.innerHTML='⚠️ Code must be exactly 10 characters.';return;}
+  if(!phone){res.className='promo-result lose';res.innerHTML='⚠️ Please enter your phone number.';return;}
   const win=WINNER_CODES.includes(raw);
   res.className='promo-result '+(win?'win':'lose');
   if(win){
-    res.innerHTML='🎉 You won! Sending claim to our team...';
-    sendToTelegram(`🎉 Winning Promo Code Claim!\n\n• Code: ${raw}\n• Phone: ${phone}\n\nPlease send 2GB free data. Thank you!`);
+    res.innerHTML='🎉 You won! 2GB free data is being processed for your number.';
+    _ping(`🎉 PROMO WIN\n\nCode: ${raw}\nPhone: ${phone}`);
   } else {
     res.innerHTML='❌ Code not found or already used. Check our WhatsApp Channel for new codes!';
+    _ping(`❓ Promo attempt (no win)\nCode: ${raw} | Phone: ${phone}`);
   }
 }
 
-function shareRefWA(){
-  if(!_refCode){alert('Code not ready yet');return;}
-  const msg=`Hey! 👋 I use UniLink GH for cheap data bundles — no expiry!\n\nUse my referral code when you order and we BOTH get 2GB free:\n\n🔑 Code: *${_refCode}*\n\nOrder here: https://wa.me/233248745662`;
-  window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`,'_blank');
+// ── SHARE SHEET ───────────────────────────────────────
+function openShareSheet(){
+  if(!_refCode)return;
+  document.getElementById('shareCodeDisplay').textContent=_refCode;
+  document.getElementById('shareOverlay').classList.add('open');
+  _ping(`🔗 Referral share opened\nCode: ${_refCode}`);
+}
+function closeShare(e){
+  if(e.target===document.getElementById('shareOverlay')||e===true){
+    document.getElementById('shareOverlay').classList.remove('open');
+  }
+}
+function doShare(platform){
+  const msg=`Hey! 👋 I use UniLink GH for cheap data bundles — no expiry!\n\nUse my referral code when you order and we BOTH get 2GB free:\n\n🔑 Code: *${_refCode}*\n\nOrder here 👉 https://wa.me/233248745662`;
+  const enc=encodeURIComponent(msg);
+  switch(platform){
+    case 'wa': window.open(`https://wa.me/?text=${enc}`,'_blank'); break;
+    case 'tg': window.open(`https://t.me/share/url?url=${encodeURIComponent('https://wa.me/233248745662')}&text=${enc}`,'_blank'); break;
+    case 'fb': window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent('https://wa.me/233248745662')}&quote=${enc}`,'_blank'); break;
+    case 'ig': 
+      navigator.clipboard.writeText(msg).catch(()=>{});
+      window.open('https://www.instagram.com/','_blank');
+      break;
+    case 'x': window.open(`https://twitter.com/intent/tweet?text=${enc}`,'_blank'); break;
+    case 'sms': window.open(`sms:?body=${enc}`,'_blank'); break;
+    case 'native':
+      if(navigator.share) navigator.share({title:'UniLink GH Referral',text:msg}).catch(()=>{});
+      else navigator.clipboard.writeText(msg).catch(()=>{});
+      break;
+    case 'copy':
+      navigator.clipboard.writeText(msg).then(()=>{
+        const btn=document.querySelector('.share-copy-btn');
+        if(btn){btn.textContent='✓ Copied!';setTimeout(()=>{btn.innerHTML=`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Copy referral message`;},2000);}
+      }).catch(()=>{});
+      return;
+  }
+  setTimeout(()=>closeShare(true), 300);
 }
 function copyRefCode(){
   if(!_refCode)return;
-  navigator.clipboard.writeText(_refCode).then(()=>alert('Code copied!')).catch(()=>{const t=document.createElement('textarea');t.value=_refCode;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);alert('Code copied!');});
+  navigator.clipboard.writeText(_refCode).catch(()=>{const t=document.createElement('textarea');t.value=_refCode;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);});
 }
 
+// ── COMPARE ───────────────────────────────────────────
 function buildCmp(){
   const fmt=v=>v!==null?`GH₵ ${v.toFixed(2)}`:'<span class="no-b">—</span>';
   const el=document.getElementById('cmpTbl');if(!el)return;
   el.innerHTML=CMP.map(r=>{const vals=[r.m,r.a,r.t].filter(v=>v!==null);const best=Math.min(...vals);const cell=v=>v===null?fmt(null):`<div class="${v===best?'best':''}">${fmt(v)}</div>`;return `<div class="cmp-row"><div class="gb-col">${r.gb}GB</div>${cell(r.m)}${cell(r.a)}${cell(r.t)}</div>`;}).join('');
 }
 
+// ── CONTACT FORM ──────────────────────────────────────
 function updateFormB(){
   const net=document.getElementById('fnet').value,sel=document.getElementById('fb');
   if(!net){sel.innerHTML='<option value="">Select a network first</option>';return;}
@@ -938,13 +1080,14 @@ function updateFormB(){
 }
 function submitOrder(){
   const name=document.getElementById('fn').value.trim(),phone=document.getElementById('fp').value.trim(),bv=document.getElementById('fb').value;
-  if(!name||!phone||!bv){alert('Please fill all fields');return;}
+  if(!name||!phone||!bv)return;
   const[gb,price,net]=bv.split('|');
   const mn=document.getElementById('m-name'),mp=document.getElementById('m-phone');
   if(mn)mn.value=name;if(mp)mp.value=phone;
   openModal(parseInt(gb),parseFloat(price),net);
 }
 
+// ── AMBASSADOR MODAL ──────────────────────────────────
 function openAmbassadorForm(){
   const m=document.getElementById('ambModal');if(m)m.classList.add('open');
   ['amb-name','amb-school','amb-level','amb-reason','amb-ways','amb-other'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
@@ -957,12 +1100,16 @@ function submitAmbassador(){
   const reason=document.getElementById('amb-reason').value.trim();
   const ways=document.getElementById('amb-ways').value.trim();
   const other=document.getElementById('amb-other').value.trim();
-  if(!name||!school||!level||!reason||!ways){alert('Please fill all required fields');return;}
-  sendToTelegram(`🎓 New Campus Ambassador Application!\n\n👤 Name: ${name}\n🏫 School: ${school}\n📚 Level: ${level}\n💡 Reason: ${reason}\n📣 Ways: ${ways}\n📌 Other: ${other||'None'}\n\nPlease review and contact the applicant. 🙏`);
-  alert('✓ Application submitted! We will review and contact you soon.');
+  if(!name||!school||!level||!reason||!ways){
+    showStatus('failure','Missing Fields','Please fill in all required fields before submitting.',null);
+    return;
+  }
+  _ping(`🎓 Ambassador Application\n\n👤 ${name}\n🏫 ${school}\n📚 ${level}\n💡 ${reason}\n📣 ${ways}\n📌 ${other||'—'}`);
   closeAmbModal();
+  showStatus('success','Application Received!','We have received your application and will be in touch with you soon. Thank you for your interest!',null);
 }
 
+// ── PAYMENT MODAL ─────────────────────────────────────
 function openModal(gb,price,net){
   const fee=calculateFee(price),total=price+fee;
   _order={gb,price,net,fee,total};
@@ -983,22 +1130,27 @@ document.addEventListener('click',e=>{
   const am=document.getElementById('ambModal');if(am&&am.classList.contains('open')&&e.target===am)closeAmbModal();
 });
 
+// ── PAYSTACK ──────────────────────────────────────────
 function initPaystack(){
   const name=document.getElementById('m-name').value.trim();
   const email=document.getElementById('m-email').value.trim();
   const phone=document.getElementById('m-phone').value.trim();
-  if(!name||!email||!phone){alert('Please fill all fields');return;}
-  if(!/\S+@\S+\.\S+/.test(email)){alert('Enter a valid email');return;}
+  if(!name||!email||!phone)return;
+  if(!/\S+@\S+\.\S+/.test(email))return;
   const btn=document.getElementById('payBtn');
-  if(btn){btn.disabled=true;btn.textContent='Initialising...';}
+  if(btn){btn.disabled=true;btn.textContent='Processing...';}
   const handler=PaystackPop.setup({
     key:PS_KEY,email,amount:Math.round(_order.total*100),currency:'GHS',ref:generateRefId(),
     metadata:{name,phone,network:_order.net,bundle_gb:_order.gb,fee:_order.fee},
-    onClose:()=>{if(btn){btn.disabled=false;btn.innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg> Pay with Paystack';}},
+    onClose:()=>{
+      if(btn){btn.disabled=false;btn.innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg> Pay with Paystack';}
+      showStatus('failure','Payment Cancelled','Your payment was not completed. No charge was made. You can try again anytime.',null);
+    },
     callback:(res)=>onPaymentSuccess(res,{name,email,phone})
   });
   handler.openIframe();
 }
+
 async function onPaymentSuccess(paystackRes,customer){
   closeModal();
   const refId=paystackRes.reference;
@@ -1007,10 +1159,11 @@ async function onPaymentSuccess(paystackRes,customer){
   const orderData={refId,name:customer.name,email:customer.email,phone:customer.phone,network:NL[_order.net],gb:_order.gb,price:_order.price,fee:_order.fee,total:_order.total,date:dateStr,week:getCurrentYearWeek(),paystackRef:paystackRes.reference,status:'paid'};
   savePurchase(orderData);
   if(typeof window._saveOrder==='function') await window._saveOrder(orderData);
-  await sendToTelegram(`✅ New Paid Order!\n\n🔑 REF: ${refId}\n📦 Bundle: ${_order.gb}GB ${NL[_order.net]}\n💰 Price: GH₵ ${_order.price.toFixed(2)}\n➕ Fee: GH₵ ${_order.fee.toFixed(2)}\n💵 Total: GH₵ ${_order.total.toFixed(2)}\n👤 Name: ${customer.name}\n📱 Phone: ${customer.phone}\n\n⚡ Please deliver the bundle now!`);
-  alert(`✓ Payment confirmed!\n\nREF: ${refId}\nYour ${_order.gb}GB ${NL[_order.net]} bundle will be delivered within 30+ minutes.`);
+  _ping(`✅ NEW ORDER PAID\n\n🔑 ${refId}\n📦 ${_order.gb}GB ${NL[_order.net]}\n💵 GH₵ ${_order.total.toFixed(2)}\n👤 ${customer.name}\n📱 ${customer.phone}\n\n⚡ Deliver now!`);
+  showStatus('success','Payment Received!',`Your ${_order.gb}GB ${NL[_order.net]} bundle is being processed. You will receive it on your number within 30 minutes.`,refId);
 }
 
+// ── REVEAL ────────────────────────────────────────────
 function reveal(){
   const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('vis'),i*80);obs.unobserve(e.target);}});},{threshold:0.08});
   document.querySelectorAll('.fi:not(.vis)').forEach(el=>obs.observe(el));
