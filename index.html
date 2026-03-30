@@ -8,7 +8,6 @@
 <meta name="darkreader-lock">
 <title>UniLink GH — Student Data Bundles</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
-<!-- Firebase -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
   import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
@@ -25,11 +24,9 @@
   window._saveOrder = async (orderData) => {
     try {
       await addDoc(collection(db, "orders"), { ...orderData, createdAt: serverTimestamp(), status: "paid" });
-      console.log("Order saved to Firebase");
     } catch(e){ console.error("Firestore error:", e); }
   };
 </script>
-<!-- Paystack inline -->
 <script src="https://js.paystack.co/v1/inline.js"></script>
 <style>
 :root {
@@ -47,15 +44,12 @@
   --shadow-lg:0 12px 48px rgba(43,45,78,0.12);
   --radius:  18px;
   --rsm:     10px;
-  
-  /* Force light mode */
   color-scheme: only light;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;background:var(--bg);forced-color-adjust:none;}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--navy);min-height:100vh;overflow-x:hidden;}
 
-/* circuit dot bg */
 body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   background-image:
     radial-gradient(circle 1.5px at 80px 80px,rgba(43,45,78,0.10) 100%,transparent 0),
@@ -66,18 +60,15 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     radial-gradient(circle 1.5px at 950px 300px,rgba(43,45,78,0.05) 100%,transparent 0);}
 
 /* NAV */
-.nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:68px;background:rgba(240,241,248,0.92);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);}
-.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;color:var(--navy);text-decoration:none;letter-spacing:-0.02em;display:flex;align-items:center;gap:8px;}
-.logo svg{flex-shrink:0;margin-top:-2px;}
+.nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:64px;background:rgba(240,241,248,0.92);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);}
+.logo{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;color:var(--navy);text-decoration:none;letter-spacing:-0.01em;display:flex;align-items:center;gap:9px;}
+.logo-svg{flex-shrink:0;}
 .logo span{color:var(--orange);}
-.nav-links{display:flex;gap:0.25rem;align-items:center;flex-wrap:wrap;}
-.nav-link{font-size:0.875rem;font-weight:500;color:var(--muted);text-decoration:none;padding:0.5rem 1rem;border-radius:100px;transition:all 0.2s;border:none;background:none;cursor:pointer;font-family:'DM Sans',sans-serif;}
-.nav-link:hover,.nav-link.active{color:var(--navy);background:var(--white);box-shadow:var(--shadow);}
-.nav-cta{background:var(--orange)!important;color:var(--white)!important;font-weight:600!important;padding:0.5rem 1.35rem!important;border-radius:100px;margin-left:0.5rem;box-shadow:0 4px 16px rgba(245,132,31,0.35);transition:transform 0.15s,box-shadow 0.2s!important;}
-.nav-cta:hover{transform:translateY(-1px)!important;box-shadow:0 6px 20px rgba(245,132,31,0.4)!important;}
+.nav-cta{background:var(--orange);color:var(--white);font-weight:600;font-size:0.875rem;padding:0.5rem 1.35rem;border-radius:100px;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;box-shadow:0 4px 16px rgba(245,132,31,0.35);transition:transform 0.15s,box-shadow 0.2s;}
+.nav-cta:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(245,132,31,0.4);}
 
 /* PAGES */
-.page{display:none;padding-top:68px;min-height:100vh;position:relative;z-index:1;}
+.page{display:none;padding-top:64px;min-height:100vh;position:relative;z-index:1;}
 .page.active{display:block;}
 
 /* HERO */
@@ -151,23 +142,12 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .fc-dark h3{color:white;}
 .fc-dark p{color:rgba(255,255,255,0.55);}
 
-/* NETWORK TABS - with SVG logos */
+/* NETWORK TABS */
 .net-tabs{display:flex;gap:1rem;margin-bottom:2.5rem;flex-wrap:wrap;}
-.net-tab{
-  display:flex;align-items:center;gap:0.875rem;
-  background:var(--white);border:2px solid var(--border);
-  color:var(--navy);font-family:'DM Sans',sans-serif;
-  font-weight:500;font-size:0.875rem;
-  padding:1rem 1.5rem;
-  border-radius:16px;cursor:pointer;
-  transition:all 0.22s;box-shadow:var(--shadow);
-  min-width:160px;
-}
+.net-tab{display:flex;align-items:center;gap:0.875rem;background:var(--white);border:2px solid var(--border);color:var(--navy);font-family:'DM Sans',sans-serif;font-weight:500;font-size:0.875rem;padding:1rem 1.5rem;border-radius:16px;cursor:pointer;transition:all 0.22s;box-shadow:var(--shadow);min-width:160px;}
 .net-tab:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg);border-color:rgba(43,45,78,0.25);}
 .net-tab.active{color:var(--white);border-color:transparent;box-shadow:0 8px 24px rgba(43,45,78,0.2);}
-.net-tab.mtn-tab.active{background:var(--navy);}
-.net-tab.at-tab.active{background:var(--navy);}
-.net-tab.tel-tab.active{background:var(--navy);}
+.net-tab.mtn-tab.active,.net-tab.at-tab.active,.net-tab.tel-tab.active{background:var(--navy);}
 .net-tab-logo{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .net-tab.mtn-tab .net-tab-logo{background:#FFCC00;}
 .net-tab.at-tab .net-tab-logo{background:#E60000;}
@@ -188,7 +168,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .offers-hero::before{content:'🎁';position:absolute;right:2rem;top:50%;transform:translateY(-50%);font-size:6rem;opacity:0.08;}
 .offers-hero h2{font-family:'Syne',sans-serif;font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;letter-spacing:-0.03em;color:white;margin-bottom:0.5rem;}
 .offers-hero p{font-size:0.95rem;color:rgba(255,255,255,0.55);max-width:500px;line-height:1.65;}
-
 .offers-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem;}
 
 /* PROMO CODE CARD */
@@ -252,7 +231,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .bc.pop .bc-btn{background:var(--orange);border-color:var(--orange);color:white;}
 .pop-badge{position:absolute;top:0.9rem;right:0.9rem;background:var(--orange);color:white;font-size:0.62rem;font-weight:700;padding:0.2rem 0.55rem;border-radius:100px;letter-spacing:0.05em;}
 .bc-net{display:inline-flex;align-items:center;gap:0.35rem;background:rgba(43,45,78,0.07);padding:0.25rem 0.65rem;border-radius:100px;font-size:0.7rem;color:var(--muted);font-weight:600;margin-bottom:1rem;}
-.bc-net svg{width:12px;height:12px;margin-right:2px;}
 .bc-gb{font-family:'Syne',sans-serif;font-size:2.4rem;font-weight:800;letter-spacing:-0.04em;line-height:1;color:var(--navy);}
 .bc-gb span{font-size:1rem;font-weight:600;color:var(--muted);}
 .bc-valid{font-size:0.72rem;color:var(--orange);font-weight:600;margin:0.3rem 0 1rem;}
@@ -316,10 +294,11 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .f-submit{width:100%;padding:0.9rem;background:var(--orange);border:none;border-radius:var(--rsm);color:white;font-family:'DM Sans',sans-serif;font-weight:700;font-size:0.95rem;cursor:pointer;margin-top:0.5rem;box-shadow:0 6px 20px rgba(245,132,31,0.4);transition:transform 0.15s,box-shadow 0.2s;display:flex;align-items:center;justify-content:center;gap:0.5rem;}
 .f-submit:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(245,132,31,0.5);}
 
-/* HISTORY & RANKING PAGES */
+/* HISTORY & RANKING */
 .history-filters{display:flex;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap;}
-.history-search{flex:1;padding:0.75rem 1rem;background:var(--white);border:1.5px solid var(--border);border-radius:var(--rsm);font-family:'DM Sans',sans-serif;font-size:0.9rem;}
-.history-stats{background:var(--white);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;text-align:center;}
+.history-search{flex:1;padding:0.75rem 1rem;background:var(--white);border:1.5px solid var(--border);border-radius:var(--rsm);font-family:'DM Sans',sans-serif;font-size:0.9rem;color:var(--navy);outline:none;}
+.history-search:focus{border-color:var(--orange);}
+.history-stats{background:var(--white);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;text-align:center;box-shadow:var(--shadow);}
 .history-stat-card{background:var(--bg2);border-radius:var(--rsm);padding:1rem;}
 .history-stat-value{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:var(--orange);}
 .history-stat-label{font-size:0.75rem;color:var(--muted);margin-top:0.25rem;}
@@ -353,14 +332,10 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .fi{opacity:0;transform:translateY(20px);transition:opacity 0.55s ease,transform 0.55s ease;}
 .fi.vis{opacity:1;transform:translateY(0);}
 
-/* TOAST */
-.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--navy);color:white;border-radius:100px;padding:0.85rem 2rem;font-size:0.875rem;font-weight:500;box-shadow:var(--shadow-lg);z-index:999;transition:transform 0.35s ease;display:flex;align-items:center;gap:0.5rem;}
-.toast.show{transform:translateX(-50%) translateY(0);}
-
-/* PAYMENT MODAL */
-.modal-overlay{position:fixed;inset:0;background:rgba(20,21,40,0.6);z-index:500;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.25s;backdrop-filter:blur(4px);}
+/* PAYMENT MODAL — scrollable */
+.modal-overlay{position:fixed;inset:0;background:rgba(20,21,40,0.6);z-index:500;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.25s;backdrop-filter:blur(4px);padding:1rem;}
 .modal-overlay.open{opacity:1;pointer-events:all;}
-.modal{background:var(--white);border-radius:var(--radius);padding:2rem;max-width:420px;width:92%;box-shadow:var(--shadow-lg);transform:translateY(20px);transition:transform 0.25s;}
+.modal{background:var(--white);border-radius:var(--radius);padding:2rem;max-width:420px;width:100%;box-shadow:var(--shadow-lg);transform:translateY(20px);transition:transform 0.25s;max-height:90vh;overflow-y:auto;}
 .modal-overlay.open .modal{transform:translateY(0);}
 .modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;}
 .modal-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;color:var(--navy);}
@@ -383,20 +358,22 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .modal-note{font-size:0.74rem;color:var(--muted);text-align:center;margin-top:0.75rem;line-height:1.55;}
 .modal-note span{color:var(--orange);font-weight:600;}
 
-/* AMBASSADOR MODAL */
-#ambModal .modal{max-width:520px;}
-.amb-form-inner{background:var(--white);padding:1.75rem;border-radius:var(--rsm);box-shadow:var(--shadow);}
-.amb-form-inner .f-lbl{color:var(--muted);font-size:0.75rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;}
+/* AMBASSADOR MODAL — scrollable */
+#ambModal .modal{max-width:520px;padding:0;}
+.amb-modal-header{padding:1.5rem 2rem 0;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--white);z-index:10;border-bottom:1px solid var(--border);padding-bottom:1rem;margin-bottom:0;}
+.amb-modal-body{padding:1.5rem 2rem 2rem;}
+.amb-form-inner .f-lbl{color:var(--muted);font-size:0.75rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;display:block;margin-bottom:0.4rem;}
 .amb-form-inner .f-inp,
-.amb-form-inner textarea{background:var(--bg);border:1.5px solid var(--border);color:var(--navy);border-radius:var(--rsm);padding:0.85rem 1.1rem;font-size:0.95rem;outline:none;transition:border-color 0.2s;}
+.amb-form-inner textarea{width:100%;background:var(--bg);border:1.5px solid var(--border);color:var(--navy);border-radius:var(--rsm);padding:0.85rem 1.1rem;font-size:0.95rem;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s;}
 .amb-form-inner .f-inp:focus,
 .amb-form-inner textarea:focus{border-color:var(--orange);}
-.amb-form-inner textarea{resize:vertical;min-height:110px;}
+.amb-form-inner textarea{resize:vertical;min-height:100px;}
+.amb-form-inner .f-row{margin-bottom:1rem;}
+.amb-form-inner .f-g2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;}
 
 /* MOBILE */
 @media(max-width:768px){
   .nav{padding:0 1.25rem;}
-  .nav-link:not(.nav-cta):not(.active){display:none;}
   .hero-wrap{grid-template-columns:1fr;padding:3rem 1.25rem 2rem;}
   .hero-visual{display:none;}
   .sec-wrap{padding:0 1.25rem 3rem;}
@@ -410,60 +387,35 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   .modal .m-g2{grid-template-columns:1fr;}
   .offers-grid{grid-template-columns:1fr;}
   .net-tabs{width:100%;}
-  .net-tab{flex:1;justify-content:center;padding:0.6rem 0.75rem;font-size:0.78rem;}
+  .net-tab{flex:1;justify-content:center;padding:0.6rem 0.75rem;font-size:0.78rem;min-width:unset;}
   .wa-channel-banner{flex-direction:column;text-align:center;}
   .wac-left{flex-direction:column;text-align:center;}
+  .amb-form-inner .f-g2{grid-template-columns:1fr;}
 }
 </style>
 </head>
 <body>
 
+<!-- NAV: logo + single Order Now button only -->
 <nav class="nav">
-  <!-- CONVERTED LOGO: Data Signal (U + signal bars) placed at left top corner -->
-  <!-- Name "UniLink GH" follows immediately after the SVG icon -->
   <a href="#" class="logo" onclick="nav('home');return false;">
-    <!-- SVG converted from the provided logo image (Concept 2: Data Signal) -->
-    <!-- Dark navy U with cyan signal bars rising on the right side -->
-    <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 140 120" fill="none" aria-label="Data Signal Logo">
-      <!-- Thick U shape (dark navy) -->
-      <path 
-        d="M25 55 L25 92 C25 108 33 112 52 112 C72 112 85 105 92 92 L92 55" 
-        stroke="#2B2D4E" 
-        stroke-width="24" 
-        stroke-linecap="round" 
-        stroke-linejoin="round" />
-      
-      <!-- Signal bars (cyan, increasing height from left to right, attached to top-right of U) -->
-      <!-- Bar 1 (shortest) -->
-      <rect x="102" y="37" width="7" height="18" rx="1" fill="#00C4FF" />
-      <!-- Bar 2 -->
-      <rect x="111" y="28" width="7" height="27" rx="1" fill="#00C4FF" />
-      <!-- Bar 3 -->
-      <rect x="120" y="18" width="7" height="37" rx="1" fill="#00C4FF" />
-      <!-- Bar 4 (tallest) -->
-      <rect x="129" y="7" width="7" height="48" rx="1" fill="#00C4FF" />
+    <!-- Correct UniLink logo: dark navy U shape + 3 ascending cyan signal bars inside -->
+    <svg class="logo-svg" width="34" height="34" viewBox="0 0 100 105" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Thick navy U shape -->
+      <path d="M12 8 L12 58 Q12 92 50 92 Q88 92 88 58 L88 8"
+            stroke="#2B2D4E" stroke-width="17" fill="none"
+            stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- 3 ascending cyan signal bars positioned inside the top-right of the U -->
+      <rect x="44" y="48" width="9" height="22" rx="2.5" fill="#00C4FF"/>
+      <rect x="57" y="35" width="9" height="35" rx="2.5" fill="#00C4FF"/>
+      <rect x="70" y="20" width="9" height="50" rx="2.5" fill="#00C4FF"/>
     </svg>
     Uni<span>Link</span> GH
   </a>
-  
-  <div class="nav-links">
-    <button class="nav-link active" id="nb-home"    onclick="nav('home')">Home</button>
-    <button class="nav-link"        id="nb-bundles" onclick="nav('bundles')">Bundles</button>
-    <button class="nav-link"        id="nb-how"     onclick="nav('how')">How it works</button>
-    <button class="nav-link"        id="nb-compare" onclick="nav('compare')">Compare</button>
-    <button class="nav-link"        id="nb-history" onclick="nav('history')">History</button>
-    <button class="nav-link"        id="nb-ranking" onclick="nav('ranking')">Ranking</button>
-    <button class="nav-link"        id="nb-offers"  onclick="nav('offers')">Offers</button>
-    <!-- CHANGED: The button next to "Order Now →" is now Telegram bot -->
-    <a class="nav-link" onclick="openTelegram('Hi UniLink GH! Join our Telegram channel for updates.'); return false;" style="color:#0088cc;font-weight:600">Channel</a>
-    <!-- Right corner now contains JUST "Order Now" (as requested) -->
-    <button class="nav-link nav-cta" id="nb-contact" onclick="nav('contact')">Order Now →</button>
-  </div>
+  <button class="nav-cta" onclick="nav('contact')">Order Now →</button>
 </nav>
 
-<div class="toast" id="toast">✓ Sending to Telegram bot...</div>
-
-<!-- PAYMENT MODAL (unchanged) -->
+<!-- PAYMENT MODAL -->
 <div class="modal-overlay" id="payModal">
   <div class="modal">
     <div class="modal-head">
@@ -489,11 +441,11 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
         <input class="m-inp" id="m-phone" type="tel" placeholder="0XX XXX XXXX">
       </div>
     </div>
-    <div class="modal-fee-row" id="feeRow">
+    <div class="modal-fee-row">
       <span>Platform fee:</span>
       <span id="feeAmount">GH₵ 0.00</span>
     </div>
-    <div class="modal-total-row" id="totalRow">
+    <div class="modal-total-row">
       <span>Total to pay:</span>
       <span id="totalAmount">GH₵ 0.00</span>
     </div>
@@ -505,44 +457,45 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   </div>
 </div>
 
-<!-- NEW: AMBASSADOR APPLICATION MODAL -->
-<!-- Opens when "Apply" is clicked. Contains the exact fields requested. -->
+<!-- AMBASSADOR MODAL — scrollable with sticky header -->
 <div class="modal-overlay" id="ambModal">
-  <div class="modal">
-    <div class="modal-head">
+  <div class="modal" style="padding:0;max-width:520px;">
+    <div class="amb-modal-header">
       <div class="modal-title">Campus Ambassador Application</div>
       <button class="modal-close" onclick="closeAmbModal()">✕</button>
     </div>
-    <div class="amb-form-inner">
-      <div class="f-row">
-        <label class="f-lbl">Full Name</label>
-        <input class="f-inp" id="amb-name" type="text" placeholder="e.g. Joel Owusu Ansah">
-      </div>
-      <div class="f-g2">
+    <div class="amb-modal-body">
+      <div class="amb-form-inner">
         <div class="f-row">
-          <label class="f-lbl">School / University</label>
-          <input class="f-inp" id="amb-school" type="text" placeholder="e.g. KNUST, UG, Ashesi">
+          <label class="f-lbl">Full Name</label>
+          <input class="f-inp" id="amb-name" type="text" placeholder="e.g. Joel Owusu Ansah">
+        </div>
+        <div class="f-g2">
+          <div class="f-row">
+            <label class="f-lbl">School / University</label>
+            <input class="f-inp" id="amb-school" type="text" placeholder="e.g. KNUST, UG, Ashesi">
+          </div>
+          <div class="f-row">
+            <label class="f-lbl">Level / Year</label>
+            <input class="f-inp" id="amb-level" type="text" placeholder="e.g. Level 200, Year 3">
+          </div>
         </div>
         <div class="f-row">
-          <label class="f-lbl">Level / Year</label>
-          <input class="f-inp" id="amb-level" type="text" placeholder="e.g. Level 200, Year 3">
+          <label class="f-lbl">Why do you want to become a campus ambassador?</label>
+          <textarea class="f-inp" id="amb-reason" rows="3" placeholder="Tell us your motivation..."></textarea>
         </div>
+        <div class="f-row">
+          <label class="f-lbl">Ways you will advertise / promote UniLink GH</label>
+          <textarea class="f-inp" id="amb-ways" rows="3" placeholder="WhatsApp status, class groups, flyers, Instagram, etc."></textarea>
+        </div>
+        <div class="f-row">
+          <label class="f-lbl">Other information (optional)</label>
+          <input class="f-inp" id="amb-other" type="text" placeholder="Phone number or any extra details">
+        </div>
+        <button class="f-submit" onclick="submitAmbassador()" style="background:var(--orange);color:white;border:none;border-radius:var(--rsm);width:100%;padding:0.9rem;font-family:'DM Sans',sans-serif;font-weight:700;font-size:0.95rem;cursor:pointer;margin-top:0.5rem;box-shadow:0 6px 20px rgba(245,132,31,0.4);transition:transform 0.15s,box-shadow 0.2s;display:flex;align-items:center;justify-content:center;gap:0.5rem;">
+          Submit Application
+        </button>
       </div>
-      <div class="f-row">
-        <label class="f-lbl">Why do you want to become a campus ambassador?</label>
-        <textarea class="f-inp" id="amb-reason" rows="3" placeholder="Tell us your motivation..."></textarea>
-      </div>
-      <div class="f-row">
-        <label class="f-lbl">Ways you will advertise / promote UniLink GH</label>
-        <textarea class="f-inp" id="amb-ways" rows="3" placeholder="WhatsApp status, class groups, flyers, Instagram, etc."></textarea>
-      </div>
-      <div class="f-row">
-        <label class="f-lbl">Other information (optional)</label>
-        <input class="f-inp" id="amb-other" type="text" placeholder="Phone number or any extra details">
-      </div>
-      <button class="f-submit" onclick="submitAmbassador()" style="margin-top:1rem;">
-        Submit Application
-      </button>
     </div>
   </div>
 </div>
@@ -581,7 +534,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
           <div class="mlabel">DELIVERY</div>
           <div class="mbig" style="color:var(--navy)">30<span style="font-size:0.95rem;color:var(--muted);font-weight:500">min+</span></div>
           <div class="msub">Delivery time</div>
-          <div style="margin-top:0.75rem;display:flex;gap:0.4rem;"><span class="mpill p-ora">MoMo</span><span class="mpill p-grn">Instant</span></div>
+          <div style="margin-top:0.75rem;display:flex;gap:0.4rem;"><span class="mpill p-ora">MoMo</span><span class="mpill p-grn">Reliable</span></div>
         </div>
       </div>
       <div class="mock-card mock-dark hc4">
@@ -594,14 +547,12 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
       </div>
     </div>
   </div>
-
   <div class="stats-bar fi">
     <div class="stat-item"><div class="stat-num">5K<span>+</span></div><div class="stat-lbl">Students served</div></div>
     <div class="stat-item"><div class="stat-num">3</div><div class="stat-lbl">Networks covered</div></div>
     <div class="stat-item"><div class="stat-num">30<span>min+</span></div><div class="stat-lbl">Delivery time</div></div>
     <div class="stat-item"><div class="stat-num">0</div><div class="stat-lbl">Expiry on bundles</div></div>
   </div>
-
   <div class="sec-wrap">
     <div class="sec-eye fi">Why UniLink GH</div>
     <h2 class="sec-title fi">Built different, for students.</h2>
@@ -623,40 +574,16 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     <p class="sec-sub fi">All bundles valid forever — no expiry. Delivered within 30+ minutes via WhatsApp after MoMo payment.</p>
     <div class="net-tabs fi" id="netTabs">
       <button class="net-tab mtn-tab active" data-net="MTN" onclick="showB('MTN')">
-        <div class="net-tab-logo">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="24" height="24" rx="6" fill="#FFCC00"/>
-            <text x="12" y="17" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-size="14" fill="#3D2E00">MTN</text>
-          </svg>
-        </div>
-        <div class="net-tab-info">
-          <div class="net-tab-name">MTN</div>
-          <div class="net-tab-sub">15 bundles · from GH₵5</div>
-        </div>
+        <div class="net-tab-logo"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="6" fill="#FFCC00"/><text x="12" y="17" text-anchor="middle" font-family="Arial" font-weight="900" font-size="14" fill="#3D2E00">MTN</text></svg></div>
+        <div class="net-tab-info"><div class="net-tab-name">MTN</div><div class="net-tab-sub">15 bundles · from GH₵5</div></div>
       </button>
       <button class="net-tab at-tab" data-net="AT" onclick="showB('AT')">
-        <div class="net-tab-logo">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="24" height="24" rx="6" fill="#E60000"/>
-            <text x="12" y="17" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-size="10" fill="white">AT</text>
-          </svg>
-        </div>
-        <div class="net-tab-info">
-          <div class="net-tab-name">AirtelTigo</div>
-          <div class="net-tab-sub">14 bundles · from GH₵4.50</div>
-        </div>
+        <div class="net-tab-logo"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="6" fill="#E60000"/><text x="12" y="17" text-anchor="middle" font-family="Arial" font-weight="900" font-size="10" fill="white">AT</text></svg></div>
+        <div class="net-tab-info"><div class="net-tab-name">AirtelTigo</div><div class="net-tab-sub">14 bundles · from GH₵4.50</div></div>
       </button>
       <button class="net-tab tel-tab" data-net="Telecel" onclick="showB('Telecel')">
-        <div class="net-tab-logo">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="24" height="24" rx="6" fill="#00AEEF"/>
-            <text x="12" y="17" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-size="9" fill="white">TEL</text>
-          </svg>
-        </div>
-        <div class="net-tab-info">
-          <div class="net-tab-name">Telecel</div>
-          <div class="net-tab-sub">9 bundles · from GH₵40</div>
-        </div>
+        <div class="net-tab-logo"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="6" fill="#00AEEF"/><text x="12" y="17" text-anchor="middle" font-family="Arial" font-weight="900" font-size="9" fill="white">TEL</text></svg></div>
+        <div class="net-tab-info"><div class="net-tab-name">Telecel</div><div class="net-tab-sub">9 bundles · from GH₵40</div></div>
       </button>
     </div>
     <div class="b-grid" id="bGrid"></div>
@@ -674,7 +601,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
       <div class="hw-card hw-light"><div class="hw-step l">02</div><div class="hw-icon" style="background:rgba(245,132,31,0.1)">💳</div><h3>Pay with MoMo</h3><p>We confirm your order and send a MoMo payment prompt. Fast, safe, and familiar — the Ghanaian way.</p></div>
       <div class="hw-card hw-light"><div class="hw-step l">03</div><div class="hw-icon" style="background:rgba(245,132,31,0.1)">⚡</div><h3>Receive within 30+ min</h3><p>Your data bundle arrives on your number within 30+ minutes. Back to streaming, studying, or scrolling.</p></div>
     </div>
-
     <div style="margin-top:3.5rem">
       <div class="sec-eye fi">Good to know</div>
       <h2 class="sec-title fi" style="font-size:1.8rem">Frequently asked</h2>
@@ -712,13 +638,10 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     <div class="sec-eye fi">Your History</div>
     <h2 class="sec-title fi">Purchase History</h2>
     <p class="sec-sub fi">View all your past purchases, track your spending, and see your unique reference IDs.</p>
-    
     <div class="history-filters">
       <input type="text" class="history-search" id="historySearch" placeholder="Search by name, phone, or ref ID..." oninput="filterHistory()">
     </div>
-    
     <div class="history-stats" id="historyStats"></div>
-    
     <div class="history-list" id="historyList"></div>
   </div>
 </div>
@@ -729,7 +652,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     <div class="sec-eye fi">Leaderboard</div>
     <h2 class="sec-title fi">Weekly Ranking</h2>
     <p class="sec-sub fi">Based on number of purchases this week. Top performers earn bonus data!</p>
-    
     <div class="ranking-list" id="rankingList"></div>
   </div>
 </div>
@@ -761,7 +683,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
           <div>
             <h3>Become a campus ambassador</h3>
             <p>Earn commissions selling data to your coursemates. Flexible, zero investment needed.</p>
-            <!-- CHANGED: No longer says "Apply on Telegram". Now just "Apply" and opens the form -->
             <button class="btn-orange" style="margin-top:1rem;font-size:0.82rem;padding:0.6rem 1.25rem" onclick="openAmbassadorForm()">Apply</button>
           </div>
         </div>
@@ -799,23 +720,18 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     <div class="wa-channel-banner fi" style="margin-bottom:2rem">
       <div class="wac-left">
         <div class="wac-icon">📢</div>
-        <div>
-          <div class="wac-title">Join our WhatsApp Channel</div>
-          <div class="wac-sub">Get flash deals, new bundles &amp; promos delivered instantly — before anyone else.</div>
-        </div>
+        <div><div class="wac-title">Join our WhatsApp Channel</div><div class="wac-sub">Get flash deals, new bundles &amp; promos delivered instantly — before anyone else.</div></div>
       </div>
       <a class="wac-btn" href="https://whatsapp.com/channel/0029Vb7tDpyFCCoZXLhKYy1Q" target="_blank">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
         Join Channel
       </a>
     </div>
-
     <div class="offers-hero fi">
       <div class="sec-eye" style="color:var(--orange2);margin-bottom:0.5rem">Special Offers</div>
       <h2>Win free data &amp; earn with referrals</h2>
       <p>Enter a promo code to win 2GB free data, or generate your unique referral link and earn bonus data every time a friend orders.</p>
     </div>
-
     <div class="offers-grid fi">
       <div class="promo-card">
         <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.5rem">
@@ -835,7 +751,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
         </button>
         <div class="promo-result" id="promoResult"></div>
       </div>
-
       <div class="ref-card">
         <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.5rem">
           <div style="width:38px;height:38px;background:rgba(245,132,31,0.15);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem">🔗</div>
@@ -858,49 +773,35 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
           </button>
         </div>
         <div class="ref-stats">
-          <div class="ref-stat">
-            <div class="ref-stat-num">2<span>GB</span></div>
-            <div class="ref-stat-lbl">You earn per referral</div>
-          </div>
-          <div class="ref-stat">
-            <div class="ref-stat-num">2<span>GB</span></div>
-            <div class="ref-stat-lbl">Friend earns on signup</div>
-          </div>
+          <div class="ref-stat"><div class="ref-stat-num">2<span>GB</span></div><div class="ref-stat-lbl">You earn per referral</div></div>
+          <div class="ref-stat"><div class="ref-stat-num">2<span>GB</span></div><div class="ref-stat-lbl">Friend earns on signup</div></div>
         </div>
       </div>
     </div>
-
     <div class="sec-eye fi" style="margin-top:1rem">How it works</div>
     <h2 class="sec-title fi" style="font-size:1.8rem">Offers explained</h2>
     <div class="feat-grid fi" style="margin-top:1.5rem">
-      <div class="feat-card fc-light">
-        <div class="feat-icon fi-ora">🎟️</div>
-        <h3>Where do I get a promo code?</h3>
-        <p>Promo codes are released on our WhatsApp Channel during special events, campus activations, and giveaways. Join the channel to never miss one.</p>
-      </div>
-      <div class="feat-card fc-dark">
-        <div class="feat-icon fi-ora-d">🏆</div>
-        <h3>What happens if I win?</h3>
-        <p>A winning code instantly sends a WhatsApp message to our team with your number and code. We verify and send 2GB free to your number within minutes.</p>
-      </div>
-      <div class="feat-card fc-light">
-        <div class="feat-icon fi-ora">🔗</div>
-        <h3>How does the referral work?</h3>
-        <p>Share your code. When a friend orders using it, message us on WhatsApp with both numbers. We verify and credit both of you 2GB bonus data.</p>
-      </div>
-      <div class="feat-card fc-light">
-        <div class="feat-icon fi-ora">⏱️</div>
-        <h3>How many times can I refer?</h3>
-        <p>Unlimited! Every new friend you refer earns you another 2GB. The more you share, the more free data you stack up. No cap.</p>
-      </div>
+      <div class="feat-card fc-light"><div class="feat-icon fi-ora">🎟️</div><h3>Where do I get a promo code?</h3><p>Promo codes are released on our WhatsApp Channel during special events, campus activations, and giveaways. Join the channel to never miss one.</p></div>
+      <div class="feat-card fc-dark"><div class="feat-icon fi-ora-d">🏆</div><h3>What happens if I win?</h3><p>A winning code instantly sends a message to our team with your number and code. We verify and send 2GB free to your number within minutes.</p></div>
+      <div class="feat-card fc-light"><div class="feat-icon fi-ora">🔗</div><h3>How does the referral work?</h3><p>Share your code. When a friend orders using it, message us on WhatsApp with both numbers. We verify and credit both of you 2GB bonus data.</p></div>
+      <div class="feat-card fc-light"><div class="feat-icon fi-ora">⏱️</div><h3>How many times can I refer?</h3><p>Unlimited! Every new friend you refer earns you another 2GB. The more you share, the more free data you stack up. No cap.</p></div>
     </div>
   </div>
 </div>
 
 <!-- FOOTER -->
 <footer class="footer">
-  <a href="#" class="logo" onclick="nav('home');return false;">Uni<span style="color:var(--orange)">Link</span> GH</a>
+  <a href="#" class="logo" onclick="nav('home');return false;">
+    <svg class="logo-svg" width="28" height="28" viewBox="0 0 100 105" fill="none">
+      <path d="M12 8 L12 58 Q12 92 50 92 Q88 92 88 58 L88 8" stroke="white" stroke-width="17" fill="none" stroke-linecap="round"/>
+      <rect x="44" y="48" width="9" height="22" rx="2.5" fill="#00C4FF"/>
+      <rect x="57" y="35" width="9" height="35" rx="2.5" fill="#00C4FF"/>
+      <rect x="70" y="20" width="9" height="50" rx="2.5" fill="#00C4FF"/>
+    </svg>
+    Uni<span style="color:var(--orange)">Link</span> GH
+  </a>
   <div class="ft-links">
+    <a onclick="nav('home')">Home</a>
     <a onclick="nav('bundles')">Bundles</a>
     <a onclick="nav('how')">How it works</a>
     <a onclick="nav('compare')">Compare</a>
@@ -914,610 +815,209 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 </footer>
 
 <script>
-// Data definitions
 const DS = {
-  MTN:[
-    {gb:1,p:5},{gb:2,p:10},{gb:3,p:15},{gb:4,p:20},{gb:5,p:25},{gb:6,p:30},
-    {gb:8,p:40},{gb:10,p:50,pop:1},{gb:12,p:55},{gb:15,p:65},{gb:20,p:85},
-    {gb:25,p:105},{gb:30,p:130},{gb:40,p:165},{gb:50,p:205}
-  ],
-  AT:[
-    {gb:1,p:4.5},{gb:2,p:9},{gb:3,p:14},{gb:4,p:18},{gb:5,p:20.5},{gb:6,p:25},
-    {gb:8,p:32},{gb:10,p:40,pop:1},{gb:12,p:50},{gb:15,p:60},
-    {gb:25,p:100},{gb:30,p:125},{gb:40,p:160},{gb:50,p:205}
-  ],
-  Telecel:[
-    {gb:10,p:40},{gb:15,p:60,pop:1},{gb:20,p:80},{gb:25,p:100},{gb:30,p:120},
-    {gb:35,p:140},{gb:40,p:160},{gb:50,p:200},{gb:100,p:400}
-  ]
+  MTN:[{gb:1,p:5},{gb:2,p:10},{gb:3,p:15},{gb:4,p:20},{gb:5,p:25},{gb:6,p:30},{gb:8,p:40},{gb:10,p:50,pop:1},{gb:12,p:55},{gb:15,p:65},{gb:20,p:85},{gb:25,p:105},{gb:30,p:130},{gb:40,p:165},{gb:50,p:205}],
+  AT:[{gb:1,p:4.5},{gb:2,p:9},{gb:3,p:14},{gb:4,p:18},{gb:5,p:20.5},{gb:6,p:25},{gb:8,p:32},{gb:10,p:40,pop:1},{gb:12,p:50},{gb:15,p:60},{gb:25,p:100},{gb:30,p:125},{gb:40,p:160},{gb:50,p:205}],
+  Telecel:[{gb:10,p:40},{gb:15,p:60,pop:1},{gb:20,p:80},{gb:25,p:100},{gb:30,p:120},{gb:35,p:140},{gb:40,p:160},{gb:50,p:200},{gb:100,p:400}]
 };
-
-const NL = {MTN:'MTN',AT:'AirtelTigo',Telecel:'Telecel'};
-
-const CMP = [
-  {gb:1, m:5,    a:4.5,  t:null},
-  {gb:2, m:10,   a:9,    t:null},
-  {gb:3, m:15,   a:14,   t:null},
-  {gb:4, m:20,   a:18,   t:null},
-  {gb:5, m:25,   a:20.5, t:null},
-  {gb:6, m:30,   a:25,   t:null},
-  {gb:8, m:40,   a:32,   t:null},
-  {gb:10,m:50,   a:40,   t:40},
-  {gb:12,m:55,   a:50,   t:null},
-  {gb:15,m:65,   a:60,   t:60},
-  {gb:20,m:85,   a:null, t:80},
-  {gb:25,m:105,  a:100,  t:100},
-  {gb:30,m:130,  a:125,  t:120},
-  {gb:35,m:null, a:null, t:140},
-  {gb:40,m:165,  a:160,  t:160},
-  {gb:50,m:205,  a:205,  t:200},
-  {gb:100,m:null,a:null, t:400}
+const NL={MTN:'MTN',AT:'AirtelTigo',Telecel:'Telecel'};
+const CMP=[
+  {gb:1,m:5,a:4.5,t:null},{gb:2,m:10,a:9,t:null},{gb:3,m:15,a:14,t:null},{gb:4,m:20,a:18,t:null},
+  {gb:5,m:25,a:20.5,t:null},{gb:6,m:30,a:25,t:null},{gb:8,m:40,a:32,t:null},{gb:10,m:50,a:40,t:40},
+  {gb:12,m:55,a:50,t:null},{gb:15,m:65,a:60,t:60},{gb:20,m:85,a:null,t:80},{gb:25,m:105,a:100,t:100},
+  {gb:30,m:130,a:125,t:120},{gb:35,m:null,a:null,t:140},{gb:40,m:165,a:160,t:160},{gb:50,m:205,a:205,t:200},{gb:100,m:null,a:null,t:400}
 ];
+const PS_KEY='pk_live_90305707d30b6282979eac837bbbc9509da579af';
+const TELEGRAM_TOKEN="8682424643:AAFmdDBXNfgOwQsE-10zmp0G15v9cj9ww98";
+const TELEGRAM_CHAT_ID="7990140672";
+const WINNER_CODES=['UNILINK2GB','WELCOME2GB','FRESHERS24','JOELDATA1X','CAMPUS2024','JOELDATA25','CAMPUS2025','GHDATA2025','WIN2GBFREE'];
+let _order={gb:0,price:0,net:'',fee:0,total:0};
+let _refCode='';
+let _purchases=[];
 
-const PS_KEY = 'pk_live_90305707d30b6282979eac837bbbc9509da579af';
-
-// ==================== TELEGRAM BOT CONFIG ====================
-const TELEGRAM_TOKEN = "8682424643:AAFmdDBXNfgOwQsE-10zmp0G15v9cj9ww98";
-const TELEGRAM_CHAT_ID = "7990140672";
-
-// Helper: Send message directly to your Telegram bot (silent, no popup)
 async function sendToTelegram(message) {
-  const url = `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`;
   try {
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        chat_id: TELEGRAM_CHAT_ID,
-        text: message,
-        parse_mode: 'HTML'
-      })
+    await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`,{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({chat_id:TELEGRAM_CHAT_ID,text:message,parse_mode:'HTML'})
     });
-    const data = await response.json();
-    if (!data.ok) console.error("Telegram API error:", data);
-  } catch (e) {
-    console.error("Telegram send failed:", e);
+  } catch(e){ console.error("Telegram error:",e); }
+}
+
+function calculateFee(p){if(p<30)return 0.30;if(p<100)return 0.90;return 1.50;}
+function generateRefId(){return 'ULG-'+Date.now().toString(36).toUpperCase()+'-'+Math.random().toString(36).substring(2,6).toUpperCase();}
+function getWeekNumber(){const n=new Date(),s=new Date(n.getFullYear(),0,1);return Math.ceil(((n-s)/86400000+s.getDay()+1)/7);}
+function getCurrentYearWeek(){return `${new Date().getFullYear()}-W${getWeekNumber()}`;}
+
+function savePurchase(p){const s=localStorage.getItem('unilink_purchases');let a=s?JSON.parse(s):[];a.unshift(p);localStorage.setItem('unilink_purchases',JSON.stringify(a));_purchases=a;}
+function loadPurchases(){const s=localStorage.getItem('unilink_purchases');_purchases=s?JSON.parse(s):[];}
+
+function renderHistory(){
+  const term=(document.getElementById('historySearch')?.value||'').toLowerCase();
+  const f=term?_purchases.filter(p=>p.name.toLowerCase().includes(term)||p.phone.includes(term)||p.refId.toLowerCase().includes(term)):_purchases;
+  const spent=f.reduce((s,p)=>s+p.total,0);
+  document.getElementById('historyStats').innerHTML=`<div class="history-stat-card"><div class="history-stat-value">${f.length}</div><div class="history-stat-label">Total Purchases</div></div><div class="history-stat-card"><div class="history-stat-value">GH₵ ${spent.toFixed(2)}</div><div class="history-stat-label">Total Spent</div></div><div class="history-stat-card"><div class="history-stat-value">${new Set(f.map(p=>p.phone)).size}</div><div class="history-stat-label">Unique Customers</div></div>`;
+  document.getElementById('historyList').innerHTML=f.length===0?'<div style="text-align:center;padding:2rem;color:var(--muted)">No purchases found.</div>':f.map(p=>`<div class="history-item"><div class="history-ref">🔑 REF: ${p.refId}</div><div class="history-details"><span><strong>${p.name}</strong></span><span>📱 ${p.phone}</span><span>📶 ${p.network}</span><span>📦 ${p.gb}GB</span><span>💰 GH₵ ${p.price.toFixed(2)}</span><span>➕ Fee: GH₵ ${p.fee.toFixed(2)}</span><span>💵 Total: GH₵ ${p.total.toFixed(2)}</span><span>📅 ${p.date}</span></div></div>`).join('');
+}
+function renderRanking(){
+  const w=getCurrentYearWeek(),m=new Map();
+  _purchases.forEach(p=>{if(p.week!==w)return;const e=m.get(p.phone)||{name:p.name,phone:p.phone,count:0,totalSpent:0};e.count++;e.totalSpent+=p.total;m.set(p.phone,e);});
+  const r=[...m.values()].sort((a,b)=>b.count-a.count);
+  document.getElementById('rankingList').innerHTML=r.length===0?'<div style="text-align:center;padding:2rem;color:var(--muted)">No purchases this week yet. Be the first!</div>':r.map((r,i)=>`<div class="ranking-item"><div class="ranking-position ${i===0?'top1':i===1?'top2':i===2?'top3':''}">${i+1}</div><div class="ranking-info"><div class="ranking-name">${r.name}</div><div class="ranking-stats">📱 ${r.phone} | 💰 GH₵ ${r.totalSpent.toFixed(2)} spent</div></div><div class="ranking-count">${r.count} ${r.count===1?'purchase':'purchases'}</div></div>`).join('');
+}
+function filterHistory(){renderHistory();}
+
+function nav(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('pg-'+page).classList.add('active');
+  window.scrollTo(0,0);
+  if(page==='bundles') showB('MTN');
+  if(page==='compare') buildCmp();
+  if(page==='offers') initOffers();
+  if(page==='history'){loadPurchases();renderHistory();}
+  if(page==='ranking'){loadPurchases();renderRanking();}
+  setTimeout(reveal,60);
+}
+
+function showB(net){
+  document.querySelectorAll('.net-tab').forEach(t=>t.classList.toggle('active',t.dataset.net===net));
+  document.getElementById('bGrid').innerHTML=DS[net].map((b,i)=>{
+    const pop=b.pop?' bc pop':' bc';
+    const badge=b.pop?'<div class="pop-badge">POPULAR</div>':'';
+    return `<div class="${pop}" style="animation-delay:${i*35}ms">${badge}<div class="bc-net">📶 ${NL[net]}</div><div class="bc-gb">${b.gb}<span>GB</span></div><div class="bc-valid">✦ Valid Forever</div><div class="bc-price">GH₵ ${b.p.toFixed(2)} <small>/ bundle</small></div><button class="bc-btn" onclick="openModal(${b.gb},${b.p},'${net}')">Order &amp; Pay →</button></div>`;
+  }).join('');
+}
+
+function initOffers(){
+  let s=localStorage.getItem('ulg_ref');
+  if(!s){s='ULK-'+Math.random().toString(36).substring(2,6).toUpperCase()+Math.random().toString(36).substring(2,6).toUpperCase();localStorage.setItem('ulg_ref',s);}
+  _refCode=s;
+  const el=document.getElementById('refCodeVal');if(el)el.textContent=_refCode;
+  const pc=document.getElementById('promoCode'),pp=document.getElementById('promoPhone'),pr=document.getElementById('promoResult');
+  if(pc)pc.value='';if(pp)pp.value='';if(pr){pr.className='promo-result';pr.textContent='';}
+  updateCodeDots('');
+}
+function updateCodeDots(v){document.querySelectorAll('#codeDots .code-dot').forEach((d,i)=>d.classList.toggle('filled',i<v.length));}
+
+function checkPromoCode(){
+  const raw=document.getElementById('promoCode').value.trim().toUpperCase().replace(/[\s-]/g,'');
+  const phone=document.getElementById('promoPhone').value.trim();
+  const res=document.getElementById('promoResult');
+  if(raw.length!==10){alert('Code must be exactly 10 characters');return;}
+  if(!phone){alert('Please enter your phone number');return;}
+  const win=WINNER_CODES.includes(raw);
+  res.className='promo-result '+(win?'win':'lose');
+  if(win){
+    res.innerHTML='🎉 You won! Sending claim to our team...';
+    sendToTelegram(`🎉 Winning Promo Code Claim!\n\n• Code: ${raw}\n• Phone: ${phone}\n\nPlease send 2GB free data. Thank you!`);
+  } else {
+    res.innerHTML='❌ Code not found or already used. Check our WhatsApp Channel for new codes!';
   }
 }
 
-// Telegram version of the old openWA function
-function openTelegram(msg) {
-  sendToTelegram(msg);
-  showToast('✓ Sending to Telegram bot...');
+function shareRefWA(){
+  if(!_refCode){alert('Code not ready yet');return;}
+  const msg=`Hey! 👋 I use UniLink GH for cheap data bundles — no expiry!\n\nUse my referral code when you order and we BOTH get 2GB free:\n\n🔑 Code: *${_refCode}*\n\nOrder here: https://wa.me/233248745662`;
+  window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`,'_blank');
+}
+function copyRefCode(){
+  if(!_refCode)return;
+  navigator.clipboard.writeText(_refCode).then(()=>alert('Code copied!')).catch(()=>{const t=document.createElement('textarea');t.value=_refCode;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);alert('Code copied!');});
 }
 
-// ==================== NEW AMBASSADOR FORM FUNCTIONS ====================
-function openAmbassadorForm() {
-  const modal = document.getElementById('ambModal');
-  if (modal) modal.classList.add('open');
-  
-  // Clear form fields
-  document.getElementById('amb-name').value = '';
-  document.getElementById('amb-school').value = '';
-  document.getElementById('amb-level').value = '';
-  document.getElementById('amb-reason').value = '';
-  document.getElementById('amb-ways').value = '';
-  document.getElementById('amb-other').value = '';
+function buildCmp(){
+  const fmt=v=>v!==null?`GH₵ ${v.toFixed(2)}`:'<span class="no-b">—</span>';
+  const el=document.getElementById('cmpTbl');if(!el)return;
+  el.innerHTML=CMP.map(r=>{const vals=[r.m,r.a,r.t].filter(v=>v!==null);const best=Math.min(...vals);const cell=v=>v===null?fmt(null):`<div class="${v===best?'best':''}">${fmt(v)}</div>`;return `<div class="cmp-row"><div class="gb-col">${r.gb}GB</div>${cell(r.m)}${cell(r.a)}${cell(r.t)}</div>`;}).join('');
 }
 
-function closeAmbModal() {
-  const modal = document.getElementById('ambModal');
-  if (modal) modal.classList.remove('open');
+function updateFormB(){
+  const net=document.getElementById('fnet').value,sel=document.getElementById('fb');
+  if(!net){sel.innerHTML='<option value="">Select a network first</option>';return;}
+  sel.innerHTML='<option value="">Choose bundle size</option>'+DS[net].map(b=>`<option value="${b.gb}|${b.p}|${net}">${b.gb}GB — GH₵ ${b.p.toFixed(2)}</option>`).join('');
+}
+function submitOrder(){
+  const name=document.getElementById('fn').value.trim(),phone=document.getElementById('fp').value.trim(),bv=document.getElementById('fb').value;
+  if(!name||!phone||!bv){alert('Please fill all fields');return;}
+  const[gb,price,net]=bv.split('|');
+  const mn=document.getElementById('m-name'),mp=document.getElementById('m-phone');
+  if(mn)mn.value=name;if(mp)mp.value=phone;
+  openModal(parseInt(gb),parseFloat(price),net);
 }
 
-function submitAmbassador() {
-  const name = document.getElementById('amb-name').value.trim();
-  const school = document.getElementById('amb-school').value.trim();
-  const level = document.getElementById('amb-level').value.trim();
-  const reason = document.getElementById('amb-reason').value.trim();
-  const ways = document.getElementById('amb-ways').value.trim();
-  const other = document.getElementById('amb-other').value.trim();
-
-  if (!name || !school || !level || !reason || !ways) {
-    showToast('⚠ Please fill all required fields');
-    return;
-  }
-
-  const msg = `🎓 New Campus Ambassador Application!\n\n` +
-    `👤 Name: ${name}\n` +
-    `🏫 School: ${school}\n` +
-    `📚 Level: ${level}\n` +
-    `💡 Reason: ${reason}\n` +
-    `📣 Ways of advertising: ${ways}\n` +
-    `📌 Other info: ${other || 'None provided'}\n\n` +
-    `Please review and contact the applicant. Thank you! 🙏`;
-
-  sendToTelegram(msg);
-  showToast('✓ Application sent to Telegram bot!');
+function openAmbassadorForm(){
+  const m=document.getElementById('ambModal');if(m)m.classList.add('open');
+  ['amb-name','amb-school','amb-level','amb-reason','amb-ways','amb-other'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+}
+function closeAmbModal(){const m=document.getElementById('ambModal');if(m)m.classList.remove('open');}
+function submitAmbassador(){
+  const name=document.getElementById('amb-name').value.trim();
+  const school=document.getElementById('amb-school').value.trim();
+  const level=document.getElementById('amb-level').value.trim();
+  const reason=document.getElementById('amb-reason').value.trim();
+  const ways=document.getElementById('amb-ways').value.trim();
+  const other=document.getElementById('amb-other').value.trim();
+  if(!name||!school||!level||!reason||!ways){alert('Please fill all required fields');return;}
+  sendToTelegram(`🎓 New Campus Ambassador Application!\n\n👤 Name: ${name}\n🏫 School: ${school}\n📚 Level: ${level}\n💡 Reason: ${reason}\n📣 Ways: ${ways}\n📌 Other: ${other||'None'}\n\nPlease review and contact the applicant. 🙏`);
+  alert('✓ Application submitted! We will review and contact you soon.');
   closeAmbModal();
 }
 
-// Global variables
-let _order = { gb: 0, price: 0, net: '', fee: 0, total: 0 };
-let _refCode = '';
-let _purchases = [];
-
-// Winning promo codes
-const WINNER_CODES = ['UNILINK2GB', 'WELCOME2GB', 'FRESHERS24', 'JOELDATA1X', 'CAMPUS2024', 'JOELDATA25', 'CAMPUS2025', 'GHDATA2025', 'WIN2GBFREE'];
-
-// Helper: Calculate platform fee
-function calculateFee(price) {
-  if (price < 30) return 0.30;
-  if (price >= 30 && price < 100) return 0.90;
-  return 1.50;
+function openModal(gb,price,net){
+  const fee=calculateFee(price),total=price+fee;
+  _order={gb,price,net,fee,total};
+  document.getElementById('m-gb').innerHTML=`${gb}<span style="font-size:1rem;font-weight:600;color:var(--muted)">GB</span>`;
+  document.getElementById('m-net').textContent=`${NL[net]} · Valid Forever`;
+  document.getElementById('m-price').textContent=`GH₵ ${price.toFixed(2)}`;
+  document.getElementById('feeAmount').textContent=`GH₵ ${fee.toFixed(2)}`;
+  document.getElementById('totalAmount').textContent=`GH₵ ${total.toFixed(2)}`;
+  document.getElementById('payModal').classList.add('open');
 }
-
-// Helper: Generate unique REF ID
-function generateRefId() {
-  const prefix = 'ULG';
-  const timestamp = Date.now().toString(36).toUpperCase();
-  const random = Math.random().toString(36).substring(2, 6).toUpperCase();
-  return `${prefix}-${timestamp}-${random}`;
+function closeModal(){
+  document.getElementById('payModal').classList.remove('open');
+  const btn=document.getElementById('payBtn');
+  if(btn){btn.disabled=false;btn.innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg> Pay with Paystack';}
 }
+document.addEventListener('click',e=>{
+  const pm=document.getElementById('payModal');if(pm&&pm.classList.contains('open')&&e.target===pm)closeModal();
+  const am=document.getElementById('ambModal');if(am&&am.classList.contains('open')&&e.target===am)closeAmbModal();
+});
 
-// Helper: Get current week number
-function getWeekNumber() {
-  const now = new Date();
-  const start = new Date(now.getFullYear(), 0, 1);
-  const days = Math.floor((now - start) / (24 * 60 * 60 * 1000));
-  return Math.ceil((days + start.getDay() + 1) / 7);
-}
-
-// Helper: Get current year-week string
-function getCurrentYearWeek() {
-  const now = new Date();
-  const year = now.getFullYear();
-  const week = getWeekNumber();
-  return `${year}-W${week}`;
-}
-
-// Save purchase to localStorage
-function savePurchase(purchase) {
-  const stored = localStorage.getItem('unilink_purchases');
-  let purchases = stored ? JSON.parse(stored) : [];
-  purchases.unshift(purchase);
-  localStorage.setItem('unilink_purchases', JSON.stringify(purchases));
-  _purchases = purchases;
-  updateHistoryAndRanking();
-}
-
-// Load all purchases
-function loadPurchases() {
-  const stored = localStorage.getItem('unilink_purchases');
-  _purchases = stored ? JSON.parse(stored) : [];
-  return _purchases;
-}
-
-// Update both history and ranking displays
-function updateHistoryAndRanking() {
-  loadPurchases();
-  if (document.getElementById('pg-history').classList.contains('active')) {
-    renderHistory();
-  }
-  if (document.getElementById('pg-ranking').classList.contains('active')) {
-    renderRanking();
-  }
-}
-
-// Render History Page
-function renderHistory() {
-  const searchTerm = document.getElementById('historySearch')?.value.toLowerCase() || '';
-  let filtered = _purchases;
-  
-  if (searchTerm) {
-    filtered = _purchases.filter(p => 
-      p.name.toLowerCase().includes(searchTerm) || 
-      p.phone.includes(searchTerm) || 
-      p.refId.toLowerCase().includes(searchTerm)
-    );
-  }
-  
-  const totalSpent = filtered.reduce((sum, p) => sum + p.total, 0);
-  const totalPurchases = filtered.length;
-  const uniqueCustomers = new Set(filtered.map(p => p.phone)).size;
-  
-  const statsHtml = `
-    <div class="history-stat-card"><div class="history-stat-value">${totalPurchases}</div><div class="history-stat-label">Total Purchases</div></div>
-    <div class="history-stat-card"><div class="history-stat-value">GH₵ ${totalSpent.toFixed(2)}</div><div class="history-stat-label">Total Spent</div></div>
-    <div class="history-stat-card"><div class="history-stat-value">${uniqueCustomers}</div><div class="history-stat-label">Unique Customers</div></div>
-  `;
-  document.getElementById('historyStats').innerHTML = statsHtml;
-  
-  if (filtered.length === 0) {
-    document.getElementById('historyList').innerHTML = '<div style="text-align:center;padding:2rem;color:var(--muted)">No purchases found.</div>';
-    return;
-  }
-  
-  const listHtml = filtered.map(p => `
-    <div class="history-item">
-      <div class="history-ref">🔑 REF: ${p.refId}</div>
-      <div class="history-details">
-        <span><strong>${p.name}</strong></span>
-        <span>📱 ${p.phone}</span>
-        <span>📶 ${p.network}</span>
-        <span>📦 ${p.gb}GB</span>
-        <span>💰 GH₵ ${p.price.toFixed(2)}</span>
-        <span>➕ Fee: GH₵ ${p.fee.toFixed(2)}</span>
-        <span>💵 Total: GH₵ ${p.total.toFixed(2)}</span>
-        <span>📅 ${p.date}</span>
-      </div>
-    </div>
-  `).join('');
-  
-  document.getElementById('historyList').innerHTML = listHtml;
-}
-
-// Render Ranking Page
-function renderRanking() {
-  const currentWeek = getCurrentYearWeek();
-  
-  const weekMap = new Map();
-  
-  _purchases.forEach(p => {
-    if (p.week === currentWeek) {
-      const key = p.phone;
-      if (!weekMap.has(key)) {
-        weekMap.set(key, { name: p.name, phone: p.phone, count: 0, totalSpent: 0 });
-      }
-      const entry = weekMap.get(key);
-      entry.count++;
-      entry.totalSpent += p.total;
-    }
-  });
-  
-  const ranking = Array.from(weekMap.values()).sort((a, b) => b.count - a.count);
-  
-  if (ranking.length === 0) {
-    document.getElementById('rankingList').innerHTML = '<div style="text-align:center;padding:2rem;color:var(--muted)">No purchases this week yet. Be the first!</div>';
-    return;
-  }
-  
-  const rankingHtml = ranking.map((r, idx) => {
-    let positionClass = '';
-    if (idx === 0) positionClass = 'top1';
-    else if (idx === 1) positionClass = 'top2';
-    else if (idx === 2) positionClass = 'top3';
-    
-    return `
-      <div class="ranking-item">
-        <div class="ranking-position ${positionClass}">${idx + 1}</div>
-        <div class="ranking-info">
-          <div class="ranking-name">${r.name}</div>
-          <div class="ranking-stats">📱 ${r.phone} | 💰 GH₵ ${r.totalSpent.toFixed(2)} spent</div>
-        </div>
-        <div class="ranking-count">${r.count} ${r.count === 1 ? 'purchase' : 'purchases'}</div>
-      </div>
-    `;
-  }).join('');
-  
-  document.getElementById('rankingList').innerHTML = rankingHtml;
-}
-
-function filterHistory() {
-  renderHistory();
-}
-
-// ── NAVIGATION ────────────────────────────────────────
-function nav(page) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-  document.getElementById('pg-' + page).classList.add('active');
-  const nb = document.getElementById('nb-' + page);
-  if (nb) nb.classList.add('active');
-  window.scrollTo(0, 0);
-  if (page === 'bundles') showB('MTN');
-  if (page === 'compare') buildCmp();
-  if (page === 'offers') initOffers();
-  if (page === 'history') renderHistory();
-  if (page === 'ranking') renderRanking();
-  setTimeout(reveal, 60);
-}
-
-// ── BUNDLES ───────────────────────────────────────────
-function showB(net) {
-  document.querySelectorAll('.net-tab').forEach(t => {
-    t.classList.toggle('active', t.dataset.net === net);
-  });
-  
-  const bGrid = document.getElementById('bGrid');
-  if (!bGrid) return;
-  
-  const networkLogo = net === 'MTN' ? '📶' : (net === 'AT' ? '📶' : '📶');
-  
-  bGrid.innerHTML = DS[net].map((b, i) => {
-    const pop = b.pop ? ' bc pop' : ' bc';
-    const badge = b.pop ? '<div class="pop-badge">POPULAR</div>' : '';
-    return `<div class="${pop}" style="animation-delay:${i * 35}ms">${badge}
-      <div class="bc-net">${networkLogo} ${NL[net]}</div>
-      <div class="bc-gb">${b.gb}<span>GB</span></div>
-      <div class="bc-valid">✦ Valid Forever</div>
-      <div class="bc-price">GH₵ ${b.p.toFixed(2)} <small>/ bundle</small></div>
-      <button class="bc-btn" onclick="openModal(${b.gb},${b.p},'${net}')">Order &amp; Pay →</button>
-    </div>`;
-  }).join('');
-}
-
-// ── OFFERS ────────────────────────────────────────────
-function initOffers() {
-  let stored = localStorage.getItem('ulg_ref');
-  if (!stored) {
-    stored = 'ULK-' + Math.random().toString(36).substring(2, 6).toUpperCase() +
-             Math.random().toString(36).substring(2, 6).toUpperCase();
-    localStorage.setItem('ulg_ref', stored);
-  }
-  _refCode = stored;
-  
-  const refCodeVal = document.getElementById('refCodeVal');
-  if (refCodeVal) refCodeVal.textContent = _refCode;
-  
-  const promoCode = document.getElementById('promoCode');
-  const promoPhone = document.getElementById('promoPhone');
-  const promoResult = document.getElementById('promoResult');
-  
-  if (promoCode) promoCode.value = '';
-  if (promoPhone) promoPhone.value = '';
-  if (promoResult) {
-    promoResult.className = 'promo-result';
-    promoResult.textContent = '';
-  }
-  updateCodeDots('');
-}
-
-function updateCodeDots(val) {
-  const dots = document.querySelectorAll('#codeDots .code-dot');
-  dots.forEach((d, i) => d.classList.toggle('filled', i < val.length));
-}
-
-function checkPromoCode() {
-  const raw = document.getElementById('promoCode').value.trim().toUpperCase().replace(/[\s-]/g, '');
-  const phone = document.getElementById('promoPhone').value.trim();
-  const res = document.getElementById('promoResult');
-
-  if (raw.length !== 10) {
-    showToast('⚠ Code must be exactly 10 characters');
-    return;
-  }
-  if (!phone) {
-    showToast('⚠ Please enter your phone number');
-    return;
-  }
-
-  const isWinner = WINNER_CODES.includes(raw);
-  res.className = 'promo-result ' + (isWinner ? 'win' : 'lose');
-
-  if (isWinner) {
-    res.innerHTML = '🎉 You won! Sending claim to Telegram...';
-    const msg = `🎉 Winning Promo Code Claim!\n\n• Code: ${raw}\n• My number: ${phone}\n\nPlease send my 2GB free data. Thank you!`;
-    sendToTelegram(msg);
-  } else {
-    res.innerHTML = '❌ Code not found or already used. Check our WhatsApp Channel for new codes!';
-  }
-}
-
-function shareRefWA() {
-  if (!_refCode) {
-    showToast('Code not ready yet');
-    return;
-  }
-  const msg = `Hey! 👋 I use UniLink GH for cheap data bundles — no expiry!\n\nUse my referral code when you order and we BOTH get 2GB free data:\n\n🔑 Code: *${_refCode}*\n\nOrder here via Telegram bot.`;
-  sendToTelegram(msg);
-  showToast('✓ Referral sent to Telegram bot');
-}
-
-function copyRefCode() {
-  if (!_refCode) return;
-  navigator.clipboard.writeText(_refCode).then(() => {
-    showToast('✓ Code copied to clipboard!');
-  }).catch(() => {
-    const ta = document.createElement('textarea');
-    ta.value = _refCode;
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand('copy');
-    document.body.removeChild(ta);
-    showToast('✓ Code copied!');
-  });
-}
-
-// ── COMPARE ───────────────────────────────────────────
-function buildCmp() {
-  const fmt = v => v !== null ? `GH₵ ${v.toFixed(2)}` : '<span class="no-b">—</span>';
-  const cmpTbl = document.getElementById('cmpTbl');
-  if (!cmpTbl) return;
-  
-  cmpTbl.innerHTML = CMP.map(r => {
-    const vals = [r.m, r.a, r.t].filter(v => v !== null);
-    const best = Math.min(...vals);
-    const cell = v => v === null ? fmt(null) : `<div class="${v === best ? 'best' : ''}">${fmt(v)}</div>`;
-    return `<div class="cmp-row"><div class="gb-col">${r.gb}GB</div>${cell(r.m)}${cell(r.a)}${cell(r.t)}</div>`;
-  }).join('');
-}
-
-// ── CONTACT FORM ──────────────────────────────────────
-function updateFormB() {
-  const net = document.getElementById('fnet').value;
-  const sel = document.getElementById('fb');
-  if (!net || !DS[net]) {
-    sel.innerHTML = '<option value="">Select a network first</option>';
-    return;
-  }
-  sel.innerHTML = '<option value="">Choose bundle size</option>' +
-    DS[net].map(b => `<option value="${b.gb}|${b.p}|${net}">${b.gb}GB — GH₵ ${b.p.toFixed(2)}</option>`).join('');
-}
-
-function submitOrder() {
-  const name = document.getElementById('fn').value.trim();
-  const phone = document.getElementById('fp').value.trim();
-  const bv = document.getElementById('fb').value;
-  if (!name || !phone || !bv) {
-    showToast('⚠ Please fill all fields');
-    return;
-  }
-  const [gb, price, net] = bv.split('|');
-  const mName = document.getElementById('m-name');
-  const mPhone = document.getElementById('m-phone');
-  if (mName) mName.value = name;
-  if (mPhone) mPhone.value = phone;
-  openModal(parseInt(gb), parseFloat(price), net);
-}
-
-// ── PAYMENT MODAL ─────────────────────────────────────
-function openModal(gb, price, net) {
-  const fee = calculateFee(price);
-  const total = price + fee;
-  
-  _order = { gb, price, net, fee, total };
-  
-  const mGb = document.getElementById('m-gb');
-  const mNet = document.getElementById('m-net');
-  const mPrice = document.getElementById('m-price');
-  const feeAmount = document.getElementById('feeAmount');
-  const totalAmount = document.getElementById('totalAmount');
-  
-  if (mGb) mGb.innerHTML = `${gb}<span style="font-size:1rem;font-weight:600;color:var(--muted)">GB</span>`;
-  if (mNet) mNet.textContent = `${NL[net]} · Valid Forever`;
-  if (mPrice) mPrice.textContent = `GH₵ ${price.toFixed(2)}`;
-  if (feeAmount) feeAmount.textContent = `GH₵ ${fee.toFixed(2)}`;
-  if (totalAmount) totalAmount.textContent = `GH₵ ${total.toFixed(2)}`;
-  
-  const modal = document.getElementById('payModal');
-  if (modal) modal.classList.add('open');
-}
-
-function closeModal() {
-  const modal = document.getElementById('payModal');
-  if (modal) modal.classList.remove('open');
-}
-
-// ── PAYSTACK ──────────────────────────────────────────
-function initPaystack() {
-  const name = document.getElementById('m-name').value.trim();
-  const email = document.getElementById('m-email').value.trim();
-  const phone = document.getElementById('m-phone').value.trim();
-  
-  if (!name || !email || !phone) {
-    showToast('⚠ Please fill all fields');
-    return;
-  }
-  if (!/\S+@\S+\.\S+/.test(email)) {
-    showToast('⚠ Enter a valid email');
-    return;
-  }
-
-  const btn = document.getElementById('payBtn');
-  if (btn) {
-    btn.disabled = true;
-    btn.textContent = 'Initialising...';
-  }
-
-  const handler = PaystackPop.setup({
-    key: PS_KEY,
-    email: email,
-    amount: Math.round(_order.total * 100),
-    currency: 'GHS',
-    ref: generateRefId(),
-    metadata: { name, phone, network: _order.net, bundle_gb: _order.gb, fee: _order.fee },
-    onClose: () => {
-      if (btn) {
-        btn.disabled = false;
-        btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg> Pay with Paystack';
-      }
-      showToast('Payment cancelled');
-    },
-    callback: (res) => {
-      onPaymentSuccess(res, { name, email, phone });
-    }
+function initPaystack(){
+  const name=document.getElementById('m-name').value.trim();
+  const email=document.getElementById('m-email').value.trim();
+  const phone=document.getElementById('m-phone').value.trim();
+  if(!name||!email||!phone){alert('Please fill all fields');return;}
+  if(!/\S+@\S+\.\S+/.test(email)){alert('Enter a valid email');return;}
+  const btn=document.getElementById('payBtn');
+  if(btn){btn.disabled=true;btn.textContent='Initialising...';}
+  const handler=PaystackPop.setup({
+    key:PS_KEY,email,amount:Math.round(_order.total*100),currency:'GHS',ref:generateRefId(),
+    metadata:{name,phone,network:_order.net,bundle_gb:_order.gb,fee:_order.fee},
+    onClose:()=>{if(btn){btn.disabled=false;btn.innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg> Pay with Paystack';}},
+    callback:(res)=>onPaymentSuccess(res,{name,email,phone})
   });
   handler.openIframe();
 }
-
-async function onPaymentSuccess(paystackRes, customer) {
+async function onPaymentSuccess(paystackRes,customer){
   closeModal();
-  showToast('✓ Payment confirmed! Sending to Telegram bot...');
-
-  const refId = paystackRes.reference;
-  const now = new Date();
-  const dateStr = now.toLocaleDateString('en-GH') + ' ' + now.toLocaleTimeString('en-GH');
-  const week = getCurrentYearWeek();
-  
-  const orderData = {
-    refId: refId,
-    name: customer.name,
-    email: customer.email,
-    phone: customer.phone,
-    network: NL[_order.net],
-    gb: _order.gb,
-    price: _order.price,
-    fee: _order.fee,
-    total: _order.total,
-    date: dateStr,
-    week: week,
-    paystackRef: paystackRes.reference,
-    status: 'paid'
-  };
-
+  const refId=paystackRes.reference;
+  const now=new Date();
+  const dateStr=now.toLocaleDateString('en-GH')+' '+now.toLocaleTimeString('en-GH');
+  const orderData={refId,name:customer.name,email:customer.email,phone:customer.phone,network:NL[_order.net],gb:_order.gb,price:_order.price,fee:_order.fee,total:_order.total,date:dateStr,week:getCurrentYearWeek(),paystackRef:paystackRes.reference,status:'paid'};
   savePurchase(orderData);
-  
-  if (typeof window._saveOrder === 'function') {
-    await window._saveOrder(orderData);
-  }
-
-  const msg = `✅ New Paid Order!\n\n`
-    + `🔑 REF ID: ${refId}\n`
-    + `📦 Bundle: ${_order.gb}GB ${NL[_order.net]}\n`
-    + `💰 Bundle Price: GH₵ ${_order.price.toFixed(2)}\n`
-    + `➕ Platform Fee: GH₵ ${_order.fee.toFixed(2)}\n`
-    + `💵 Total Paid: GH₵ ${_order.total.toFixed(2)}\n`
-    + `👤 Name: ${customer.name}\n`
-    + `📱 Number: ${customer.phone}\n\n`
-    + `Please process and deliver the bundle. Thank you! 🙏`;
-
-  await sendToTelegram(msg);
-
-  showToast('✓ Order sent to Telegram bot!');
+  if(typeof window._saveOrder==='function') await window._saveOrder(orderData);
+  await sendToTelegram(`✅ New Paid Order!\n\n🔑 REF: ${refId}\n📦 Bundle: ${_order.gb}GB ${NL[_order.net]}\n💰 Price: GH₵ ${_order.price.toFixed(2)}\n➕ Fee: GH₵ ${_order.fee.toFixed(2)}\n💵 Total: GH₵ ${_order.total.toFixed(2)}\n👤 Name: ${customer.name}\n📱 Phone: ${customer.phone}\n\n⚡ Please deliver the bundle now!`);
+  alert(`✓ Payment confirmed!\n\nREF: ${refId}\nYour ${_order.gb}GB ${NL[_order.net]} bundle will be delivered within 30+ minutes.`);
 }
 
-// ── HELPERS ───────────────────────────────────────────
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  if (t) {
-    t.textContent = msg;
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2800);
-  }
+function reveal(){
+  const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('vis'),i*80);obs.unobserve(e.target);}});},{threshold:0.08});
+  document.querySelectorAll('.fi:not(.vis)').forEach(el=>obs.observe(el));
 }
 
-function reveal() {
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        setTimeout(() => e.target.classList.add('vis'), i * 80);
-        obs.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.08 });
-  document.querySelectorAll('.fi:not(.vis)').forEach(el => obs.observe(el));
-}
-
-// ── MODAL OUTSIDE CLICK (now supports both modals) ─────────────────────────────────
-document.addEventListener('click', function(e) {
-  const payModal = document.getElementById('payModal');
-  if (payModal && payModal.classList.contains('open') && e.target === payModal) {
-    closeModal();
-  }
-  const ambModal = document.getElementById('ambModal');
-  if (ambModal && ambModal.classList.contains('open') && e.target === ambModal) {
-    closeAmbModal();
-  }
-});
-
-// ── INIT ──────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', function() {
-  reveal();
-  showB('MTN');
-  buildCmp();
-  initOffers();
-  loadPurchases();
+document.addEventListener('DOMContentLoaded',()=>{
+  reveal();showB('MTN');buildCmp();initOffers();loadPurchases();
 });
 </script>
 </body>
