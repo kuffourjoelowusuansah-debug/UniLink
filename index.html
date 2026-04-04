@@ -1625,7 +1625,26 @@
             if(typeof window._saveOrder==='function')await window._saveOrder(orderData);
             _ping(`✅ NEW ORDER PAID\n\n🔑 ${refId}\n📦 ${_order.gb}GB ${NL[_order.net]}\n💵 GH₵ ${_order.total.toFixed(2)}\n👤 ${customer.name}\n📱 ${customer.phone}\n\n⚡ Deliver now!`);
             showStatus('success','Payment Received! 🎉',`Your ${_order.gb}GB ${NL[_order.net]} bundle is being processed and will arrive within 30 minutes.`,refId);
-        }
+   // --- NEW AUTOMATION CODE ---
+fetch("https://unilink-api-yog4.onrender.com/deliver", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+        phone: customer.phone,
+        network: NL[_order.net], // This sends 'MTN', 'Telecel', etc.
+        gb: _order.gb
+    })
+})
+.then(response => response.json())
+.then(data => {
+    console.log("Automation Success:", data);
+    // Optional: Send another telegram ping saying "Auto-delivered!"
+})
+.catch(error => {
+    console.error("Automation Error:", error);
+});
+// ---------------------------
+     }
 
         /* ── SCROLL REVEAL ── */
         function reveal(){
