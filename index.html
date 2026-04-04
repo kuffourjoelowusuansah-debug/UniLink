@@ -1663,5 +1663,22 @@ fetch("https://unilink-api-yog4.onrender.com/deliver", {
             initCountUps();
         });
     </script>
-</body>
+<script type="text/javascript">
+  (function(d, t) {
+      var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
+      v.onload = function() {
+        window.voiceflow.chat.load({
+  verify: { projectID: '69d1432841d3218c8b72501d' },
+  url: 'https://general-runtime.voiceflow.com',
+  versionID: 'production',
+  /* ADD THIS LINE BELOW TO MOVE IT TO THE LEFT */
+  render: { mode: 'popover', side: 'left' }, 
+  voice: {
+    url: "https://runtime-api.voiceflow.com"
+  }
+});
+      }
+      v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs"; v.type = "text/javascript"; s.parentNode.insertBefore(v, s);
+  })(document, 'script');
+</script></body>
 </html>
