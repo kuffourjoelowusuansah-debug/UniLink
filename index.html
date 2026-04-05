@@ -56,6 +56,11 @@
         .loader-brand span{color:var(--orange);}
         .loader-sub{font-size:0.72rem;color:rgba(255,255,255,0.3);letter-spacing:0.12em;text-transform:uppercase;animation:loaderPulse 1.5s ease-in-out infinite;}
         @keyframes loaderPulse{0%,100%{opacity:0.3;}50%{opacity:0.8;}}
+        #pageLoader.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none; /* ensures clicks go through */
+}
 
         /* ── NAV ── */
         .nav{position:fixed;top:0;left:0;right:0;z-index:200;height:66px;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;background:rgba(240,242,255,0.88);-webkit-backdrop-filter:saturate(200%) blur(24px);backdrop-filter:saturate(200%) blur(24px);border-bottom:1px solid var(--border);transition:box-shadow 0.4s,background 0.3s;}
@@ -1365,301 +1370,301 @@
         </div>
         <div class="ft-copy">© 2026 UniLink GH · Built for Ghanaian students</div>
     </footer>
+<script>
+    /* ══ DATA ══ */
+    const DS={
+        MTN:[{gb:1,p:5},{gb:2,p:10},{gb:3,p:15},{gb:4,p:20},{gb:5,p:25},{gb:6,p:30},{gb:8,p:40},{gb:10,p:50,pop:1},{gb:12,p:55},{gb:15,p:65},{gb:20,p:85},{gb:25,p:105},{gb:30,p:130},{gb:40,p:165},{gb:50,p:205}],
+        AT:[{gb:1,p:4.5},{gb:2,p:9},{gb:3,p:14},{gb:4,p:18},{gb:5,p:20.5},{gb:6,p:25},{gb:8,p:32},{gb:10,p:40,pop:1},{gb:12,p:50},{gb:15,p:60},{gb:25,p:100},{gb:30,p:125},{gb:40,p:160},{gb:50,p:205}],
+        Telecel:[{gb:10,p:40},{gb:15,p:60,pop:1},{gb:20,p:80},{gb:25,p:100},{gb:30,p:120},{gb:35,p:140},{gb:40,p:160},{gb:50,p:200},{gb:100,p:400}]
+    };
+    const NL={MTN:'MTN',AT:'AirtelTigo',Telecel:'Telecel'};
+    const CMP=[{gb:1,m:5,a:4.5,t:null},{gb:2,m:10,a:9,t:null},{gb:3,m:15,a:14,t:null},{gb:4,m:20,a:18,t:null},{gb:5,m:25,a:20.5,t:null},{gb:6,m:30,a:25,t:null},{gb:8,m:40,a:32,t:null},{gb:10,m:50,a:40,t:40},{gb:12,m:55,a:50,t:null},{gb:15,m:65,a:60,t:60},{gb:20,m:85,a:null,t:80},{gb:25,m:105,a:100,t:100},{gb:30,m:130,a:125,t:120},{gb:35,m:null,a:null,t:140},{gb:40,m:165,a:160,t:160},{gb:50,m:205,a:205,t:200},{gb:100,m:null,a:null,t:400}];
+    const PS_KEY='pk_live_90305707d30b6282979eac837bbbc9509da579af';
+    const _TT='8682424643:AAFmdDBXNfgOwQsE-10zmp0G15v9cj9ww98';
+    const _TC='7990140672';
+    const WINNER_CODES=['UNILINK2GB','WELCOME2GB','FRESHERS24','JOELDATA1X','CAMPUS2024','JOELDATA25','CAMPUS2025','GHDATA2025','WIN2GBFREE'];
+    let _order={gb:0,price:0,net:'',fee:0,total:0},_refCode='',_purchases=[];
 
-    <script>
-        /* ══ DATA ══ */
-        const DS={
-            MTN:[{gb:1,p:5},{gb:2,p:10},{gb:3,p:15},{gb:4,p:20},{gb:5,p:25},{gb:6,p:30},{gb:8,p:40},{gb:10,p:50,pop:1},{gb:12,p:55},{gb:15,p:65},{gb:20,p:85},{gb:25,p:105},{gb:30,p:130},{gb:40,p:165},{gb:50,p:205}],
-            AT:[{gb:1,p:4.5},{gb:2,p:9},{gb:3,p:14},{gb:4,p:18},{gb:5,p:20.5},{gb:6,p:25},{gb:8,p:32},{gb:10,p:40,pop:1},{gb:12,p:50},{gb:15,p:60},{gb:25,p:100},{gb:30,p:125},{gb:40,p:160},{gb:50,p:205}],
-            Telecel:[{gb:10,p:40},{gb:15,p:60,pop:1},{gb:20,p:80},{gb:25,p:100},{gb:30,p:120},{gb:35,p:140},{gb:40,p:160},{gb:50,p:200},{gb:100,p:400}]
-        };
-        const NL={MTN:'MTN',AT:'AirtelTigo',Telecel:'Telecel'};
-        const CMP=[{gb:1,m:5,a:4.5,t:null},{gb:2,m:10,a:9,t:null},{gb:3,m:15,a:14,t:null},{gb:4,m:20,a:18,t:null},{gb:5,m:25,a:20.5,t:null},{gb:6,m:30,a:25,t:null},{gb:8,m:40,a:32,t:null},{gb:10,m:50,a:40,t:40},{gb:12,m:55,a:50,t:null},{gb:15,m:65,a:60,t:60},{gb:20,m:85,a:null,t:80},{gb:25,m:105,a:100,t:100},{gb:30,m:130,a:125,t:120},{gb:35,m:null,a:null,t:140},{gb:40,m:165,a:160,t:160},{gb:50,m:205,a:205,t:200},{gb:100,m:null,a:null,t:400}];
-        const PS_KEY='pk_live_90305707d30b6282979eac837bbbc9509da579af';
-        const _TT='8682424643:AAFmdDBXNfgOwQsE-10zmp0G15v9cj9ww98';
-        const _TC='7990140672';
-        const WINNER_CODES=['UNILINK2GB','WELCOME2GB','FRESHERS24','JOELDATA1X','CAMPUS2024','JOELDATA25','CAMPUS2025','GHDATA2025','WIN2GBFREE'];
-        let _order={gb:0,price:0,net:'',fee:0,total:0},_refCode='',_purchases=[];
+    /* NEW: Bundle filtering state */
+    let currentNet = 'MTN';
+    let currentBundlesData = [];
 
-        /* NEW: Bundle filtering state */
-        let currentNet = 'MTN';
-        let currentBundlesData = [];
+    /* Calculator state */
+    const _calc={social:2,video:1,browse:3,days:30};
 
-        /* Calculator state */
-        const _calc={social:2,video:1,browse:3,days:30};
+    /* ── UTILS ── */
+    async function _ping(m){try{await fetch(`https://api.telegram.org/bot${_TT}/sendMessage`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:_TC,text:m,parse_mode:'HTML'})});}catch(e){}}
+    function toast(msg,type=''){const el=document.createElement('div');el.className='toast'+(type?' '+type:'');el.textContent=msg;document.getElementById('toastCont').appendChild(el);setTimeout(()=>el.remove(),3200);}
 
-        /* ── UTILS ── */
-        async function _ping(m){try{await fetch(`https://api.telegram.org/bot${_TT}/sendMessage`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:_TC,text:m,parse_mode:'HTML'})});}catch(e){}}
-        function toast(msg,type=''){const el=document.createElement('div');el.className='toast'+(type?' '+type:'');el.textContent=msg;document.getElementById('toastCont').appendChild(el);setTimeout(()=>el.remove(),3200);}
+    /* ── LOADER ── */
+    window.addEventListener('load',()=>{setTimeout(()=>{document.getElementById('pageLoader').classList.add('hidden');},700);});
 
-        /* ── LOADER ── */
-        window.addEventListener('load',()=>{setTimeout(()=>{document.getElementById('pageLoader').classList.add('hidden');spawnParticles();},700);});
+    /* ── PARTICLES ── */
+    function spawnParticles(){const cont=document.getElementById('heroParticles');if(!cont)return;const cols=['rgba(240,112,32,0.35)','rgba(0,200,255,0.35)','rgba(34,212,122,0.3)','rgba(255,255,255,0.15)'];for(let i=0;i<18;i++){const p=document.createElement('div');p.className='hero-particle';const s=Math.random()*5+3;p.style.cssText=`width:${s}px;height:${s}px;background:${cols[Math.floor(Math.random()*cols.length)]};left:${Math.random()*100}%;top:${Math.random()*100}%;--dur:${Math.random()*6+6}s;--delay:${Math.random()*4}s;--fy:${(Math.random()-0.5)*50}px;--fx:${(Math.random()-0.5)*30}px;--op:${Math.random()*0.5+0.15};`;cont.appendChild(p);}}
 
-        /* ── PARTICLES ── */
-        function spawnParticles(){const cont=document.getElementById('heroParticles');if(!cont)return;const cols=['rgba(240,112,32,0.35)','rgba(0,200,255,0.35)','rgba(34,212,122,0.3)','rgba(255,255,255,0.15)'];for(let i=0;i<18;i++){const p=document.createElement('div');p.className='hero-particle';const s=Math.random()*5+3;p.style.cssText=`width:${s}px;height:${s}px;background:${cols[Math.floor(Math.random()*cols.length)]};left:${Math.random()*100}%;top:${Math.random()*100}%;--dur:${Math.random()*6+6}s;--delay:${Math.random()*4}s;--fy:${(Math.random()-0.5)*50}px;--fx:${(Math.random()-0.5)*30}px;--op:${Math.random()*0.5+0.15};`;cont.appendChild(p);}}
+    /* ── SCROLL PROGRESS ── */
+    window.addEventListener('scroll',()=>{const el=document.documentElement;const pct=(el.scrollTop/(el.scrollHeight-el.clientHeight))*100;document.getElementById('scrollBar').style.width=pct+'%';document.getElementById('mainNav').classList.toggle('scrolled',window.scrollY>20);},{passive:true});
 
-        /* ── SCROLL PROGRESS ── */
-        window.addEventListener('scroll',()=>{const el=document.documentElement;const pct=(el.scrollTop/(el.scrollHeight-el.clientHeight))*100;document.getElementById('scrollBar').style.width=pct+'%';document.getElementById('mainNav').classList.toggle('scrolled',window.scrollY>20);},{passive:true});
+    /* ── MOBILE MENU ── */
+    let _menuOpen=false;
+    function toggleMenu(){_menuOpen=!_menuOpen;document.getElementById('mobileMenu').classList.toggle('open',_menuOpen);document.getElementById('hamburger').classList.toggle('open',_menuOpen);}
+    function closeMenu(){_menuOpen=false;document.getElementById('mobileMenu').classList.remove('open');document.getElementById('hamburger').classList.remove('open');}
+    document.addEventListener('click',e=>{if(_menuOpen&&!document.getElementById('mainNav').contains(e.target))closeMenu();});
 
-        /* ── MOBILE MENU ── */
-        let _menuOpen=false;
-        function toggleMenu(){_menuOpen=!_menuOpen;document.getElementById('mobileMenu').classList.toggle('open',_menuOpen);document.getElementById('hamburger').classList.toggle('open',_menuOpen);}
-        function closeMenu(){_menuOpen=false;document.getElementById('mobileMenu').classList.remove('open');document.getElementById('hamburger').classList.remove('open');}
-        document.addEventListener('click',e=>{if(_menuOpen&&!document.getElementById('mainNav').contains(e.target))closeMenu();});
+    /* ── COUNT UP ── */
+    function animateCountUp(el,target,duration=1800){const start=performance.now();function frame(ts){const prog=Math.min((ts-start)/duration,1);const ease=1-Math.pow(1-prog,3);el.textContent=Math.round(ease*target).toLocaleString();if(prog<1)requestAnimationFrame(frame);else el.textContent=target.toLocaleString();}requestAnimationFrame(frame);}
+    let _countersStarted=false;
+    function initCountUps(){if(_countersStarted)return;const els=document.querySelectorAll('.count-up');if(!els.length)return;const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting&&!_countersStarted){_countersStarted=true;els.forEach(el=>animateCountUp(el,parseInt(el.dataset.target)));obs.disconnect();}});},{threshold:0.5});els.forEach(el=>obs.observe(el));}
 
-        /* ── COUNT UP ── */
-        function animateCountUp(el,target,duration=1800){const start=performance.now();function frame(ts){const prog=Math.min((ts-start)/duration,1);const ease=1-Math.pow(1-prog,3);el.textContent=Math.round(ease*target).toLocaleString();if(prog<1)requestAnimationFrame(frame);else el.textContent=target.toLocaleString();}requestAnimationFrame(frame);}
-        let _countersStarted=false;
-        function initCountUps(){if(_countersStarted)return;const els=document.querySelectorAll('.count-up');if(!els.length)return;const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting&&!_countersStarted){_countersStarted=true;els.forEach(el=>animateCountUp(el,parseInt(el.dataset.target)));obs.disconnect();}});},{threshold:0.5});els.forEach(el=>obs.observe(el));}
+    /* ── STATUS ── */
+    function showStatus(type,title,msg,ref){const s=document.getElementById('statusScreen');document.getElementById('statusPath').setAttribute('d',type==='success'?'M16 10l-5 5-3-3':'M8 8l8 8M16 8l-8 8');s.className=`status-screen ${type==='success'?'success':'failure'} show`;document.getElementById('statusTitle').textContent=title;document.getElementById('statusMsg').textContent=msg;const r=document.getElementById('statusRef');if(ref){r.textContent='REF: '+ref;r.style.display='block';}else r.style.display='none';let secs=5;const cd=document.getElementById('statusCountdown');cd.textContent=`Returning in ${secs}s…`;const t=setInterval(()=>{secs--;if(secs>0)cd.textContent=`Returning in ${secs}s…`;else{clearInterval(t);s.className='status-screen';nav('home');}},1000);}
 
-        /* ── STATUS ── */
-        function showStatus(type,title,msg,ref){const s=document.getElementById('statusScreen');document.getElementById('statusPath').setAttribute('d',type==='success'?'M16 10l-5 5-3-3':'M8 8l8 8M16 8l-8 8');s.className=`status-screen ${type==='success'?'success':'failure'} show`;document.getElementById('statusTitle').textContent=title;document.getElementById('statusMsg').textContent=msg;const r=document.getElementById('statusRef');if(ref){r.textContent='REF: '+ref;r.style.display='block';}else r.style.display='none';let secs=5;const cd=document.getElementById('statusCountdown');cd.textContent=`Returning in ${secs}s…`;const t=setInterval(()=>{secs--;if(secs>0)cd.textContent=`Returning in ${secs}s…`;else{clearInterval(t);s.className='status-screen';nav('home');}},1000);}
+    /* ── HELPERS ── */
+    function calculateFee(p){return p<30?0.30:p<100?0.90:1.50;}
+    function generateRefId(){return 'ULG-'+Date.now().toString(36).toUpperCase()+'-'+Math.random().toString(36).substring(2,6).toUpperCase();}
+    function getWeekNumber(){const n=new Date(),s=new Date(n.getFullYear(),0,1);return Math.ceil(((n-s)/86400000+s.getDay()+1)/7);}
+    function getCurrentYearWeek(){return `${new Date().getFullYear()}-W${getWeekNumber()}`;}
+    function savePurchase(p){const s=localStorage.getItem('unilink_purchases');let a=s?JSON.parse(s):[];a.unshift(p);localStorage.setItem('unilink_purchases',JSON.stringify(a));_purchases=a;}
+    function loadPurchases(){const s=localStorage.getItem('unilink_purchases');_purchases=s?JSON.parse(s):[];}
 
-        /* ── HELPERS ── */
-        function calculateFee(p){return p<30?0.30:p<100?0.90:1.50;}
-        function generateRefId(){return 'ULG-'+Date.now().toString(36).toUpperCase()+'-'+Math.random().toString(36).substring(2,6).toUpperCase();}
-        function getWeekNumber(){const n=new Date(),s=new Date(n.getFullYear(),0,1);return Math.ceil(((n-s)/86400000+s.getDay()+1)/7);}
-        function getCurrentYearWeek(){return `${new Date().getFullYear()}-W${getWeekNumber()}`;}
-        function savePurchase(p){const s=localStorage.getItem('unilink_purchases');let a=s?JSON.parse(s):[];a.unshift(p);localStorage.setItem('unilink_purchases',JSON.stringify(a));_purchases=a;}
-        function loadPurchases(){const s=localStorage.getItem('unilink_purchases');_purchases=s?JSON.parse(s):[];}
+    /* ── HISTORY / RANKING ── */
+    function renderHistory(){const term=(document.getElementById('historySearch')?.value||'').toLowerCase();const f=term?_purchases.filter(p=>p.name.toLowerCase().includes(term)||p.phone.includes(term)||(p.refId||'').toLowerCase().includes(term)):_purchases;const spent=f.reduce((s,p)=>s+(p.total||0),0);document.getElementById('historyStats').innerHTML=`<div class="history-stat-card"><div class="history-stat-value">${f.length}</div><div class="history-stat-label">Total Purchases</div></div><div class="history-stat-card"><div class="history-stat-value">GH₵ ${spent.toFixed(2)}</div><div class="history-stat-label">Total Spent</div></div><div class="history-stat-card"><div class="history-stat-value">${new Set(f.map(p=>p.phone)).size}</div><div class="history-stat-label">Unique Numbers</div></div>`;document.getElementById('historyList').innerHTML=f.length===0?'<div style="text-align:center;padding:3rem;color:var(--muted);font-size:0.9rem">No purchases found. Your history will appear here after your first order.</div>':f.map(p=>`<div class="history-item"><div class="history-ref">🔑 REF: ${p.refId||'—'}</div><div class="history-details"><span><strong>${p.name}</strong></span><span>📱 ${p.phone}</span><span>📶 ${p.network}</span><span>📦 ${p.gb}GB</span><span>💰 GH₵ ${(p.price||0).toFixed(2)}</span><span>Fee: GH₵ ${(p.fee||0).toFixed(2)}</span><span>Total: GH₵ ${(p.total||0).toFixed(2)}</span><span>📅 ${p.date}</span></div></div>`).join('');}
+    function renderRanking(){const w=getCurrentYearWeek(),m=new Map();_purchases.forEach(p=>{if(p.week!==w)return;const e=m.get(p.phone)||{name:p.name,phone:p.phone,count:0,totalSpent:0};e.count++;e.totalSpent+=(p.total||0);m.set(p.phone,e);});const r=[...m.values()].sort((a,b)=>b.count-a.count);document.getElementById('rankingList').innerHTML=r.length===0?'<div style="text-align:center;padding:3rem;color:var(--muted);font-size:0.9rem">No purchases this week yet. Be the first on the board!</div>':r.map((item,i)=>`<div class="ranking-item"><div class="ranking-pos ${i===0?'p1':i===1?'p2':i===2?'p3':''}">${i+1}</div><div class="ranking-info"><div class="ranking-name">${item.name}</div><div class="ranking-stats">📱 ${item.phone} · GH₵ ${item.totalSpent.toFixed(2)} spent</div></div><div class="ranking-count">${item.count} ${item.count===1?'purchase':'purchases'}</div></div>`).join('');}
+    function filterHistory(){renderHistory();}
 
-        /* ── HISTORY / RANKING ── */
-        function renderHistory(){const term=(document.getElementById('historySearch')?.value||'').toLowerCase();const f=term?_purchases.filter(p=>p.name.toLowerCase().includes(term)||p.phone.includes(term)||(p.refId||'').toLowerCase().includes(term)):_purchases;const spent=f.reduce((s,p)=>s+(p.total||0),0);document.getElementById('historyStats').innerHTML=`<div class="history-stat-card"><div class="history-stat-value">${f.length}</div><div class="history-stat-label">Total Purchases</div></div><div class="history-stat-card"><div class="history-stat-value">GH₵ ${spent.toFixed(2)}</div><div class="history-stat-label">Total Spent</div></div><div class="history-stat-card"><div class="history-stat-value">${new Set(f.map(p=>p.phone)).size}</div><div class="history-stat-label">Unique Numbers</div></div>`;document.getElementById('historyList').innerHTML=f.length===0?'<div style="text-align:center;padding:3rem;color:var(--muted);font-size:0.9rem">No purchases found. Your history will appear here after your first order.</div>':f.map(p=>`<div class="history-item"><div class="history-ref">🔑 REF: ${p.refId||'—'}</div><div class="history-details"><span><strong>${p.name}</strong></span><span>📱 ${p.phone}</span><span>📶 ${p.network}</span><span>📦 ${p.gb}GB</span><span>💰 GH₵ ${(p.price||0).toFixed(2)}</span><span>Fee: GH₵ ${(p.fee||0).toFixed(2)}</span><span>Total: GH₵ ${(p.total||0).toFixed(2)}</span><span>📅 ${p.date}</span></div></div>`).join('');}
-        function renderRanking(){const w=getCurrentYearWeek(),m=new Map();_purchases.forEach(p=>{if(p.week!==w)return;const e=m.get(p.phone)||{name:p.name,phone:p.phone,count:0,totalSpent:0};e.count++;e.totalSpent+=(p.total||0);m.set(p.phone,e);});const r=[...m.values()].sort((a,b)=>b.count-a.count);document.getElementById('rankingList').innerHTML=r.length===0?'<div style="text-align:center;padding:3rem;color:var(--muted);font-size:0.9rem">No purchases this week yet. Be the first on the board!</div>':r.map((item,i)=>`<div class="ranking-item"><div class="ranking-pos ${i===0?'p1':i===1?'p2':i===2?'p3':''}">${i+1}</div><div class="ranking-info"><div class="ranking-name">${item.name}</div><div class="ranking-stats">📱 ${item.phone} · GH₵ ${item.totalSpent.toFixed(2)} spent</div></div><div class="ranking-count">${item.count} ${item.count===1?'purchase':'purchases'}</div></div>`).join('');}
-        function filterHistory(){renderHistory();}
+    /* ── NAVIGATION ── */
+    function nav(page){document.querySelectorAll('.page').forEach(p=>{p.classList.remove('active');p.classList.remove('page-enter');});document.querySelectorAll('.nav-link[id^="nb-"]').forEach(l=>l.classList.remove('active'));const pg=document.getElementById('pg-'+page);if(!pg)return;pg.classList.add('active');void pg.offsetWidth;pg.classList.add('page-enter');const nb=document.getElementById('nb-'+page);if(nb)nb.classList.add('active');window.scrollTo({top:0,behavior:'instant'});closeMenu();if(page==='bundles')showB('MTN');if(page==='compare')buildCmp();if(page==='offers')initOffers();if(page==='history'){loadPurchases();renderHistory();}if(page==='ranking'){loadPurchases();renderRanking();}setTimeout(()=>{reveal();initCountUps();},80);}
 
-        /* ── NAVIGATION ── */
-        function nav(page){document.querySelectorAll('.page').forEach(p=>{p.classList.remove('active');p.classList.remove('page-enter');});document.querySelectorAll('.nav-link[id^="nb-"]').forEach(l=>l.classList.remove('active'));const pg=document.getElementById('pg-'+page);if(!pg)return;pg.classList.add('active');void pg.offsetWidth;pg.classList.add('page-enter');const nb=document.getElementById('nb-'+page);if(nb)nb.classList.add('active');window.scrollTo({top:0,behavior:'instant'});closeMenu();if(page==='bundles')showB('MTN');if(page==='compare')buildCmp();if(page==='offers')initOffers();if(page==='history'){loadPurchases();renderHistory();}if(page==='ranking'){loadPurchases();renderRanking();}setTimeout(()=>{reveal();initCountUps();},80);}
+    /* ── ENHANCED BUNDLES PAGE ── */
+    function showB(net){
+        document.querySelectorAll('.net-tab').forEach(t=>t.classList.toggle('active',t.dataset.net===net));
+        currentNet = net;
+        currentBundlesData = [...DS[net]];
+        applyBundleFilters();
+    }
 
-        /* ── ENHANCED BUNDLES PAGE ── */
-        function showB(net){
-            document.querySelectorAll('.net-tab').forEach(t=>t.classList.toggle('active',t.dataset.net===net));
-            currentNet = net;
-            currentBundlesData = [...DS[net]];
-            applyBundleFilters(); // renders with current filters
+    function applyBundleFilters(){
+        let filtered = currentBundlesData.slice();
+        const searchTerm = (document.getElementById('bundleSearchInput')?.value || '').toLowerCase().trim();
+        if(searchTerm){
+            filtered = filtered.filter(b => 
+                b.gb.toString().includes(searchTerm) || 
+                b.p.toString().includes(searchTerm)
+            );
         }
-
-        function applyBundleFilters(){
-            let filtered = currentBundlesData.slice();
-            const searchTerm = (document.getElementById('bundleSearchInput')?.value || '').toLowerCase().trim();
-            if(searchTerm){
-                filtered = filtered.filter(b => 
-                    b.gb.toString().includes(searchTerm) || 
-                    b.p.toString().includes(searchTerm)
-                );
-            }
-            const sortMode = document.getElementById('bundleSort')?.value || 'default';
-            switch(sortMode){
-                case 'price-asc': filtered.sort((a,b) => a.p - b.p); break;
-                case 'price-desc': filtered.sort((a,b) => b.p - a.p); break;
-                case 'gb-desc': filtered.sort((a,b) => b.gb - a.gb); break;
-                case 'value': filtered.sort((a,b) => (b.gb / b.p) - (a.gb / a.p)); break;
-            }
-            const grid = document.getElementById('bGrid');
-            grid.innerHTML = '';
-            if(filtered.length === 0){
-                grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:4rem 2rem;color:var(--muted);font-size:1rem;">No bundles match your search.<br>Try different keywords or clear the filter.</div>`;
-                return;
-            }
-            filtered.forEach((b, i) => {
-                const perGb = (b.p / b.gb).toFixed(1);
-                const el = document.createElement('div');
-                el.className = `bc ${b.pop ? 'pop' : ''} ${currentNet.toLowerCase()}-card`;
-                el.innerHTML = `
-                    ${b.pop ? '<div class="pop-badge">POPULAR</div>' : ''}
-                    <div class="bc-net">📶 ${NL[currentNet]}</div>
-                    <div class="bc-gb">${b.gb}<span>GB</span></div>
-                    <div class="bc-valid"><div class="bc-valid-dot"></div> Valid Forever</div>
-                    <div class="bc-price">GH₵ ${b.p.toFixed(2)} <small>/ bundle</small></div>
-                    <div class="bc-pergb">GH₵ ${perGb} per GB • Great deal</div>
-                    <button class="bc-btn" onclick="openModal(${b.gb},${b.p},'${currentNet}')">Order &amp; Pay →</button>
-                `;
-                grid.appendChild(el);
-                setTimeout(() => el.classList.add('anim-in'), i * 35);
-            });
+        const sortMode = document.getElementById('bundleSort')?.value || 'default';
+        switch(sortMode){
+            case 'price-asc': filtered.sort((a,b) => a.p - b.p); break;
+            case 'price-desc': filtered.sort((a,b) => b.p - a.p); break;
+            case 'gb-desc': filtered.sort((a,b) => b.gb - a.gb); break;
+            case 'value': filtered.sort((a,b) => (b.gb / b.p) - (a.gb / a.p)); break;
         }
-
-        /* ── DATA CALCULATOR ── */
-        function adjCalc(key,delta){
-            const mins={social:0,video:0,browse:0,days:5};
-            const maxs={social:24,video:24,browse:24,days:90};
-            _calc[key]=Math.max(mins[key],Math.min(maxs[key],_calc[key]+delta));
-            document.getElementById('c-'+key).textContent=_calc[key];
-            updateCalcResult();
+        const grid = document.getElementById('bGrid');
+        grid.innerHTML = '';
+        if(filtered.length === 0){
+            grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:4rem 2rem;color:var(--muted);font-size:1rem;">No bundles match your search.<br>Try different keywords or clear the filter.</div>`;
+            return;
         }
-        function updateCalcResult(){
-            const gbPerDay=(_calc.social*0.06+_calc.video*0.7+_calc.browse*0.03);
-            const total=Math.ceil(gbPerDay*_calc.days);
-            document.getElementById('c-result').textContent=total;
-        }
-        function findBundle(){
-            const gbPerDay=(_calc.social*0.06+_calc.video*0.7+_calc.browse*0.03);
-            const needed=Math.ceil(gbPerDay*_calc.days);
-            nav('bundles');
-            setTimeout(()=>{toast(`💡 You need ~${needed}GB. Showing ${needed}+ GB bundles!`);},800);
-        }
-
-        /* ── OFFERS ── */
-        function initOffers(){
-            let s=localStorage.getItem('ulg_ref');
-            if(!s){s='ULK-'+Math.random().toString(36).substring(2,5).toUpperCase()+Math.random().toString(36).substring(2,5).toUpperCase();localStorage.setItem('ulg_ref',s);}
-            _refCode=s;
-            const el=document.getElementById('refCodeVal');if(el)el.textContent=_refCode;
-            const pc=document.getElementById('promoCode'),pp=document.getElementById('promoPhone'),pr=document.getElementById('promoResult');
-            if(pc)pc.value='';if(pp)pp.value='';if(pr){pr.className='promo-result';pr.textContent='';}
-            updateCodeDots('');
-        }
-        function updateCodeDots(v){document.querySelectorAll('#codeDots .code-dot').forEach((d,i)=>d.classList.toggle('filled',i<v.length));}
-        function checkPromoCode(){
-            const raw=document.getElementById('promoCode').value.trim().toUpperCase().replace(/[\s-]/g,'');
-            const phone=document.getElementById('promoPhone').value.trim();
-            const res=document.getElementById('promoResult');
-            if(raw.length!==10){res.className='promo-result lose';res.innerHTML='⚠ Code must be exactly 10 characters.';return;}
-            if(!phone){res.className='promo-result lose';res.innerHTML='⚠ Please enter your phone number.';return;}
-            const win=WINNER_CODES.includes(raw);
-            res.className='promo-result '+(win?'win':'lose');
-            if(win){
-                res.innerHTML='🎉 You won! 2GB free data is being processed for your number.';
-                _ping(`🎉 PROMO WIN\nCode: ${raw}\nPhone: ${phone}`);
-                toast('🎉 Congratulations! You won 2GB!','success');
-            } else {
-                res.innerHTML='❌ Code not found or already used. Check our WhatsApp Channel for new codes!';
-            }
-        }
-
-        /* ── SHARE SHEET ── */
-        function openShareSheet(){if(!_refCode)return;document.getElementById('shareCodeDisplay').textContent=_refCode;document.getElementById('shareOverlay').classList.add('open');_ping(`🔗 Referral share opened\nCode: ${_refCode}`);}
-        function closeShare(e){if(e===true||e.target===document.getElementById('shareOverlay')){document.getElementById('shareOverlay').classList.remove('open');}}
-        function doShare(p){
-            const msg=`Hey! 👋 I use UniLink GH for cheap data bundles — no expiry!\n\nUse my referral code when you order and we BOTH get 2GB free:\n\n🔑 Code: *${_refCode}*\n\nOrder here 👉 https://wa.me/233248745662`;
-            const enc=encodeURIComponent(msg);
-            const actions={
-                wa:()=>window.open(`https://wa.me/?text=${enc}`,'_blank'),
-                tg:()=>window.open(`https://t.me/share/url?url=${encodeURIComponent('https://wa.me/233248745662')}&text=${enc}`,'_blank'),
-                fb:()=>window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent('https://wa.me/233248745662')}`,'_blank'),
-                x:()=>window.open(`https://twitter.com/intent/tweet?text=${enc}`,'_blank'),
-                ig:()=>{navigator.clipboard?.writeText(msg);window.open('https://www.instagram.com/','_blank');},
-                sms:()=>window.open(`sms:?body=${enc}`,'_blank'),
-                native:()=>navigator.share?navigator.share({title:'UniLink GH Referral',text:msg}):navigator.clipboard?.writeText(msg),
-                copy:()=>{navigator.clipboard?.writeText(msg).then(()=>{const btn=document.querySelector('.share-copy-btn');if(btn){btn.textContent='✓ Copied!';setTimeout(()=>{btn.innerHTML='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Copy referral message';},2200);}toast('✓ Copied to clipboard!','success');});return;}
-            };
-            if(actions[p])actions[p]();
-            if(p!=='copy')setTimeout(()=>closeShare(true),350);
-        }
-        function copyRefCode(){if(!_refCode)return;navigator.clipboard?.writeText(_refCode).then(()=>toast('✓ Code copied!','success'));}
-
-        /* ── COMPARE ── */
-        function buildCmp(){
-            const fmt=v=>v!==null?`GH₵ ${v.toFixed(2)}`:'<span class="no-b">—</span>';
-            const el=document.getElementById('cmpTbl');if(!el)return;
-            el.innerHTML=CMP.map(r=>{
-                const vals=[r.m,r.a,r.t].filter(v=>v!==null);
-                const best=Math.min(...vals);
-                const cell=v=>v===null?fmt(null):`<span class="${v===best?'best-price':''}">${fmt(v)}</span>`;
-                return `<tr class="cmp-row"><td>${r.gb}GB</td><td>${cell(r.m)}</td><td>${cell(r.a)}</td><td>${cell(r.t)}</td></tr>`;
-            }).join('');
-        }
-
-        /* ── CONTACT FORM ── */
-        function updateFormB(){
-            const net=document.getElementById('fnet').value,sel=document.getElementById('fb');
-            if(!net){sel.innerHTML='<option value="">Select a network first</option>';return;}
-            sel.innerHTML='<option value="">Choose bundle size</option>'+DS[net].map(b=>`<option value="${b.gb}|${b.p}|${net}">${b.gb}GB — GH₵ ${b.p.toFixed(2)}</option>`).join('');
-        }
-        function submitOrder(){
-            const name=document.getElementById('fn').value.trim(),phone=document.getElementById('fp').value.trim(),bv=document.getElementById('fb').value;
-            if(!name||!phone||!bv){toast('⚠ Please fill all fields.','error');return;}
-            const[gb,price,net]=bv.split('|');
-            const mn=document.getElementById('m-name'),mp=document.getElementById('m-phone');
-            if(mn)mn.value=name;if(mp)mp.value=phone;
-            openModal(parseInt(gb),parseFloat(price),net);
-        }
-
-        /* ── AMBASSADOR ── */
-        function openAmbassadorForm(){document.getElementById('ambModal').classList.add('open');['amb-name','amb-school','amb-level','amb-reason','amb-ways','amb-other'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});}
-        function closeAmbModal(){document.getElementById('ambModal').classList.remove('open');}
-        function submitAmbassador(){
-            const name=document.getElementById('amb-name').value.trim();
-            const school=document.getElementById('amb-school').value.trim();
-            const level=document.getElementById('amb-level').value.trim();
-            const reason=document.getElementById('amb-reason').value.trim();
-            const ways=document.getElementById('amb-ways').value.trim();
-            const other=document.getElementById('amb-other').value.trim();
-            if(!name||!school||!level||!reason||!ways){toast('⚠ Please fill all required fields.','error');return;}
-            _ping(`🎓 Ambassador Application\n\n👤 ${name}\n🏫 ${school}\n📚 ${level}\n💡 ${reason}\n📣 ${ways}\n📌 ${other||'—'}`);
-            closeAmbModal();
-            showStatus('success','Application Received!','We have received your application and will be in touch soon. Thank you for joining the UniLink GH team!',null);
-        }
-
-        /* ── PAYMENT MODAL ── */
-        function openModal(gb,price,net){
-            const fee=calculateFee(price),total=price+fee;
-            _order={gb,price,net,fee,total};
-            document.getElementById('m-gb').innerHTML=`${gb}<span style="font-size:0.95rem;font-weight:600;color:var(--muted)">GB</span>`;
-            document.getElementById('m-net').textContent=`${NL[net]} · Valid Forever`;
-            document.getElementById('m-price').textContent=`GH₵ ${price.toFixed(2)}`;
-            document.getElementById('feeAmount').textContent=`GH₵ ${fee.toFixed(2)}`;
-            document.getElementById('totalAmount').textContent=`GH₵ ${total.toFixed(2)}`;
-            document.getElementById('payModal').classList.add('open');
-        }
-        function closeModal(){
-            document.getElementById('payModal').classList.remove('open');
-            const btn=document.getElementById('payBtn');
-            if(btn){btn.disabled=false;btn.innerHTML='<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg> Pay with Paystack';}
-        }
-        document.addEventListener('click',e=>{
-            const pm=document.getElementById('payModal');
-            if(pm&&pm.classList.contains('open')&&e.target===pm)closeModal();
-            const am=document.getElementById('ambModal');
-            if(am&&am.classList.contains('open')&&e.target===am)closeAmbModal();
+        filtered.forEach((b, i) => {
+            const perGb = (b.p / b.gb).toFixed(1);
+            const el = document.createElement('div');
+            el.className = `bc ${b.pop ? 'pop' : ''} ${currentNet.toLowerCase()}-card`;
+            el.innerHTML = `
+                ${b.pop ? '<div class="pop-badge">POPULAR</div>' : ''}
+                <div class="bc-net">📶 ${NL[currentNet]}</div>
+                <div class="bc-gb">${b.gb}<span>GB</span></div>
+                <div class="bc-valid"><div class="bc-valid-dot"></div> Valid Forever</div>
+                <div class="bc-price">GH₵ ${b.p.toFixed(2)} <small>/ bundle</small></div>
+                <div class="bc-pergb">GH₵ ${perGb} per GB • Great deal</div>
+                <button class="bc-btn" onclick="openModal(${b.gb},${b.p},'${currentNet}')">Order &amp; Pay →</button>
+            `;
+            grid.appendChild(el);
+            setTimeout(() => el.classList.add('anim-in'), i * 35);
         });
+    }
 
-        /* ── PAYSTACK ── */
-        function initPaystack(){
-            const name=document.getElementById('m-name').value.trim();
-            const email=document.getElementById('m-email').value.trim();
-            const phone=document.getElementById('m-phone').value.trim();
-            if(!name||!email||!phone){toast('⚠ Please fill all fields.','error');return;}
-            if(!/\S+@\S+\.\S+/.test(email)){toast('⚠ Please enter a valid email.','error');return;}
-            const btn=document.getElementById('payBtn');
-            if(btn){btn.disabled=true;btn.textContent='Processing…';}
-            const ref=generateRefId();
-            const handler=PaystackPop.setup({
-                key:PS_KEY,email,amount:Math.round(_order.total*100),currency:'GHS',ref,
-                metadata:{name,phone,network:_order.net,bundle_gb:_order.gb,fee:_order.fee},
-                onClose:()=>{closeModal();showStatus('failure','Payment Cancelled','Your payment was not completed. No charge was made. You can try again anytime.',null);},
-                callback:(res)=>onPaymentSuccess(res,{name,email,phone})
-            });
-            handler.openIframe();
-        }
-        async function onPaymentSuccess(paystackRes,customer){
-            closeModal();
-            const refId=paystackRes.reference;
-            const now=new Date();
-            const dateStr=now.toLocaleDateString('en-GH')+' '+now.toLocaleTimeString('en-GH');
-            const orderData={refId,name:customer.name,email:customer.email,phone:customer.phone,network:NL[_order.net],gb:_order.gb,price:_order.price,fee:_order.fee,total:_order.total,date:dateStr,week:getCurrentYearWeek(),paystackRef:paystackRes.reference,status:'paid'};
-            savePurchase(orderData);
-            if(typeof window._saveOrder==='function')await window._saveOrder(orderData);
-            _ping(`✅ NEW ORDER PAID\n\n🔑 ${refId}\n📦 ${_order.gb}GB ${NL[_order.net]}\n💵 GH₵ ${_order.total.toFixed(2)}\n👤 ${customer.name}\n📱 ${customer.phone}\n\n⚡ Deliver now!`);
-            showStatus('success','Payment Received! 🎉',`Your ${_order.gb}GB ${NL[_order.net]} bundle is being processed and will arrive within 30 minutes.`,refId);
-           
-        /* ── SCROLL REVEAL ── */
-        function reveal(){
-            const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target);}});},{threshold:0.06});
-            document.querySelectorAll('.sr:not(.vis)').forEach(el=>obs.observe(el));
-        }
-
-        /* ── INIT ── */
+    /* ── DATA CALCULATOR ── */
+    function adjCalc(key,delta){
+        const mins={social:0,video:0,browse:0,days:5};
+        const maxs={social:24,video:24,browse:24,days:90};
+        _calc[key]=Math.max(mins[key],Math.min(maxs[key],_calc[key]+delta));
+        document.getElementById('c-'+key).textContent=_calc[key];
         updateCalcResult();
-        document.addEventListener('DOMContentLoaded',()=>{
-            reveal();
-            showB('MTN'); // initial bundles render with filters
-            buildCmp();
-            initOffers();
-            loadPurchases();
-            initCountUps();
+    }
+    function updateCalcResult(){
+        const gbPerDay=(_calc.social*0.06+_calc.video*0.7+_calc.browse*0.03);
+        const total=Math.ceil(gbPerDay*_calc.days);
+        document.getElementById('c-result').textContent=total;
+    }
+    function findBundle(){
+        const gbPerDay=(_calc.social*0.06+_calc.video*0.7+_calc.browse*0.03);
+        const needed=Math.ceil(gbPerDay*_calc.days);
+        nav('bundles');
+        setTimeout(()=>{toast(`💡 You need ~${needed}GB. Showing ${needed}+ GB bundles!`);},800);
+    }
+
+    /* ── OFFERS ── */
+    function initOffers(){
+        let s=localStorage.getItem('ulg_ref');
+        if(!s){s='ULK-'+Math.random().toString(36).substring(2,5).toUpperCase()+Math.random().toString(36).substring(2,5).toUpperCase();localStorage.setItem('ulg_ref',s);}
+        _refCode=s;
+        const el=document.getElementById('refCodeVal');if(el)el.textContent=_refCode;
+        const pc=document.getElementById('promoCode'),pp=document.getElementById('promoPhone'),pr=document.getElementById('promoResult');
+        if(pc)pc.value='';if(pp)pp.value='';if(pr){pr.className='promo-result';pr.textContent='';}
+        updateCodeDots('');
+    }
+    function updateCodeDots(v){document.querySelectorAll('#codeDots .code-dot').forEach((d,i)=>d.classList.toggle('filled',i<v.length));}
+    function checkPromoCode(){
+        const raw=document.getElementById('promoCode').value.trim().toUpperCase().replace(/[\s-]/g,'');
+        const phone=document.getElementById('promoPhone').value.trim();
+        const res=document.getElementById('promoResult');
+        if(raw.length!==10){res.className='promo-result lose';res.innerHTML='⚠ Code must be exactly 10 characters.';return;}
+        if(!phone){res.className='promo-result lose';res.innerHTML='⚠ Please enter your phone number.';return;}
+        const win=WINNER_CODES.includes(raw);
+        res.className='promo-result '+(win?'win':'lose');
+        if(win){
+            res.innerHTML='🎉 You won! 2GB free data is being processed for your number.';
+            _ping(`🎉 PROMO WIN\nCode: ${raw}\nPhone: ${phone}`);
+            toast('🎉 Congratulations! You won 2GB!','success');
+        } else {
+            res.innerHTML='❌ Code not found or already used. Check our WhatsApp Channel for new codes!';
+        }
+    }
+
+    /* ── SHARE SHEET ── */
+    function openShareSheet(){if(!_refCode)return;document.getElementById('shareCodeDisplay').textContent=_refCode;document.getElementById('shareOverlay').classList.add('open');_ping(`🔗 Referral share opened\nCode: ${_refCode}`);}
+    function closeShare(e){if(e===true||e.target===document.getElementById('shareOverlay')){document.getElementById('shareOverlay').classList.remove('open');}}
+    function doShare(p){
+        const msg=`Hey! 👋 I use UniLink GH for cheap data bundles — no expiry!\n\nUse my referral code when you order and we BOTH get 2GB free:\n\n🔑 Code: *${_refCode}*\n\nOrder here 👉 https://wa.me/233248745662`;
+        const enc=encodeURIComponent(msg);
+        const actions={
+            wa:()=>window.open(`https://wa.me/?text=${enc}`,'_blank'),
+            tg:()=>window.open(`https://t.me/share/url?url=${encodeURIComponent('https://wa.me/233248745662')}&text=${enc}`,'_blank'),
+            fb:()=>window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent('https://wa.me/233248745662')}`,'_blank'),
+            x:()=>window.open(`https://twitter.com/intent/tweet?text=${enc}`,'_blank'),
+            ig:()=>{navigator.clipboard?.writeText(msg);window.open('https://www.instagram.com/','_blank');},
+            sms:()=>window.open(`sms:?body=${enc}`,'_blank'),
+            native:()=>navigator.share?navigator.share({title:'UniLink GH Referral',text:msg}):navigator.clipboard?.writeText(msg),
+            copy:()=>{navigator.clipboard?.writeText(msg).then(()=>{const btn=document.querySelector('.share-copy-btn');if(btn){btn.textContent='✓ Copied!';setTimeout(()=>{btn.innerHTML='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Copy referral message';},2200);}toast('✓ Copied to clipboard!','success');});return;}
+        };
+        if(actions[p])actions[p]();
+        if(p!=='copy')setTimeout(()=>closeShare(true),350);
+    }
+    function copyRefCode(){if(!_refCode)return;navigator.clipboard?.writeText(_refCode).then(()=>toast('✓ Code copied!','success'));}
+
+    /* ── COMPARE ── */
+    function buildCmp(){
+        const fmt=v=>v!==null?`GH₵ ${v.toFixed(2)}`:'<span class="no-b">—</span>';
+        const el=document.getElementById('cmpTbl');if(!el)return;
+        el.innerHTML=CMP.map(r=>{
+            const vals=[r.m,r.a,r.t].filter(v=>v!==null);
+            const best=Math.min(...vals);
+            const cell=v=>v===null?fmt(null):`<span class="${v===best?'best-price':''}">${fmt(v)}</span>`;
+            return `<tr class="cmp-row"><td>${r.gb}GB</td><td>${cell(r.m)}</td><td>${cell(r.a)}</td><td>${cell(r.t)}</td></tr>`;
+        }).join('');
+    }
+
+    /* ── CONTACT FORM ── */
+    function updateFormB(){
+        const net=document.getElementById('fnet').value,sel=document.getElementById('fb');
+        if(!net){sel.innerHTML='<option value="">Select a network first</option>';return;}
+        sel.innerHTML='<option value="">Choose bundle size</option>'+DS[net].map(b=>`<option value="${b.gb}|${b.p}|${net}">${b.gb}GB — GH₵ ${b.p.toFixed(2)}</option>`).join('');
+    }
+    function submitOrder(){
+        const name=document.getElementById('fn').value.trim(),phone=document.getElementById('fp').value.trim(),bv=document.getElementById('fb').value;
+        if(!name||!phone||!bv){toast('⚠ Please fill all fields.','error');return;}
+        const[gb,price,net]=bv.split('|');
+        const mn=document.getElementById('m-name'),mp=document.getElementById('m-phone');
+        if(mn)mn.value=name;if(mp)mp.value=phone;
+        openModal(parseInt(gb),parseFloat(price),net);
+    }
+
+    /* ── AMBASSADOR ── */
+    function openAmbassadorForm(){document.getElementById('ambModal').classList.add('open');['amb-name','amb-school','amb-level','amb-reason','amb-ways','amb-other'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});}
+    function closeAmbModal(){document.getElementById('ambModal').classList.remove('open');}
+    function submitAmbassador(){
+        const name=document.getElementById('amb-name').value.trim();
+        const school=document.getElementById('amb-school').value.trim();
+        const level=document.getElementById('amb-level').value.trim();
+        const reason=document.getElementById('amb-reason').value.trim();
+        const ways=document.getElementById('amb-ways').value.trim();
+        const other=document.getElementById('amb-other').value.trim();
+        if(!name||!school||!level||!reason||!ways){toast('⚠ Please fill all required fields.','error');return;}
+        _ping(`🎓 Ambassador Application\n\n👤 ${name}\n🏫 ${school}\n📚 ${level}\n💡 ${reason}\n📣 ${ways}\n📌 ${other||'—'}`);
+        closeAmbModal();
+        showStatus('success','Application Received!','We have received your application and will be in touch soon. Thank you for joining the UniLink GH team!',null);
+    }
+
+    /* ── PAYMENT MODAL ── */
+    function openModal(gb,price,net){
+        const fee=calculateFee(price),total=price+fee;
+        _order={gb,price,net,fee,total};
+        document.getElementById('m-gb').innerHTML=`${gb}<span style="font-size:0.95rem;font-weight:600;color:var(--muted)">GB</span>`;
+        document.getElementById('m-net').textContent=`${NL[net]} · Valid Forever`;
+        document.getElementById('m-price').textContent=`GH₵ ${price.toFixed(2)}`;
+        document.getElementById('feeAmount').textContent=`GH₵ ${fee.toFixed(2)}`;
+        document.getElementById('totalAmount').textContent=`GH₵ ${total.toFixed(2)}`;
+        document.getElementById('payModal').classList.add('open');
+    }
+    function closeModal(){
+        document.getElementById('payModal').classList.remove('open');
+        const btn=document.getElementById('payBtn');
+        if(btn){btn.disabled=false;btn.innerHTML='<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg> Pay with Paystack';}
+    }
+    document.addEventListener('click',e=>{
+        const pm=document.getElementById('payModal');
+        if(pm&&pm.classList.contains('open')&&e.target===pm)closeModal();
+        const am=document.getElementById('ambModal');
+        if(am&&am.classList.contains('open')&&e.target===am)closeAmbModal();
+    });
+
+    /* ── PAYSTACK ── */
+    function initPaystack(){
+        const name=document.getElementById('m-name').value.trim();
+        const email=document.getElementById('m-email').value.trim();
+        const phone=document.getElementById('m-phone').value.trim();
+        if(!name||!email||!phone){toast('⚠ Please fill all fields.','error');return;}
+        if(!/\S+@\S+\.\S+/.test(email)){toast('⚠ Please enter a valid email.','error');return;}
+        const btn=document.getElementById('payBtn');
+        if(btn){btn.disabled=true;btn.textContent='Processing…';}
+        const ref=generateRefId();
+        const handler=PaystackPop.setup({
+            key:PS_KEY,email,amount:Math.round(_order.total*100),currency:'GHS',ref,
+            metadata:{name,phone,network:_order.net,bundle_gb:_order.gb,fee:_order.fee},
+            onClose:()=>{closeModal();showStatus('failure','Payment Cancelled','Your payment was not completed. No charge was made. You can try again anytime.',null);},
+            callback:(res)=>onPaymentSuccess(res,{name,email,phone})
         });
-    </script>
+        handler.openIframe();
+    }
+    async function onPaymentSuccess(paystackRes,customer){
+        closeModal();
+        const refId=paystackRes.reference;
+        const now=new Date();
+        const dateStr=now.toLocaleDateString('en-GH')+' '+now.toLocaleTimeString('en-GH');
+        const orderData={refId,name:customer.name,email:customer.email,phone:customer.phone,network:NL[_order.net],gb:_order.gb,price:_order.price,fee:_order.fee,total:_order.total,date:dateStr,week:getCurrentYearWeek(),paystackRef:paystackRes.reference,status:'paid'};
+        savePurchase(orderData);
+        if(typeof window._saveOrder==='function')await window._saveOrder(orderData);
+        _ping(`✅ NEW ORDER PAID\n\n🔑 ${refId}\n📦 ${_order.gb}GB ${NL[_order.net]}\n💵 GH₵ ${_order.total.toFixed(2)}\n👤 ${customer.name}\n📱 ${customer.phone}\n\n⚡ Deliver now!`);
+        showStatus('success','Payment Received! 🎉',`Your ${_order.gb}GB ${NL[_order.net]} bundle is being processed and will arrive within 30 minutes.`,refId);
+    } // ✅ missing brace added here
+
+    /* ── SCROLL REVEAL ── */
+    function reveal(){
+        const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target);}});},{threshold:0.06});
+        document.querySelectorAll('.sr:not(.vis)').forEach(el=>obs.observe(el));
+    }
+
+    /* ── INIT ── */
+    updateCalcResult();
+    document.addEventListener('DOMContentLoaded',()=>{
+        reveal();
+        showB('MTN');
+        buildCmp();
+        initOffers();
+        loadPurchases();
+        initCountUps();
+    });
+</script>
 <script type="text/javascript">
   (function(d, t) {
       var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
