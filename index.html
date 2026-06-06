@@ -1509,10 +1509,9 @@
         const name=document.getElementById('fn').value.trim(),phone=document.getElementById('fp').value.trim(),bv=document.getElementById('fb').value;
         if(!name||!phone||!bv){toast('⚠ Please fill all fields.','error');return;}
         const[gb,price,net]=bv.split('|');
-        const mn=document.getElementById('m-name'),mp=document.getElementById('m-phone'),me=document.getElementById('m-email');
+        const mn=document.getElementById('m-name'),mp=document.getElementById('m-phone');
         if(mn)mn.value=name;if(mp)mp.value=phone;
         openModal(parseInt(gb),parseFloat(price),net);
-        }
     }
 
     /* ── AMBASSADOR ── */
@@ -1619,8 +1618,7 @@
       v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs"; v.type = "text/javascript"; s.parentNode.insertBefore(v, s);
   })(document, 'script');
 </script> <!-- Before </body> -->
-<script src="https://js.paystack.co/v1/inline.js"></script>
-<script src="/frontend/order-integration.js"></script>
+
 
 <!-- Add this div where you want status messages to appear -->
 <div id="order-status"></div></body>
