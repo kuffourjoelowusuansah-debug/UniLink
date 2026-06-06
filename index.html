@@ -131,39 +131,12 @@
         .btn-ghost:hover{background:rgba(255,255,255,0.17);border-color:rgba(255,255,255,0.44);}
         .hero-sub{text-shadow:0 1px 12px rgba(0,0,0,0.7);}
         .hero-badge{text-shadow:none;}
+        .hero-bg{position:absolute;inset:0;background:linear-gradient(to right, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.35) 60%, rgba(0,0,0,0.10) 100%),url('man-business-businessman-american-african.jpg') center top/cover no-repeat;background-attachment:fixed;}
 
-        /* ── HERO CARDS ── */
-        .hero-cards{position:relative;height:400px;animation:heroFadeUp 0.9s var(--out) 0.4s both;}
-        .hcard{position:absolute;border-radius:var(--radius-md);box-shadow:var(--shadow-xl);transition:transform 0.45s var(--spring),box-shadow 0.45s;}
-        .hcard:hover{z-index:10;}
-        .hc-dark{background:linear-gradient(140deg,var(--navy2),var(--navy3));}
-        .hc-light{background:var(--white);}
-        .hcp{padding:1.3rem;}
-        .hcl{font-size:0.56rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:0.4rem;}
-        .hcl-w{color:rgba(255,255,255,0.4);}
-        .hcl-d{color:var(--muted);}
-        .hcv{font-family:'Bricolage Grotesque',sans-serif;font-size:2rem;font-weight:800;letter-spacing:-0.05em;}
-        .hcv-w{color:white;}
-        .hcv-d{color:var(--navy);}
-        .hcs{font-size:0.68rem;margin-top:0.1rem;}
-        .hcs-w{color:rgba(255,255,255,0.42);}
-        .hcs-d{color:var(--muted);}
-        .hcbar{height:3px;background:rgba(255,255,255,0.08);border-radius:10px;margin-top:0.75rem;overflow:hidden;}
-        .hcbar-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,var(--orange),var(--orange2));box-shadow:0 0 10px rgba(240,112,32,0.7);animation:barFill 1.5s var(--out) 1s both;}
-        @keyframes barFill{from{width:0%;}to{width:var(--w,72%);}}
-        .hcrow{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.45rem;}
-        .hcrow:last-child{margin:0;}
-        .hcnet{font-size:0.7rem;font-weight:600;color:var(--navy);}
-        .hcpill{display:inline-flex;align-items:center;gap:0.25rem;padding:0.15rem 0.55rem;border-radius:100px;font-size:0.62rem;font-weight:700;}
-        .pill-g{background:rgba(34,212,122,0.12);color:#0A7A3E;}
-        .pill-o{background:rgba(240,112,32,0.12);color:var(--orange);}
-        .hc1{width:190px;top:10px;left:0;animation:hcFloat1 6s ease-in-out infinite;}
-        .hc2{width:240px;top:65px;left:155px;z-index:2;animation:hcFloat2 7s ease-in-out infinite 0.5s;}
-        .hc3{width:196px;bottom:20px;left:20px;animation:hcFloat3 8s ease-in-out infinite 1s;}
-        .hc4{width:210px;bottom:60px;right:0;animation:hcFloat1 6.5s ease-in-out infinite 1.5s;}
-        @keyframes hcFloat1{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
-        @keyframes hcFloat2{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(-10px) scale(1.01);}}
-        @keyframes hcFloat3{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+        .hero h1{color:#FFFFFF;text-shadow:0 2px 24px rgba(0,0,0,0.5);}
+        .hero-sub{color:rgba(255,255,255,0.90);text-shadow:0 1px 14px rgba(0,0,0,0.55);}
+        .hero-badge{background:rgba(0,0,0,0.35);border-color:rgba(255,255,255,0.25);}
+
 
         /* ── TICKER ── */
         .ticker-wrap{background:var(--navy2);overflow:hidden;padding:0.65rem 0;border-bottom:1px solid rgba(255,255,255,0.05);}
@@ -823,15 +796,7 @@
                         <button class="btn-ghost" onclick="nav('how')">How it works →</button>
                     </div>
                 </div>
-                <div class="hero-cards">
-                    <div class="hcard hc-dark hc1">
-                        <div class="hcp">
-                            <div class="hcl hcl-w">POPULAR BUNDLE</div>
-                            <div class="hcv hcv-w">10<span style="font-size:0.9rem;font-weight:500;color:rgba(255,255,255,0.35)">GB</span></div>
-                            <div class="hcs hcs-w">MTN · Valid Forever</div>
-                            <div class="hcbar"><div class="hcbar-fill" style="--w:72%"></div></div>
-                        </div>
-                    </div>
+                
                     <div class="hcard hc-light hc2">
                         <div class="hcp">
                             <div class="hcl hcl-d">NETWORKS</div>
