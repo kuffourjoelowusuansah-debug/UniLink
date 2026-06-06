@@ -1600,26 +1600,221 @@
         initCountUps();
     });
 </script>
-<script type="text/javascript">
-  (function(d, t) {
-      var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
-      v.onload = function() {
-        window.voiceflow.chat.load({
-  verify: { projectID: '69d1432841d3218c8b72501d' },
-  url: 'https://general-runtime.voiceflow.com',
-  versionID: 'production',
-  /* ADD THIS LINE BELOW TO MOVE IT TO THE LEFT */
-  render: { mode: 'popover', side: 'left' }, 
-  voice: {
-    url: "https://runtime-api.voiceflow.com"
+<script>
+(function(){
+  /* ── UNIBOT STYLES ── */
+  const s=document.createElement('style');
+  s.textContent=`
+    #ub-btn{position:fixed;bottom:1.75rem;left:1.75rem;z-index:400;width:56px;height:56px;border-radius:50%;background:#F07020;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 0 28px rgba(240,112,32,0.5),0 0 56px rgba(240,112,32,0.2);transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);padding:0;}
+    #ub-btn:hover{transform:scale(1.12) translateY(-3px);box-shadow:0 0 40px rgba(240,112,32,0.7);}
+    #ub-btn img{width:38px;height:38px;border-radius:50%;object-fit:cover;}
+    #ub-pulse{position:absolute;inset:0;border-radius:50%;background:#F07020;animation:ubPulse 2s ease-out infinite;z-index:-1;}
+    @keyframes ubPulse{0%{transform:scale(1);opacity:0.7;}100%{transform:scale(1.75);opacity:0;}}
+    #ub-frame{position:fixed;bottom:5.5rem;left:1.75rem;z-index:400;width:360px;height:540px;background:#F0F2FF;border-radius:20px;box-shadow:0 14px 50px rgba(20,22,48,0.2);display:none;flex-direction:column;overflow:hidden;border:1px solid rgba(20,22,48,0.1);font-family:'DM Sans',sans-serif;}
+    #ub-head{background:#141630;padding:13px 15px;display:flex;align-items:center;gap:11px;flex-shrink:0;}
+    #ub-head img{width:38px;height:38px;border-radius:50%;object-fit:cover;flex-shrink:0;}
+    #ub-hinfo{flex:1;}
+    #ub-hname{font-size:14px;font-weight:700;color:white;font-family:'Bricolage Grotesque',sans-serif;}
+    #ub-hstatus{font-size:11px;color:rgba(255,255,255,0.5);display:flex;align-items:center;gap:5px;margin-top:2px;}
+    #ub-dot{width:7px;height:7px;border-radius:50%;background:#22D47A;flex-shrink:0;}
+    #ub-close{background:none;border:none;color:rgba(255,255,255,0.45);font-size:18px;cursor:pointer;line-height:1;padding:4px;border-radius:6px;transition:color 0.2s;}
+    #ub-close:hover{color:white;}
+    #ub-msgs{flex:1;overflow-y:auto;padding:13px 11px;display:flex;flex-direction:column;gap:6px;scroll-behavior:smooth;}
+    #ub-msgs::-webkit-scrollbar{width:3px;}
+    #ub-msgs::-webkit-scrollbar-thumb{background:rgba(0,0,0,0.12);border-radius:3px;}
+    .ub-row{display:flex;flex-direction:column;}
+    .ub-row.out{align-items:flex-end;}
+    .ub-row.in{align-items:flex-start;}
+    .ub-bubble{max-width:82%;padding:9px 13px;border-radius:16px;font-size:13.5px;line-height:1.52;word-break:break-word;}
+    .ub-bubble.in{background:#fff;color:#111;border-bottom-left-radius:4px;box-shadow:0 1px 3px rgba(0,0,0,0.08);}
+    .ub-bubble.out{background:#F07020;color:white;border-bottom-right-radius:4px;}
+    .ub-time{font-size:10.5px;color:rgba(0,0,0,0.32);margin-top:3px;padding:0 3px;}
+    .ub-row.out .ub-time{text-align:right;}
+    .ub-typing{background:white;border-radius:16px;border-bottom-left-radius:4px;padding:11px 15px;display:flex;gap:5px;align-items:center;box-shadow:0 1px 3px rgba(0,0,0,0.08);width:fit-content;}
+    .ub-tdot{width:7px;height:7px;border-radius:50%;background:#bbb;animation:ubBounce 1.2s ease-in-out infinite;}
+    .ub-tdot:nth-child(2){animation-delay:0.2s;}
+    .ub-tdot:nth-child(3){animation-delay:0.4s;}
+    @keyframes ubBounce{0%,60%,100%{transform:translateY(0);}30%{transform:translateY(-5px);}}
+    .ub-qr{display:flex;flex-wrap:wrap;gap:6px;padding:5px 11px 3px;}
+    .ub-qbtn{background:white;border:1.5px solid rgba(240,112,32,0.35);color:#F07020;border-radius:100px;padding:6px 13px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.18s;white-space:nowrap;}
+    .ub-qbtn:hover{background:#F07020;color:white;}
+    .ub-date{text-align:center;font-size:10.5px;color:rgba(0,0,0,0.3);background:rgba(0,0,0,0.055);border-radius:100px;padding:3px 11px;align-self:center;margin:3px 0;}
+    #ub-input-area{background:white;padding:9px 11px;display:flex;align-items:center;gap:9px;border-top:1px solid rgba(0,0,0,0.07);flex-shrink:0;}
+    #ub-input{flex:1;border:1.5px solid rgba(0,0,0,0.1);border-radius:100px;padding:8px 15px;font-size:13.5px;font-family:'DM Sans',sans-serif;outline:none;background:#f5f5f5;color:#111;transition:border-color 0.2s;}
+    #ub-input:focus{border-color:#F07020;background:white;}
+    #ub-input::placeholder{color:#aaa;}
+    #ub-send{width:40px;height:40px;border-radius:50%;background:#F07020;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform 0.15s;box-shadow:0 0 14px rgba(240,112,32,0.4);}
+    #ub-send:hover{transform:scale(1.08);}
+    #ub-send:active{transform:scale(0.95);}
+    @media(max-width:480px){#ub-frame{left:0;right:0;bottom:0;width:100%;height:100vh;border-radius:0;}}
+  `;
+  document.head.appendChild(s);
+
+  /* ── BUTTON ── */
+  const btn=document.createElement('button');
+  btn.id='ub-btn';
+  btn.setAttribute('aria-label','Open UniBot support chat');
+  btn.innerHTML=`<div id="ub-pulse"></div><img src="favricon.png.png" alt="UniBot">`;
+  document.body.appendChild(btn);
+
+  /* ── CHAT FRAME ── */
+  const frame=document.createElement('div');
+  frame.id='ub-frame';
+  frame.innerHTML=`
+    <div id="ub-head">
+      <img src="favricon.png.png" alt="UniBot">
+      <div id="ub-hinfo">
+        <div id="ub-hname">UniBot</div>
+        <div id="ub-hstatus"><div id="ub-dot"></div><span id="ub-status-txt">Online — AI powered</span></div>
+      </div>
+      <button id="ub-close" aria-label="Close chat">✕</button>
+    </div>
+    <div id="ub-msgs"></div>
+    <div class="ub-qr" id="ub-qr">
+      <button class="ub-qbtn" onclick="ubQuick('How do I order a bundle?')">Order a bundle</button>
+      <button class="ub-qbtn" onclick="ubQuick('My bundle has not arrived')">Bundle not arrived</button>
+      <button class="ub-qbtn" onclick="ubQuick('What networks do you support?')">Networks</button>
+      <button class="ub-qbtn" onclick="ubQuick('How does the referral work?')">Referral</button>
+    </div>
+    <div id="ub-input-area">
+      <input id="ub-input" type="text" placeholder="Ask UniBot anything…" autocomplete="off"/>
+      <button id="ub-send" aria-label="Send">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+  `;
+  document.body.appendChild(frame);
+
+  /* ── TOGGLE ── */
+  let open=false;
+  btn.onclick=()=>{
+    open=!open;
+    frame.style.display=open?'flex':'none';
+    if(open&&!ubGreeted){ubGreet();ubGreeted=true;}
+  };
+  document.getElementById('ub-close').onclick=()=>{open=false;frame.style.display='none';};
+
+  /* ── SYSTEM PROMPT ── */
+  const SYSTEM=`You are UniBot — the friendly AI support assistant for UniLink GH, Ghana's #1 student data bundle service.
+
+ABOUT UNILINK GH:
+- Sells MTN, AirtelTigo (AT), and Telecel data bundles with NO expiry (valid forever)
+- MTN bundles: 1GB=GH₵5, 2GB=GH₵10, 3GB=GH₵15, 4GB=GH₵20, 5GB=GH₵25, 6GB=GH₵30, 8GB=GH₵40, 10GB=GH₵50 (popular), 12GB=GH₵55, 15GB=GH₵65, 20GB=GH₵85, 25GB=GH₵105, 30GB=GH₵130, 40GB=GH₵165, 50GB=GH₵205
+- AirtelTigo bundles: 1GB=GH₵4.50, 2GB=GH₵9, 3GB=GH₵14, 4GB=GH₵18, 5GB=GH₵20.50, 6GB=GH₵25, 8GB=GH₵32, 10GB=GH₵40 (popular), 12GB=GH₵50, 15GB=GH₵60, 25GB=GH₵100, 30GB=GH₵125, 40GB=GH₵160, 50GB=GH₵205
+- Telecel bundles: 10GB=GH₵40, 15GB=GH₵60 (popular), 20GB=GH₵80, 25GB=GH₵100, 30GB=GH₵120, 35GB=GH₵140, 40GB=GH₵160, 50GB=GH₵200, 100GB=GH₵400
+- Payment: Paystack (card or MoMo) — secure checkout on the website
+- Delivery: bundle sent directly to customer's phone number after payment
+- Small platform fee added at checkout (GH₵0.30 for orders under GH₵30, GH₵0.90 for GH₵30–GH₵100, GH₵1.50 above GH₵100)
+- Support: WhatsApp +233248745662 or email ghanaunilink@gmail.com — available 24/7
+- Referral program: share your code, both you and friend earn 2GB bonus data
+- Promo codes: released on WhatsApp Channel (https://whatsapp.com/channel/0029Vb7Pfxj7IUYZ5RLIy712) during events — winning code gives 2GB free
+- Campus ambassadors: students can apply to earn commissions selling to coursemates
+- Coverage: KNUST, UG, Ashesi and campuses across Ghana
+
+RULES:
+- Keep replies SHORT and friendly — 2-4 sentences max
+- Be warm like a helpful Ghanaian student peer
+- Never make up information not listed above
+- If someone has a delivery problem, tell them to contact WhatsApp: +233248745662
+- If asked to order, tell them to tap "View Bundles" or "Order Now" on the site
+- Use plain English, no markdown formatting
+- You are UniBot, not Claude or any other AI`;
+
+  const history=[];
+  let ubGreeted=false;
+
+  /* ── HELPERS ── */
+  function ubTime(){return new Date().toLocaleTimeString('en-GH',{hour:'2-digit',minute:'2-digit'});}
+
+  function ubAddMsg(text,role){
+    const msgs=document.getElementById('ub-msgs');
+    const row=document.createElement('div');
+    row.className=`ub-row ${role==='user'?'out':'in'}`;
+    const bubble=document.createElement('div');
+    bubble.className=`ub-bubble ${role==='user'?'out':'in'}`;
+    bubble.textContent=text;
+    const time=document.createElement('div');
+    time.className='ub-time';
+    time.textContent=ubTime();
+    row.appendChild(bubble);
+    row.appendChild(time);
+    msgs.appendChild(row);
+    msgs.scrollTop=msgs.scrollHeight;
   }
-});
-      }
-      v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs"; v.type = "text/javascript"; s.parentNode.insertBefore(v, s);
-  })(document, 'script');
-</script> <!-- Before </body> -->
 
+  function ubShowTyping(){
+    const msgs=document.getElementById('ub-msgs');
+    const row=document.createElement('div');
+    row.className='ub-row in';
+    row.id='ub-typing';
+    const b=document.createElement('div');
+    b.className='ub-typing';
+    b.innerHTML='<div class="ub-tdot"></div><div class="ub-tdot"></div><div class="ub-tdot"></div>';
+    row.appendChild(b);
+    msgs.appendChild(row);
+    msgs.scrollTop=msgs.scrollHeight;
+  }
 
+  function ubRemoveTyping(){const t=document.getElementById('ub-typing');if(t)t.remove();}
+
+  function ubSetStatus(typing){
+    document.getElementById('ub-dot').style.background=typing?'#aaa':'#22D47A';
+    document.getElementById('ub-status-txt').textContent=typing?'Typing…':'Online — AI powered';
+  }
+
+  function ubGreet(){
+    const msgs=document.getElementById('ub-msgs');
+    const d=document.createElement('div');
+    d.className='ub-date';d.textContent='Today';
+    msgs.appendChild(d);
+    setTimeout(()=>ubAddMsg('👋 Hi! I\'m UniBot, your UniLink GH assistant. I can help with bundles, pricing, delivery and referrals. What do you need?','assistant'),300);
+  }
+
+  async function ubSend(){
+    const input=document.getElementById('ub-input');
+    const text=input.value.trim();
+    if(!text)return;
+    input.value='';
+    document.getElementById('ub-qr').style.display='none';
+    ubAddMsg(text,'user');
+    history.push({role:'user',content:text});
+    ubSetStatus(true);
+    ubShowTyping();
+
+    try{
+      const res=await fetch('https://api.anthropic.com/v1/messages',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+          model:'claude-sonnet-4-20250514',
+          max_tokens:1000,
+          system:SYSTEM,
+          messages:history
+        })
+      });
+      const data=await res.json();
+      const reply=data.content?.[0]?.text||'Sorry, I\'m having trouble right now. Please reach us on WhatsApp: +233248745662';
+      history.push({role:'assistant',content:reply});
+      ubRemoveTyping();
+      ubSetStatus(false);
+      ubAddMsg(reply,'assistant');
+    }catch(e){
+      ubRemoveTyping();
+      ubSetStatus(false);
+      ubAddMsg('I\'m having connection issues. Please contact us on WhatsApp: +233248745662','assistant');
+    }
+  }
+
+  window.ubQuick=function(text){
+    document.getElementById('ub-input').value=text;
+    ubSend();
+  };
+
+  document.getElementById('ub-send').onclick=ubSend;
+  document.getElementById('ub-input').addEventListener('keydown',e=>{if(e.key==='Enter')ubSend();});
+
+})();
+</script>
 <!-- Add this div where you want status messages to appear -->
 <div id="order-status"></div></body>
 </html>
