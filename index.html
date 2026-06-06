@@ -828,7 +828,7 @@
                     <svg class="t-icon" viewBox="0 0 24 24" fill="none" stroke="#0A7A3E" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Secured by Paystack
                 </div>
                 <div class="trust-item">
-                    <svg class="t-icon" viewBox="0 0 24 24" fill="none" stroke="#0A7A3E" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>30+ min delivery
+                    <svg class="t-icon" viewBox="0 0 24 24" fill="none" stroke="#0A7A3E" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Fast delivery
                 </div>
                 <div class="trust-item">
                     <svg class="t-icon" viewBox="0 0 24 24" fill="none" stroke="#0A7A3E" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Valid forever
@@ -973,7 +973,7 @@
         <div class="sec-wrap sec-pad">
             <div class="sec-eye sr"><div class="sec-eye-line"></div>Shop bundles</div>
             <h2 class="sec-title sr sr-d1">Pick your network &amp; size</h2>
-            <p class="sec-sub sr sr-d2">All bundles valid forever — no expiry. Delivered within 30+ minutes via WhatsApp after MoMo payment. <strong>New:</strong> Search, sort &amp; filter for the perfect bundle.</p>
+            <p class="sec-sub sr sr-d2">All bundles valid forever — no expiry. Pay securely and your bundle is delivered straight to your number. <strong>New:</strong> Search, sort &amp; filter for the perfect bundle. <strong>New:</strong> Search, sort &amp; filter for the perfect bundle.</p>
 
             <div class="net-tabs-wrap sr sr-d2">
                 <div class="net-tabs" id="netTabs">
@@ -1033,16 +1033,17 @@
                     <div class="hw-icon-box" style="background:rgba(240,112,32,0.1)">
                         <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="#F07020" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
                     </div>
-                    <h3>Pay with MoMo</h3>
-                    <p>We confirm your order and send a MoMo payment prompt. Fast, safe, and familiar — the Ghanaian way.</p>
+                    
+                     <h3>Pay securely</h3>
+                     <p>Complete your payment via Paystack. Fast, safe, and secured — your bundle is queued instantly.</p>
                 </div>
                 <div class="hw-card hw-light">
                     <div class="hw-step-num">03</div>
                     <div class="hw-icon-box" style="background:rgba(240,112,32,0.1)">
                         <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="#F07020" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
                     </div>
-                    <h3>Receive within 30+ min</h3>
-                    <p>Your data bundle arrives on your number within 30+ minutes. Back to streaming, studying, or scrolling.</p>
+                    <h3>Bundle delivered to your number</h3>
+                    <p>Your data bundle is sent directly to your number after payment. Back to streaming, studying, or scrolling.</p>
                 </div>
             </div>
 
@@ -1158,7 +1159,7 @@
                 </div>
                 <div class="form-card">
                     <div class="form-title">Quick Order Form</div>
-                    <div class="form-sub">Select your bundle and we'll open WhatsApp with your order pre-filled.</div>
+                   <div class="form-sub">Select your bundle and complete your payment securely via Paystack.</div>
                     <div class="f-row"><label class="f-lbl">Your name</label><input class="f-inp" id="fn" type="text" placeholder="e.g. Abena Mensah"></div>
                     <div class="f-g2">
                         <div class="f-row" style="margin:0"><label class="f-lbl">Phone number</label><input class="f-inp" id="fp" type="tel" placeholder="0XX XXX XXXX"></div>
@@ -1176,7 +1177,8 @@
                     </div>
                     <button class="f-submit" onclick="submitOrder()">
                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-                        Send Order via WhatsApp
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                        Proceed to Checkout
                     </button>
                 </div>
             </div>
@@ -1507,9 +1509,10 @@
         const name=document.getElementById('fn').value.trim(),phone=document.getElementById('fp').value.trim(),bv=document.getElementById('fb').value;
         if(!name||!phone||!bv){toast('⚠ Please fill all fields.','error');return;}
         const[gb,price,net]=bv.split('|');
-        const mn=document.getElementById('m-name'),mp=document.getElementById('m-phone');
+        const mn=document.getElementById('m-name'),mp=document.getElementById('m-phone'),me=document.getElementById('m-email');
         if(mn)mn.value=name;if(mp)mp.value=phone;
         openModal(parseInt(gb),parseFloat(price),net);
+        }
     }
 
     /* ── AMBASSADOR ── */
