@@ -219,8 +219,8 @@
         .net-tab.active{background:linear-gradient(140deg,var(--navy),var(--navy2));border-color:transparent;color:white;box-shadow:var(--shadow-lg);}
         .net-tab-logo{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:var(--shadow);}
         .mtn-tab .net-tab-logo{background:#FFCC00;}
-        .at-tab .net-tab-logo{background:#E60000;}
-        .tel-tab .net-tab-logo{background:#00AEEF;}
+        ..at-tab .net-tab-logo{background:#ffffff;border:1px solid #eee;}
+        .tel-tab .net-tab-logo{background:#CC0000;}
         .net-tab-name{font-size:0.9rem;font-weight:700;line-height:1.2;}
         .net-tab:not(.active) .net-tab-name{color:var(--navy);}
         .net-tab.active .net-tab-name{color:white;}
@@ -613,12 +613,7 @@
     <!-- NAV -->
     <nav class="nav" id="mainNav">
         <a href="#" class="logo" onclick="nav('home');return false;">
-            <svg class="logo-icon" width="34" height="34" viewBox="0 0 100 105" fill="none">
-                <path d="M12 8 L12 58 Q12 92 50 92 Q88 92 88 58 L88 8" stroke="#141630" stroke-width="17" fill="none" stroke-linecap="round"/>
-                <rect x="44" y="48" width="9" height="22" rx="2.5" fill="#00C8FF"/>
-                <rect x="57" y="35" width="9" height="35" rx="2.5" fill="#00C8FF"/>
-                <rect x="70" y="20" width="9" height="50" rx="2.5" fill="#00C8FF"/>
-            </svg>
+            <img src="favricon.png.png" width="34" height="34" style="border-radius:8px;object-fit:cover;">
             Uni<span>Link</span> GH
         </a>
         <div class="nav-right">
@@ -985,19 +980,19 @@
 
             <div class="net-tabs-wrap sr sr-d2">
                 <div class="net-tabs" id="netTabs">
-                    <button class="net-tab mtn-tab active" data-net="MTN" onclick="showB('MTN')">
-                        <div class="net-tab-logo"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="6" fill="#FFCC00"/><text x="12" y="17" text-anchor="middle" font-family="Arial" font-weight="900" font-size="12" fill="#3D2E00">MTN</text></svg></div>
-                        <div><div class="net-tab-name">MTN</div><div class="net-tab-sub">15 bundles · from GH₵5</div></div>
-                    </button>
-                    <button class="net-tab at-tab" data-net="AT" onclick="showB('AT')">
-                        <div class="net-tab-logo"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="6" fill="#E60000"/><text x="12" y="17" text-anchor="middle" font-family="Arial" font-weight="900" font-size="10" fill="white">AT</text></svg></div>
-                        <div><div class="net-tab-name">AirtelTigo</div><div class="net-tab-sub">14 bundles · from GH₵4.50</div></div>
-                    </button>
-                    <button class="net-tab tel-tab" data-net="Telecel" onclick="showB('Telecel')">
-                        <div class="net-tab-logo"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="6" fill="#00AEEF"/><text x="12" y="17" text-anchor="middle" font-family="Arial" font-weight="900" font-size="9" fill="white">TEL</text></svg></div>
-                        <div><div class="net-tab-name">Telecel</div><div class="net-tab-sub">9 bundles · from GH₵40</div></div>
-                    </button>
-                </div>
+    <button class="net-tab mtn-tab active" data-net="MTN" onclick="showB('MTN')">
+        <div class="net-tab-logo"><img src="mtn.jpg" width="44" height="44" style="border-radius:12px;object-fit:cover;display:block;"></div>
+        <div><div class="net-tab-name">MTN</div><div class="net-tab-sub">15 bundles · from GH₵5</div></div>
+    </button>
+    <button class="net-tab at-tab" data-net="AT" onclick="showB('AT')">
+        <div class="net-tab-logo"><img src="at1.png" width="44" height="44" style="border-radius:12px;object-fit:contain;background:white;display:block;"></div>
+        <div><div class="net-tab-name" style="color:inherit">AirtelTigo</div><div class="net-tab-sub">14 bundles · from GH₵4.50</div></div>
+    </button>
+    <button class="net-tab tel-tab" data-net="Telecel" onclick="showB('Telecel')">
+        <div class="net-tab-logo"><img src="telecel1.jpg" width="44" height="44" style="border-radius:12px;object-fit:cover;display:block;"></div>
+        <div><div class="net-tab-name" style="color:inherit">Telecel</div><div class="net-tab-sub">9 bundles · from GH₵40</div></div>
+    </button>
+</div>
             </div>
 
             <!-- NEW: BUNDLE FILTERS -->
@@ -1294,12 +1289,7 @@
     <!-- FOOTER -->
     <footer class="footer">
         <a href="#" class="logo" onclick="nav('home');return false;">
-            <svg class="logo-icon" width="28" height="28" viewBox="0 0 100 105" fill="none">
-                <path d="M12 8 L12 58 Q12 92 50 92 Q88 92 88 58 L88 8" stroke="white" stroke-width="17" fill="none" stroke-linecap="round"/>
-                <rect x="44" y="48" width="9" height="22" rx="2.5" fill="#00C8FF"/>
-                <rect x="57" y="35" width="9" height="35" rx="2.5" fill="#00C8FF"/>
-                <rect x="70" y="20" width="9" height="50" rx="2.5" fill="#00C8FF"/>
-            </svg>
+            <img src="favricon.png.png" width="34" height="34" style="border-radius:8px;object-fit:cover;">
             Uni<span style="color:var(--orange)">Link</span> GH
         </a>
         <div class="ft-links">
