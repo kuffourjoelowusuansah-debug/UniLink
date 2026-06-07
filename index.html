@@ -1141,7 +1141,7 @@
                 <div class="net-tabs" id="netTabs">
     <button class="net-tab mtn-tab active" data-net="MTN" onclick="showB('MTN')">
         <div class="net-tab-logo"><img src="mtn.jpg" width="44" height="44" style="border-radius:12px;object-fit:cover;display:block;"></div>
-        <div><div class="net-tab-name">MTN</div><div class="net-tab-sub">15 bundles · from GH₵5</div></div>
+        <div><div class="net-tab-name">MTN</div><div class="net-tab-sub">14 bundles · from GH₵4.70</div></div>
     </button>
     <button class="net-tab at-tab" data-net="AT" onclick="showB('AT')">
         <div class="net-tab-logo"><img src="at1.png" width="44" height="44" style="border-radius:12px;object-fit:contain;background:white;display:block;"></div>
@@ -1562,7 +1562,7 @@
 <script>
     /* ══ DATA ══ */
     const DS={
-        MTN:[{gb:1,p:5},{gb:2,p:10},{gb:3,p:15},{gb:4,p:20},{gb:5,p:25},{gb:6,p:30},{gb:8,p:40},{gb:10,p:50,pop:1},{gb:12,p:55},{gb:15,p:65},{gb:20,p:85},{gb:25,p:105},{gb:30,p:130},{gb:40,p:165},{gb:50,p:205}],
+       MTN:[{gb:1,p:4.70},{gb:2,p:9.50},{gb:3,p:13.90},{gb:4,p:19.00},{gb:5,p:24.00},{gb:6,p:27.00},{gb:8,p:35.50},{gb:10,p:44.00,pop:1},{gb:15,p:64.00},{gb:20,p:85.00},{gb:25,p:106.00},{gb:30,p:129.00},{gb:40,p:169.00},{gb:50,p:214.00}],
         AT:[{gb:1,p:4.5},{gb:2,p:9},{gb:3,p:14},{gb:4,p:18},{gb:5,p:20.5},{gb:6,p:25},{gb:8,p:32},{gb:10,p:40,pop:1},{gb:12,p:50},{gb:15,p:60},{gb:25,p:100},{gb:30,p:125},{gb:40,p:160},{gb:50,p:205}],
         Telecel:[{gb:10,p:40},{gb:15,p:60,pop:1},{gb:20,p:80},{gb:25,p:100},{gb:30,p:120},{gb:35,p:140},{gb:40,p:160},{gb:50,p:200},{gb:100,p:400}]
     };
@@ -1609,7 +1609,10 @@
     function showStatus(type,title,msg,ref){const s=document.getElementById('statusScreen');document.getElementById('statusPath').setAttribute('d',type==='success'?'M16 10l-5 5-3-3':'M8 8l8 8M16 8l-8 8');s.className=`status-screen ${type==='success'?'success':'failure'} show`;document.getElementById('statusTitle').textContent=title;document.getElementById('statusMsg').textContent=msg;const r=document.getElementById('statusRef');if(ref){r.textContent='REF: '+ref;r.style.display='block';}else r.style.display='none';let secs=5;const cd=document.getElementById('statusCountdown');cd.textContent=`Returning in ${secs}s…`;const t=setInterval(()=>{secs--;if(secs>0)cd.textContent=`Returning in ${secs}s…`;else{clearInterval(t);s.className='status-screen';nav('home');}},1000);}
 
     /* ── HELPERS ── */
-    function calculateFee(p){return p<30?0.30:p<100?0.90:1.50;}
+    function calculateFee(p){
+    const feeMap={4.70:0.30,9.50:0.50,13.90:0.60,19.00:1.00,24.00:1.00,27.00:1.00,35.50:1.50,44.00:2.00,64.00:2.00,85.00:3.00,106.00:4.00,129.00:5.00,169.00:6.00,214.00:6.00};
+    return feeMap[p]!==undefined?feeMap[p]:p<30?0.30:p<100?0.90:1.50;
+}
     function generateRefId(){return 'ULG-'+Date.now().toString(36).toUpperCase()+'-'+Math.random().toString(36).substring(2,6).toUpperCase();}
     function getWeekNumber(){const n=new Date(),s=new Date(n.getFullYear(),0,1);return Math.ceil(((n-s)/86400000+s.getDay()+1)/7);}
     function getCurrentYearWeek(){return `${new Date().getFullYear()}-W${getWeekNumber()}`;}
