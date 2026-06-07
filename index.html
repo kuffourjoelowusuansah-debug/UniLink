@@ -96,6 +96,37 @@
   </script>
     <script src="https://js.paystack.co/v1/inline.js"></script>
     <style>
+       /* ── TESTIMONIALS SELAR STYLE ── */
+.tsl-section{background:linear-gradient(135deg,var(--navy),var(--navy2));padding:5rem 0 4rem;position:relative;overflow:hidden;}
+.tsl-inner{max-width:1100px;margin:0 auto;padding:0 2rem;}
+.tsl-head{text-align:center;margin-bottom:3.5rem;}
+.tsl-title{font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(1.9rem,3.5vw,2.8rem);font-weight:800;letter-spacing:-0.04em;color:white;margin:0.5rem 0;}
+.tsl-sub{font-size:0.95rem;color:rgba(255,255,255,0.48);}
+.tsl-carousel{display:flex;align-items:center;gap:1.25rem;}
+.tsl-btn{width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);color:white;font-size:1.6rem;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all 0.22s;line-height:1;}
+.tsl-btn:hover{background:rgba(255,255,255,0.22);}
+.tsl-viewport{flex:1;overflow:hidden;}
+.tsl-track{display:flex;transition:transform 0.55s cubic-bezier(0.16,1,0.3,1);}
+.tsl-slide{min-width:100%;padding:80px 10px 20px;}
+.tsl-card-wrap{position:relative;max-width:820px;margin:0 auto;}
+.tsl-photo-ring{position:absolute;left:35px;top:-70px;width:140px;height:140px;border-radius:50%;overflow:hidden;border:5px solid white;box-shadow:0 8px 36px rgba(0,0,0,0.3);z-index:2;}
+.tsl-photo{width:100%;height:100%;object-fit:cover;object-position:top center;}
+.tsl-card{background:white;border-radius:var(--radius);padding:2.5rem 2.25rem 2.25rem 205px;box-shadow:0 20px 60px rgba(0,0,0,0.18);}
+.tsl-quote{font-size:1rem;line-height:1.78;color:var(--navy);font-style:italic;margin-bottom:1.5rem;}
+.tsl-name{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:0.98rem;color:var(--navy);}
+.tsl-role{font-size:0.76rem;color:var(--muted);margin-top:0.18rem;}
+.tsl-dots{display:flex;justify-content:center;gap:8px;margin-top:2rem;}
+.tsl-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.22);cursor:pointer;transition:all 0.28s;}
+.tsl-dot.active{background:var(--orange);width:26px;border-radius:4px;box-shadow:0 0 10px rgba(240,112,32,0.55);}
+@media(max-width:680px){
+    .tsl-photo-ring{left:50%;transform:translateX(-50%);top:-65px;width:120px;height:120px;}
+    .tsl-card{padding:4.5rem 1.5rem 2rem;text-align:center;}
+    .tsl-slide{padding:80px 5px 15px;}
+    .tsl-carousel{gap:0.5rem;}
+    .tsl-btn{width:38px;height:38px;font-size:1.2rem;}
+}
+        
+        
         /* ═══════════ TOKENS ═══════════ */
         :root{
             --bg:#F0F2FF;--bg2:#F7F8FE;--bg3:#FFFFFF;
@@ -1011,34 +1042,92 @@
             </div>
         </div>
 
-        <!-- NEW: TESTIMONIALS SECTION -->
-        <div class="sec-wrap" style="padding-top:1rem;">
-            <div class="sec-eye sr"><div class="sec-eye-line"></div>Campus Love</div>
-            <h2 class="sec-title sr sr-d1">Real students.<br>Real savings.</h2>
-            <p class="sec-sub sr sr-d2">See what your coursemates are saying about UniLink GH.</p>
-            <div class="testimonial-grid sr sr-d2">
-                <div class="test-card">
-                    <div class="test-quote">"Bought 10GB MTN during exams and it landed in 18 minutes. Saved me so much money this semester!"</div>
-                    <div class="test-author">Joel Owusu Ansah</div>
-                    <div class="test-school">KNUST • Computer Science • Level 300</div>
-                </div>
-                <div class="test-card">
-                    <div class="test-quote">"The 15GB Telecel bundle is perfect for my Zoom lectures + TikTok. Delivered super fast and no expiry — game changer!"</div>
-                    <div class="test-author">Akosua Mensah</div>
-                    <div class="test-school">UG • Nursing • Level 200</div>
-                </div>
-                <div class="test-card">
-                    <div class="test-quote">"Referred 4 friends using my code and got 8GB free data. Best student hustle ever. 10/10 recommend."</div>
-                    <div class="test-author">Kwame Boateng</div>
-                    <div class="test-school">Ashesi University • Business • Year 2</div>
-                </div>
-                <div class="test-card">
-                    <div class="test-quote">"AirtelTigo 8GB for just GH₵32? Insanely cheap. I use it every week now. Thank you UniLink!"</div>
-                    <div class="test-author">Nana Yaa Ofori</div>
-                    <div class="test-school">KNUST • Pharmacy • Level 100</div>
+     <!-- TESTIMONIALS - SELAR STYLE -->
+<div class="tsl-section">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse 50% 70% at 10% 50%,rgba(240,112,32,0.07),transparent),radial-gradient(ellipse 50% 70% at 90% 50%,rgba(0,200,255,0.05),transparent);pointer-events:none;"></div>
+    <div class="tsl-inner">
+        <div class="tsl-head">
+            <div class="sec-eye" style="justify-content:center;color:rgba(255,255,255,0.4);">
+                <div class="sec-eye-line" style="background:rgba(255,255,255,0.2)"></div>
+                Campus Love
+                <div class="sec-eye-line" style="background:rgba(255,255,255,0.2)"></div>
+            </div>
+            <h2 class="tsl-title">Don't take our word for it!</h2>
+            <p class="tsl-sub">See what Ghanaian students are saying about UniLink GH.</p>
+        </div>
+        <div class="tsl-carousel">
+            <button class="tsl-btn" onclick="prevTest()">&#8249;</button>
+            <div class="tsl-viewport">
+                <div class="tsl-track" id="tslTrack">
+
+                    <div class="tsl-slide">
+                        <div class="tsl-card-wrap">
+                            <div class="tsl-photo-ring"><img src="frances.jpeg" class="tsl-photo" alt="Frances"></div>
+                            <div class="tsl-card">
+                                <p class="tsl-quote">"As a first-year CS Engineering student, I'm always on GitHub, Stack Overflow, and YouTube tutorials. UniLink GH gave me a 20GB MTN bundle that lasted the whole semester without breaking my allowance. It arrived in under 20 minutes. I've already referred my entire department!"</p>
+                                <div class="tsl-name">Frances Agyapomaa</div>
+                                <div class="tsl-role">1st Year · Computer Science & Engineering · UMATS</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tsl-slide">
+                        <div class="tsl-card-wrap">
+                            <div class="tsl-photo-ring"><img src="joel.jpeg" class="tsl-photo" alt="Joel"></div>
+                            <div class="tsl-card">
+                                <p class="tsl-quote">"My mum ordered a 5GB bundle from UniLink GH for my online classes and it arrived so fast! I use it for homework, educational videos, and research. The best part is it never expires — I can use it anytime without rushing. UniLink GH is simply the best!"</p>
+                                <div class="tsl-name">Joel Owusu Ansah</div>
+                                <div class="tsl-role">Basic 8 · Peniel Academy</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tsl-slide">
+                        <div class="tsl-card-wrap">
+                            <div class="tsl-photo-ring"><img src="angel11.jpeg" class="tsl-photo" alt="Angel"></div>
+                            <div class="tsl-card">
+                                <p class="tsl-quote">"I use data every day for French podcasts, language apps, and online lectures. UniLink GH has the most affordable bundles I've found on campus. The no-expiry policy is what convinced me — buy once and use at your own pace. My entire hall floor now orders from UniLink GH!"</p>
+                                <div class="tsl-name">Angel Benewaa</div>
+                                <div class="tsl-role">2nd Year · French · KNUST</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tsl-slide">
+                        <div class="tsl-card-wrap">
+                            <div class="tsl-photo-ring"><img src="rev.jpeg" class="tsl-photo" alt="Rev Kuffour"></div>
+                            <div class="tsl-card">
+                                <p class="tsl-quote">"I recommended UniLink GH to our students and staff after experiencing the service personally. The delivery is prompt, the pricing is genuinely fair, and the support is outstanding. It is truly inspiring to see a Ghanaian youth-led platform operating with this level of professionalism."</p>
+                                <div class="tsl-name">Rev. Kuffour</div>
+                                <div class="tsl-role">Assistant Headmaster · PENSEC</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tsl-slide">
+                        <div class="tsl-card-wrap">
+                            <div class="tsl-photo-ring"><img src="emmanuel.jpeg" class="tsl-photo" alt="Emmanuel"></div>
+                            <div class="tsl-card">
+                                <p class="tsl-quote">"Dentistry requires constant research — journals, anatomy videos, and lecture recordings. UniLink GH has been a lifesaver. I bought 15GB Telecel and it was on my number in under 20 minutes at a price far cheaper than buying directly. Hands down the best data service in Kumasi."</p>
+                                <div class="tsl-name">Emmanuel Boamah</div>
+                                <div class="tsl-role">1st Year · Dentistry · KNUST</div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
+            <button class="tsl-btn" onclick="nextTest()">&#8250;</button>
         </div>
+        <div class="tsl-dots">
+            <div class="tsl-dot active" onclick="goTest(0)"></div>
+            <div class="tsl-dot" onclick="goTest(1)"></div>
+            <div class="tsl-dot" onclick="goTest(2)"></div>
+            <div class="tsl-dot" onclick="goTest(3)"></div>
+            <div class="tsl-dot" onclick="goTest(4)"></div>
+        </div>
+    </div>
+</div>
     </div>
 
     <!-- ════════════ BUNDLES PAGE (ENHANCED) ════════════ -->
@@ -1881,6 +1970,19 @@ s1.charset='UTF-8';
 s1.setAttribute('crossorigin','*');
 s0.parentNode.insertBefore(s1,s0);
 })();
+/* ── TESTIMONIAL CAROUSEL ── */
+let _tslIdx=0;
+const _tslTotal=5;
+function updateTsl(){
+    const t=document.getElementById('tslTrack');
+    if(t)t.style.transform=`translateX(-${_tslIdx*100}%)`;
+    document.querySelectorAll('.tsl-dot').forEach((d,i)=>d.classList.toggle('active',i===_tslIdx));
+}
+function nextTest(){_tslIdx=(_tslIdx+1)%_tslTotal;updateTsl();}
+function prevTest(){_tslIdx=(_tslIdx-1+_tslTotal)%_tslTotal;updateTsl();}
+function goTest(i){_tslIdx=i;updateTsl();}
+setInterval(nextTest,6000);
+
 </script>
 <!--End of Tawk.to Script-->
 
