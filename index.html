@@ -12,11 +12,14 @@
   <script type="module">
     import{initializeApp}from"https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
     import{getFirestore,collection,addDoc,serverTimestamp,query,where,getDocs,orderBy}from"https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
-    import{getAuth,GoogleAuthProvider,signInWithPopup,RecaptchaVerifier,signInWithPhoneNumber,onAuthStateChanged,signOut}from"https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+    import{getAuth,GoogleAuthProvider,signInWithPopup,signInWithRedirect,getRedirectResult,RecaptchaVerifier,signInWithPhoneNumber,onAuthStateChanged,signOut}from"https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
     const app=initializeApp({apiKey:"AIzaSyCqg3E9tuKRcEnq2DdP6FjtG0LqnAjCHfM",authDomain:"joeldata-25d06.firebaseapp.com",projectId:"joeldata-25d06",storageBucket:"joeldata-25d06.firebasestorage.app",messagingSenderId:"555857869458",appId:"1:555857869458:web:db96a97fca5983b142044b"});
     const db=getFirestore(app);
     const auth=getAuth(app);
+      getRedirectResult(auth).then(result=>{
+    if(result?.user){nav('account');}
+}).catch(e=>console.error(e));
     window._db=db;
     window._auth=auth;
 
@@ -36,9 +39,13 @@
     };
 
     window._signInGoogle=async()=>{
-        const provider=new GoogleAuthProvider();
-        try{await signInWithPopup(auth,provider);}catch(e){console.error(e);}
-    };
+    const provider=new GoogleAuthProvider();
+    const isMobile=/Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    try{
+        if(isMobile){await signInWithRedirect(auth,provider);}
+        else{await signInWithPopup(auth,provider);}
+    }catch(e){console.error(e);}
+};
 
     window._setupRecaptcha=()=>{
         if(window._recaptchaVerifier)return;
