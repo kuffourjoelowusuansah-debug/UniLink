@@ -9,13 +9,84 @@
     <title>UniLink GH — Student Data Bundles</title>
     <link rel="icon" type="image/png" href="favricon.png.png">
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-    <script type="module">
-        import{initializeApp}from"https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-        import{getFirestore,collection,addDoc,serverTimestamp}from"https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
-        const app=initializeApp({apiKey:"AIzaSyCqg3E9tuKRcEnq2DdP6FjtG0LqnAjCHfM",authDomain:"joeldata-25d06.firebaseapp.com",projectId:"joeldata-25d06",storageBucket:"joeldata-25d06.firebasestorage.app",messagingSenderId:"555857869458",appId:"1:555857869458:web:db96a97fca5983b142044b"});
-        const db=getFirestore(app);
-        window._saveOrder=async(d)=>{try{await addDoc(collection(db,"orders"),{...d,createdAt:serverTimestamp(),status:"paid"});}catch(e){}};
-    </script>
+  <script type="module">
+    import{initializeApp}from"https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import{getFirestore,collection,addDoc,serverTimestamp,query,where,getDocs,orderBy}from"https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+    import{getAuth,GoogleAuthProvider,signInWithPopup,RecaptchaVerifier,signInWithPhoneNumber,onAuthStateChanged,signOut}from"https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+
+    const app=initializeApp({apiKey:"AIzaSyCqg3E9tuKRcEnq2DdP6FjtG0LqnAjCHfM",authDomain:"joeldata-25d06.firebaseapp.com",projectId:"joeldata-25d06",storageBucket:"joeldata-25d06.firebasestorage.app",messagingSenderId:"555857869458",appId:"1:555857869458:web:db96a97fca5983b142044b"});
+    const db=getFirestore(app);
+    const auth=getAuth(app);
+    window._db=db;
+    window._auth=auth;
+
+    window._saveOrder=async(d)=>{
+        const user=auth.currentUser;
+        try{await addDoc(collection(db,"orders"),{...d,userId:user?user.uid:null,userEmail:user?user.email:null,createdAt:serverTimestamp(),status:"paid"});}catch(e){}
+    };
+
+    window._getMyOrders=async()=>{
+        const user=auth.currentUser;
+        if(!user)return[];
+        try{
+            const q=query(collection(db,"orders"),where("userId","==",user.uid));
+            const snap=await getDocs(q);
+            return snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
+        }catch(e){return[];}
+    };
+
+    window._signInGoogle=async()=>{
+        const provider=new GoogleAuthProvider();
+        try{await signInWithPopup(auth,provider);}catch(e){console.error(e);}
+    };
+
+    window._setupRecaptcha=()=>{
+        if(window._recaptchaVerifier)return;
+        window._recaptchaVerifier=new RecaptchaVerifier(auth,'ub-recaptcha',{size:'invisible'});
+    };
+
+    window._signInPhone=async(phone)=>{
+        window._setupRecaptcha();
+        try{
+            const confirmation=await signInWithPhoneNumber(auth,phone,window._recaptchaVerifier);
+            window._confirmationResult=confirmation;
+            return true;
+        }catch(e){console.error(e);return false;}
+    };
+
+    window._verifyOTP=async(otp)=>{
+        try{
+            await window._confirmationResult.confirm(otp);
+            return true;
+        }catch(e){return false;}
+    };
+
+    window._signOut=async()=>{
+        await signOut(auth);
+        nav('home');
+        toast('Signed out successfully.');
+    };
+
+    onAuthStateChanged(auth,user=>{
+        window._currentUser=user;
+        const navAuth=document.getElementById('nb-account');
+        if(navAuth){
+            navAuth.textContent=user?(user.displayName||user.phoneNumber||'Account'):'Sign In';
+        }
+        const mobileAuth=document.getElementById('mb-account');
+        if(mobileAuth){
+            mobileAuth.textContent=user?(user.displayName||user.phoneNumber||'Account'):'Sign In';
+        }
+        if(user&&document.getElementById('pg-account')?.classList.contains('active')){
+            renderDashboard(user);
+        }
+        const mn=document.getElementById('m-name');
+        if(mn&&user&&!mn.value&&user.displayName)mn.value=user.displayName;
+        const me=document.getElementById('m-email');
+        if(me&&user&&!me.value&&user.email)me.value=user.email;
+    });
+
+  </script>
     <script src="https://js.paystack.co/v1/inline.js"></script>
     <style>
         /* ═══════════ TOKENS ═══════════ */
@@ -617,7 +688,8 @@
                 <button class="nav-link" id="nb-history" onclick="nav('history')">History</button>
                 <button class="nav-link" id="nb-ranking" onclick="nav('ranking')">Ranking</button>
                 <button class="nav-link" id="nb-offers" onclick="nav('offers')">Offers</button>
-                <a class="nav-link" href="https://whatsapp.com/channel/0029Vb7Pfxj7IUYZ5RLIy712" target="_blank" style="color:#0A7A3E;font-weight:600;">Channel</a>
+                <button class="nav-link" id="nb-account" onclick="nav('account')" style="color:var(--orange);font-weight:600;">Sign In</button>
+<a class="nav-link" href="https://whatsapp.com/channel/0029Vb7Pfxj7IUYZ5RLIy712" target="_blank" style="color:#0A7A3E;font-weight:600;">Channel</a>
             </div>
             <button class="nav-hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
                 <span></span><span></span><span></span>
@@ -635,7 +707,8 @@
         <button class="nav-link" onclick="nav('history');closeMenu()">History</button>
         <button class="nav-link" onclick="nav('ranking');closeMenu()">Ranking</button>
         <button class="nav-link" onclick="nav('offers');closeMenu()">Offers</button>
-        <a class="nav-link" href="https://whatsapp.com/channel/0029Vb7Pfxj7IUYZ5RLIy712" target="_blank" style="display:block;color:#0A7A3E;font-weight:600;">Channel</a>
+        <button class="nav-link" id="mb-account" onclick="nav('account');closeMenu()" style="color:var(--orange);font-weight:700;">Sign In</button>
+<a class="nav-link" href="https://whatsapp.com/channel/0029Vb7Pfxj7IUYZ5RLIy712" target="_blank" style="display:block;color:#0A7A3E;font-weight:600;">Channel</a>
         <button class="nav-link" onclick="nav('contact');closeMenu()" style="color:var(--orange);font-weight:700;">Order Now →</button>
     </div>
 
@@ -1277,6 +1350,97 @@
         </div>
     </div>
 
+   <!-- ════════════ ACCOUNT PAGE ════════════ -->
+<div class="page" id="pg-account">
+    <div id="ub-recaptcha"></div>
+    <div class="sec-wrap sec-pad" id="auth-container">
+
+        <!-- SIGNED OUT: AUTH PANEL -->
+        <div id="auth-panel">
+            <div class="sec-eye sr"><div class="sec-eye-line"></div>Your Account</div>
+            <h2 class="sec-title sr sr-d1">Sign in to UniLink GH</h2>
+            <p class="sec-sub sr sr-d2">Access your order history, referral code, and personal dashboard.</p>
+
+            <div style="max-width:420px;">
+
+                <!-- GOOGLE SIGN IN -->
+                <div class="sr sr-d2" style="background:var(--white);border-radius:var(--radius);padding:2rem;box-shadow:var(--shadow-md);border:1px solid var(--border);margin-bottom:1.25rem;">
+                    <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:1rem;color:var(--navy);margin-bottom:0.4rem;">Continue with Google</div>
+                    <div style="font-size:0.82rem;color:var(--muted);margin-bottom:1.25rem;">Quick sign-in with your Google account.</div>
+                    <button onclick="window._signInGoogle()" style="width:100%;padding:0.85rem;background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-weight:600;font-size:0.9rem;color:var(--navy);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.75rem;transition:all 0.2s var(--spring);box-shadow:var(--shadow);">
+                        <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+                        Sign in with Google
+                    </button>
+                </div>
+
+                <!-- PHONE SIGN IN -->
+                <div class="sr sr-d2" style="background:var(--white);border-radius:var(--radius);padding:2rem;box-shadow:var(--shadow-md);border:1px solid var(--border);">
+                    <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:1rem;color:var(--navy);margin-bottom:0.4rem;">Continue with Phone</div>
+                    <div style="font-size:0.82rem;color:var(--muted);margin-bottom:1.25rem;">We'll send a one-time code to your number.</div>
+
+                    <div id="phone-step-1">
+                        <div style="display:flex;gap:0.5rem;margin-bottom:0.875rem;">
+                            <input id="auth-phone" type="tel" placeholder="+233 XX XXX XXXX" style="flex:1;padding:0.78rem 1rem;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:0.88rem;color:var(--navy);outline:none;transition:border-color 0.22s;" onfocus="this.style.borderColor='var(--orange)'" onblur="this.style.borderColor='var(--border)'">
+                        </div>
+                        <button onclick="authSendOTP()" id="auth-send-otp-btn" style="width:100%;padding:0.85rem;background:var(--orange);border:none;border-radius:var(--radius-sm);color:white;font-family:'DM Sans',sans-serif;font-weight:700;font-size:0.9rem;cursor:pointer;box-shadow:var(--glow-o);transition:all 0.25s var(--spring);">
+                            Send OTP Code
+                        </button>
+                    </div>
+
+                    <div id="phone-step-2" style="display:none;">
+                        <div style="font-size:0.82rem;color:var(--muted);margin-bottom:0.75rem;" id="otp-hint">Enter the code sent to your number.</div>
+                        <input id="auth-otp" type="text" maxlength="6" placeholder="6-digit code" style="width:100%;padding:0.78rem 1rem;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'Bricolage Grotesque',sans-serif;font-size:1.3rem;font-weight:700;letter-spacing:0.3em;text-align:center;color:var(--navy);outline:none;margin-bottom:0.875rem;transition:border-color 0.22s;" onfocus="this.style.borderColor='var(--orange)'" onblur="this.style.borderColor='var(--border)'">
+                        <button onclick="authVerifyOTP()" style="width:100%;padding:0.85rem;background:var(--orange);border:none;border-radius:var(--radius-sm);color:white;font-family:'DM Sans',sans-serif;font-weight:700;font-size:0.9rem;cursor:pointer;box-shadow:var(--glow-o);margin-bottom:0.5rem;">
+                            Verify Code
+                        </button>
+                        <button onclick="document.getElementById('phone-step-1').style.display='block';document.getElementById('phone-step-2').style.display='none';" style="width:100%;padding:0.6rem;background:none;border:none;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:0.82rem;cursor:pointer;">
+                            ← Change number
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SIGNED IN: DASHBOARD -->
+        <div id="dashboard-panel" style="display:none;">
+            <div class="sec-eye sr"><div class="sec-eye-line"></div>My Account</div>
+            <div id="dash-header" style="display:flex;align-items:center;gap:1rem;margin-bottom:2rem;flex-wrap:wrap;">
+                <div id="dash-avatar" style="width:56px;height:56px;border-radius:50%;background:var(--orange);display:flex;align-items:center;justify-content:center;font-family:'Bricolage Grotesque',sans-serif;font-size:1.4rem;font-weight:800;color:white;flex-shrink:0;"></div>
+                <div style="flex:1;">
+                    <div id="dash-name" style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:1.3rem;color:var(--navy);"></div>
+                    <div id="dash-email" style="font-size:0.82rem;color:var(--muted);margin-top:2px;"></div>
+                </div>
+                <button onclick="window._signOut()" style="background:var(--white);border:1.5px solid var(--border);border-radius:100px;padding:0.5rem 1.1rem;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:600;color:var(--muted);cursor:pointer;transition:all 0.2s;">Sign Out</button>
+            </div>
+
+            <!-- STATS -->
+            <div id="dash-stats" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;margin-bottom:2rem;"></div>
+
+            <!-- REFERRAL CODE -->
+            <div style="background:linear-gradient(155deg,var(--navy),var(--navy2));border-radius:var(--radius);padding:1.75rem;margin-bottom:2rem;position:relative;overflow:hidden;">
+                <div style="position:absolute;top:-40%;right:-10%;width:200px;height:200px;background:radial-gradient(circle,rgba(0,200,255,0.07),transparent 70%);pointer-events:none;"></div>
+                <div style="font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:rgba(255,255,255,0.4);margin-bottom:0.5rem;">Your Referral Code</div>
+                <div id="dash-refcode" style="font-family:'Bricolage Grotesque',sans-serif;font-size:1.8rem;font-weight:800;letter-spacing:0.18em;color:var(--orange2);margin-bottom:0.4rem;"></div>
+                <div style="font-size:0.76rem;color:rgba(255,255,255,0.35);margin-bottom:1.25rem;">Share this — you both earn 2GB when a friend orders</div>
+                <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+                    <button onclick="copyDashRef()" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:100px;padding:0.55rem 1.1rem;color:white;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:600;cursor:pointer;transition:all 0.2s;">Copy Code</button>
+                    <button onclick="shareDashRef()" style="background:rgba(37,211,102,0.15);border:1px solid rgba(37,211,102,0.3);border-radius:100px;padding:0.55rem 1.1rem;color:var(--green);font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:600;cursor:pointer;transition:all 0.2s;">Share via WhatsApp</button>
+                </div>
+            </div>
+
+            <!-- ORDER HISTORY -->
+            <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:1.1rem;color:var(--navy);margin-bottom:1rem;display:flex;align-items:center;justify-content:space-between;">
+                My Orders
+                <button onclick="renderDashboard(window._currentUser)" style="font-size:0.78rem;font-weight:500;color:var(--muted);background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;">↻ Refresh</button>
+            </div>
+            <div id="dash-orders"></div>
+
+            <button onclick="nav('bundles')" style="margin-top:1.5rem;background:var(--orange);color:white;border:none;border-radius:100px;padding:0.85rem 1.9rem;font-family:'DM Sans',sans-serif;font-weight:600;font-size:0.88rem;cursor:pointer;box-shadow:var(--glow-o);transition:all 0.3s var(--spring);">Shop Bundles →</button>
+        </div>
+
+    </div>
+</div>
+    
     <!-- FOOTER -->
     <footer class="footer">
         <a href="#" class="logo" onclick="nav('home');return false;">
@@ -1293,6 +1457,7 @@
             <a onclick="nav('offers')">Offers</a>
             <a href="https://whatsapp.com/channel/0029Vb7Pfxj7IUYZ5RLIy712" target="_blank">Channel</a>
             <a onclick="nav('contact')">Order</a>
+            <a onclick="nav('account')" style="color:var(--orange2);">Account</a>
             <a href="mailto:ghanaunilink@gmail.com">Email</a>
         </div>
         <div class="ft-copy">© 2026 UniLink GH · Built for Ghanaian students</div>
@@ -1360,7 +1525,7 @@
     function filterHistory(){renderHistory();}
 
     /* ── NAVIGATION ── */
-    function nav(page){document.querySelectorAll('.page').forEach(p=>{p.classList.remove('active');p.classList.remove('page-enter');});document.querySelectorAll('.nav-link[id^="nb-"]').forEach(l=>l.classList.remove('active'));const pg=document.getElementById('pg-'+page);if(!pg)return;pg.classList.add('active');void pg.offsetWidth;pg.classList.add('page-enter');const nb=document.getElementById('nb-'+page);if(nb)nb.classList.add('active');window.scrollTo({top:0,behavior:'instant'});closeMenu();if(page==='bundles')showB('MTN');if(page==='compare')buildCmp();if(page==='offers')initOffers();if(page==='history'){loadPurchases();renderHistory();}if(page==='ranking'){loadPurchases();renderRanking();}setTimeout(()=>{reveal();initCountUps();},80);}
+    function nav(page){document.querySelectorAll('.page').forEach(p=>{p.classList.remove('active');p.classList.remove('page-enter');});document.querySelectorAll('.nav-link[id^="nb-"]').forEach(l=>l.classList.remove('active'));const pg=document.getElementById('pg-'+page);if(!pg)return;pg.classList.add('active');void pg.offsetWidth;pg.classList.add('page-enter');const nb=document.getElementById('nb-'+page);if(nb)nb.classList.add('active');window.scrollTo({top:0,behavior:'instant'});closeMenu();if(page==='bundles')showB('MTN');if(page==='compare')buildCmp();if(page==='offers')initOffers();if(page==='account'){const user=window._currentUser;if(user){renderDashboard(user);}else{document.getElementById('auth-panel').style.display='block';document.getElementById('dashboard-panel').style.display='none';}}if(page==='history'){loadPurchases();renderHistory();}if(page==='ranking'){loadPurchases();renderRanking();}setTimeout(()=>{reveal();initCountUps();},80);}
 
     /* ── ENHANCED BUNDLES PAGE ── */
     function showB(net){
@@ -1591,6 +1756,111 @@
         loadPurchases();
         initCountUps();
     });
+/* ── AUTH FUNCTIONS ── */
+async function authSendOTP(){
+    const phone=document.getElementById('auth-phone').value.trim();
+    if(!phone||phone.length<10){toast('⚠ Enter a valid phone number with country code (e.g. +233...)','error');return;}
+    const btn=document.getElementById('auth-send-otp-btn');
+    btn.textContent='Sending…';btn.disabled=true;
+    const ok=await window._signInPhone(phone);
+    if(ok){
+        document.getElementById('phone-step-1').style.display='none';
+        document.getElementById('phone-step-2').style.display='block';
+        document.getElementById('otp-hint').textContent=`Code sent to ${phone}`;
+        toast('✓ OTP sent! Check your messages.','success');
+    } else {
+        toast('⚠ Failed to send OTP. Check the number and try again.','error');
+        btn.textContent='Send OTP Code';btn.disabled=false;
+    }
+}
+
+async function authVerifyOTP(){
+    const otp=document.getElementById('auth-otp').value.trim();
+    if(otp.length!==6){toast('⚠ Enter the 6-digit code.','error');return;}
+    const ok=await window._verifyOTP(otp);
+    if(ok){
+        toast('✓ Signed in successfully!','success');
+    } else {
+        toast('⚠ Invalid code. Try again.','error');
+    }
+}
+
+async function renderDashboard(user){
+    if(!user)return;
+    document.getElementById('auth-panel').style.display='none';
+    document.getElementById('dashboard-panel').style.display='block';
+
+    const initials=(user.displayName||user.phoneNumber||'U').charAt(0).toUpperCase();
+    document.getElementById('dash-avatar').textContent=initials;
+    document.getElementById('dash-name').textContent=user.displayName||user.phoneNumber||'UniLink User';
+    document.getElementById('dash-email').textContent=user.email||user.phoneNumber||'';
+
+    const refKey='ulg_ref_'+user.uid;
+    let ref=localStorage.getItem(refKey);
+    if(!ref){
+        ref='ULK-'+Math.random().toString(36).substring(2,5).toUpperCase()+user.uid.substring(0,4).toUpperCase();
+        localStorage.setItem(refKey,ref);
+    }
+    document.getElementById('dash-refcode').textContent=ref;
+    window._dashRef=ref;
+
+    document.getElementById('dash-orders').innerHTML='<div style="text-align:center;padding:2rem;color:var(--muted);font-size:0.85rem;">Loading your orders…</div>';
+
+    const orders=await window._getMyOrders();
+    const totalSpent=orders.reduce((s,o)=>s+(o.total||0),0);
+    const totalGB=orders.reduce((s,o)=>s+(o.gb||0),0);
+
+    document.getElementById('dash-stats').innerHTML=`
+        <div style="background:var(--white);border-radius:var(--radius);padding:1.25rem;box-shadow:var(--shadow);border:1px solid var(--border);text-align:center;">
+            <div style="font-family:'Bricolage Grotesque',sans-serif;font-size:1.8rem;font-weight:800;color:var(--orange);">${orders.length}</div>
+            <div style="font-size:0.7rem;color:var(--muted);margin-top:3px;font-weight:500;">Total Orders</div>
+        </div>
+        <div style="background:var(--white);border-radius:var(--radius);padding:1.25rem;box-shadow:var(--shadow);border:1px solid var(--border);text-align:center;">
+            <div style="font-family:'Bricolage Grotesque',sans-serif;font-size:1.8rem;font-weight:800;color:var(--orange);">GH₵${totalSpent.toFixed(2)}</div>
+            <div style="font-size:0.7rem;color:var(--muted);margin-top:3px;font-weight:500;">Total Spent</div>
+        </div>
+        <div style="background:var(--white);border-radius:var(--radius);padding:1.25rem;box-shadow:var(--shadow);border:1px solid var(--border);text-align:center;">
+            <div style="font-family:'Bricolage Grotesque',sans-serif;font-size:1.8rem;font-weight:800;color:var(--orange);">${totalGB}GB</div>
+            <div style="font-size:0.7rem;color:var(--muted);margin-top:3px;font-weight:500;">Data Purchased</div>
+        </div>
+    `;
+
+    if(orders.length===0){
+        document.getElementById('dash-orders').innerHTML=`
+            <div style="background:var(--white);border-radius:var(--radius);padding:2.5rem;text-align:center;box-shadow:var(--shadow);border:1px solid var(--border);">
+                <div style="font-size:2rem;margin-bottom:0.75rem;">📦</div>
+                <div style="font-weight:700;color:var(--navy);margin-bottom:0.3rem;">No orders yet</div>
+                <div style="font-size:0.82rem;color:var(--muted);">Your orders will appear here after your first purchase.</div>
+            </div>`;
+        return;
+    }
+
+    document.getElementById('dash-orders').innerHTML=orders.map(o=>`
+        <div style="background:var(--white);border-radius:var(--radius);padding:1.25rem;box-shadow:var(--shadow);border-left:3px solid var(--orange);margin-bottom:0.875rem;transition:transform 0.25s var(--spring);">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:0.5rem;">
+                <div>
+                    <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:1.1rem;color:var(--navy);">${o.gb||'?'}GB ${o.network||''}</div>
+                    <div style="font-size:0.76rem;color:var(--orange);font-weight:700;margin-top:2px;">REF: ${o.refId||o.id}</div>
+                    <div style="font-size:0.78rem;color:var(--muted);margin-top:4px;">📱 ${o.phone||'—'} · 📅 ${o.date||'—'}</div>
+                </div>
+                <div style="text-align:right;">
+                    <div style="font-family:'Bricolage Grotesque',sans-serif;font-size:1.2rem;font-weight:800;color:var(--navy);">GH₵${(o.total||0).toFixed(2)}</div>
+                    <div style="display:inline-block;background:rgba(34,212,122,0.1);color:#0A7A3E;border-radius:100px;padding:2px 10px;font-size:0.65rem;font-weight:700;margin-top:4px;">✓ Paid</div>
+                </div>
+            </div>
+        </div>`).join('');
+}
+
+function copyDashRef(){
+    if(!window._dashRef)return;
+    navigator.clipboard?.writeText(window._dashRef).then(()=>toast('✓ Referral code copied!','success'));
+}
+
+function shareDashRef(){
+    if(!window._dashRef)return;
+    const msg=`Hey! I use UniLink GH for cheap data bundles — no expiry!\n\nUse my referral code when you order and we BOTH get 2GB free:\n\n🔑 Code: *${window._dashRef}*\n\nOrder here 👉 https://uni-link-iota.vercel.app`;
+    window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`,'_blank');
+}
 </script>
 <!--Start of Tawk.to Script-->
 <script type="text/javascript">
