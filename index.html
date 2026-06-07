@@ -188,7 +188,7 @@
 
         /* ── HERO ── */
         .hero-section{position:relative;overflow:hidden;background:var(--navy);min-height:680px;display:flex;align-items:center;}
-        .hero-bg{position:absolute;inset:0;background:url('ang.jpeg') top center/cover no-repeat;}
+        .hero-bg{position:absolute;inset:0;background:url('ang.jpeg') top right/55% auto no-repeat;}
         .hero-mesh{position:absolute;inset:0;background:linear-gradient(to right, rgba(0,0,0,0.60) 0%, rgba(0,0,0,0.25) 55%, rgba(0,0,0,0.0) 100%);}
         .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:52px 52px;mask-image:radial-gradient(ellipse at center,black 15%,transparent 75%);}
         .hero-particles{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
@@ -199,8 +199,8 @@
         .hero-badge-dot{width:6px;height:6px;background:var(--green);border-radius:50%;animation:greenPulse 2.2s infinite;box-shadow:0 0 8px rgba(34,212,122,0.9);}
         @keyframes greenPulse{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.5);opacity:0.6;}}
         @keyframes heroFadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
-        .hero h1{font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(2.8rem,5vw,4.5rem);font-weight:800;letter-spacing:-0.04em;line-height:1.0;color:#FFFFFF;margin-bottom:1.4rem;animation:heroFadeUp 0.8s var(--out) 0.35s both;text-shadow:0 2px 28px rgba(0,0,0,0.4);}
-        .hero h1 em{font-style:normal;color:#FFFFFF;-webkit-text-fill-color:#FFFFFF;filter:none;}
+        .hero h1{font-family:'DM Sans',sans-serif;font-size:clamp(2.6rem,4.5vw,4.2rem);font-weight:700;letter-spacing:-0.02em;line-height:1.05;color:#FFFFFF;margin-bottom:1.4rem;animation:heroFadeUp 0.8s var(--out) 0.35s both;text-shadow:none;}
+        .hero h1 em{font-style:normal;color:#FFFFFF;-webkit-text-fill-color:#FFFFFF;background:none;filter:none;}
         .hero-sub{font-size:1rem;color:rgba(255,255,255,0.68);line-height:1.78;margin-bottom:2.25rem;max-width:430px;animation:heroFadeUp 0.8s var(--out) 0.5s both;}
         .hero-btns{display:flex;gap:0.875rem;flex-wrap:wrap;animation:heroFadeUp 0.8s var(--out) 0.65s both;}
         .btn-primary{background:var(--orange);color:white;font-family:'DM Sans',sans-serif;font-weight:600;font-size:0.88rem;padding:0.85rem 1.9rem;border-radius:100px;border:none;display:inline-flex;align-items:center;gap:0.5rem;box-shadow:var(--glow-o);transition:all 0.3s var(--spring);cursor:pointer;}
@@ -209,16 +209,13 @@
         .btn-ghost:hover{background:rgba(255,255,255,0.17);border-color:rgba(255,255,255,0.44);}
         .hero-sub{text-shadow:0 1px 12px rgba(0,0,0,0.7);}
         .hero-badge{text-shadow:none;}
-        .hero-bg{position:absolute;inset:0;background:url('ang.jpeg') top center/cover no-repeat;}
+        .hero-bg{position:absolute;inset:0;background:url('ang.jpeg') top right/55% auto no-repeat;}
         .hero h1{color:#FFFFFF;text-shadow:0 2px 24px rgba(0,0,0,0.5);}
         .hero-sub{color:rgba(255,255,255,0.90);text-shadow:0 1px 14px rgba(0,0,0,0.55);}
         .hero-badge{background:rgba(0,0,0,0.35);border-color:rgba(255,255,255,0.25);}
         .hero-section{min-height:620px;}
 @media(max-width:900px){
-    .hero-section{min-height:520px;background-position:60% center;}
-}
-        @media(max-width:900px){
-    .hero-bg{background:url('ang.jpeg') top center/cover no-repeat !important;background-attachment:scroll !important;}
+    .hero-bg{background:url('ang.jpeg') top center/85% auto no-repeat !important;background-color:#1a0a00 !important;background-attachment:scroll !important;}
     .hero-section{min-height:600px;}
 }
 
