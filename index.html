@@ -188,8 +188,8 @@
 
         /* ── HERO ── */
         .hero-section{position:relative;overflow:hidden;background:var(--navy);min-height:560px;display:flex;align-items:center;}
-        .hero-bg{position:absolute;inset:0;background:linear-gradient(to right, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.20) 55%, rgba(0,0,0,0.0) 100%),url('ang.jpeg') center top/cover no-repeat;background-attachment:fixed;}
-        .hero-mesh{position:absolute;inset:0;background:radial-gradient(ellipse 65% 55% at 75% 50%,rgba(0,200,255,0.09) 0%,transparent 65%),radial-gradient(ellipse 45% 70% at 5% 85%,rgba(240,112,32,0.11) 0%,transparent 60%);}
+        .hero-bg{position:absolute;inset:0;background:url('ang.jpeg') center center/cover no-repeat;background-attachment:fixed;}
+        .hero-mesh{position:absolute;inset:0;background:linear-gradient(to right, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.20) 50%, rgba(0,0,0,0.0) 100%);}
         .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:52px 52px;mask-image:radial-gradient(ellipse at center,black 15%,transparent 75%);}
         .hero-particles{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
         .hero-particle{position:absolute;border-radius:50%;animation:floatP var(--dur,8s) ease-in-out infinite var(--delay,0s);}
@@ -209,11 +209,15 @@
         .btn-ghost:hover{background:rgba(255,255,255,0.17);border-color:rgba(255,255,255,0.44);}
         .hero-sub{text-shadow:0 1px 12px rgba(0,0,0,0.7);}
         .hero-badge{text-shadow:none;}
-        .hero-bg{position:absolute;inset:0;background:linear-gradient(to right, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.35) 60%, rgba(0,0,0,0.10) 100%),url('ang.jpeg') center top/cover no-repeat;background-attachment:fixed;}
+        .hero-bg{position:absolute;inset:0;background:url('ang.jpeg') center center/cover no-repeat;background-attachment:fixed;}
 
         .hero h1{color:#FFFFFF;text-shadow:0 2px 24px rgba(0,0,0,0.5);}
         .hero-sub{color:rgba(255,255,255,0.90);text-shadow:0 1px 14px rgba(0,0,0,0.55);}
         .hero-badge{background:rgba(0,0,0,0.35);border-color:rgba(255,255,255,0.25);}
+        .hero-section{min-height:620px;}
+@media(max-width:900px){
+    .hero-section{min-height:520px;background-position:60% center;}
+}
 
 
         /* ── TICKER ── */
@@ -853,8 +857,8 @@
             <div class="hero-content">
                 <div>
                     <div class="hero-badge"><div class="hero-badge-dot"></div> Live · Ghana's #1 Student Data Network</div>
-                    <h1>Stay <em>online</em>,<br>spend less.</h1>
-                    <p class="hero-sub">Affordable, no-expiry data bundles for university students across Ghana. MTN, AirtelTigo &amp; Telecel — delivered fast.</p>
+<h1>Data for<br><em>every student.</em></h1>
+<p class="hero-sub">Affordable, no-expiry bundles for Ghanaian university students. MTN, AirtelTigo & Telecel — Fast delivery</p>
                     <div class="hero-btns">
                         <button class="btn-primary" onclick="nav('bundles')">
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
